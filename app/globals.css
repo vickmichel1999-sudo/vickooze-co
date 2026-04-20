@@ -39,16 +39,25 @@ body {
 }
 
 .section-shell {
-  @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  @apply mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-10;
 }
 
 .eyebrow {
-  @apply inline-flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-muted;
+  @apply inline-flex items-center gap-3 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-2;
 }
 
 .eyebrow::before {
   content: "";
-  @apply block h-px w-[22px] bg-coral;
+  @apply block h-px w-[24px] bg-pine/70;
+}
+
+.eyebrow-center {
+  @apply justify-center;
+}
+
+.eyebrow-center::after {
+  content: "";
+  @apply block h-px w-[24px] bg-pine/70;
 }
 
 .sparkle-field {

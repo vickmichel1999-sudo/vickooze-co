@@ -38,7 +38,7 @@ export function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.2fr_1.8fr]">
           <div>
             <Link href="/" className="flex items-center gap-3 text-xl font-black">
-              <span className="grid h-10 w-10 place-items-center rounded-lg bg-coral font-serif text-lg italic text-white">
+              <span className="grid h-10 w-10 place-items-center rounded-lg bg-pine font-serif text-lg italic text-white">
                 V
               </span>
               <span>{SITE_NAME}</span>
@@ -49,7 +49,7 @@ export function Footer() {
             </p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="mt-6 inline-flex items-center gap-2 text-sm text-white/74 transition-colors hover:text-coral"
+              className="mt-6 inline-flex items-center gap-2 text-sm text-white/74 transition-colors hover:text-pine"
             >
               <Mail className="h-4 w-4" />
               {CONTACT_EMAIL}
@@ -58,7 +58,7 @@ export function Footer() {
               href={LINKEDIN_URL}
               target="_blank"
               rel="noreferrer"
-              className="mt-4 flex w-fit items-center gap-2 text-sm text-white/74 transition-colors hover:text-coral"
+              className="mt-4 flex w-fit items-center gap-2 text-sm text-white/74 transition-colors hover:text-pine"
             >
               <Linkedin className="h-4 w-4" />
               LinkedIn
@@ -79,14 +79,14 @@ export function Footer() {
                           href={link.href}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-sm text-white/68 transition-colors hover:text-coral"
+                          className="text-sm text-white/68 transition-colors hover:text-pine"
                         >
                           {link.label}
                         </a>
                       ) : (
                         <Link
                           href={link.href}
-                          className="text-sm text-white/68 transition-colors hover:text-coral"
+                          className="text-sm text-white/68 transition-colors hover:text-pine"
                         >
                           {link.label}
                         </Link>

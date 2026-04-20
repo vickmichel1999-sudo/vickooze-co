@@ -5,15 +5,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-bold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-bold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pine focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-coral text-white shadow-lift hover:-translate-y-0.5 hover:bg-[#ef5f2d]",
+        default: "bg-pine text-white shadow-lift hover:-translate-y-0.5 hover:bg-pine-900",
         secondary: "bg-charcoal text-white hover:-translate-y-0.5 hover:bg-black",
-        outline: "border border-charcoal/15 bg-white text-charcoal hover:-translate-y-0.5 hover:border-coral hover:text-coral",
-        ghost: "text-charcoal hover:bg-white/70 hover:text-coral",
-        light: "bg-white text-charcoal shadow-soft hover:-translate-y-0.5 hover:text-coral"
+        outline: "border border-charcoal/15 bg-white text-charcoal hover:-translate-y-0.5 hover:border-pine hover:text-pine",
+        ghost: "text-charcoal hover:bg-white/70 hover:text-pine",
+        light: "bg-white text-charcoal shadow-soft hover:-translate-y-0.5 hover:text-pine"
       },
       size: {
         default: "h-11 px-5",

@@ -8,7 +8,7 @@ export function StatsBar() {
       <div className="section-shell flex flex-col items-center justify-center gap-4 text-center sm:flex-row sm:gap-8 lg:gap-14">
         {stats.map((stat) => (
           <div key={stat} className="flex items-center gap-3 text-sm font-bold md:text-base">
-            <Zap className="h-5 w-5 fill-coral text-coral" />
+            <Zap className="h-5 w-5 fill-pine text-pine" />
             <span>{stat}</span>
           </div>
         ))}

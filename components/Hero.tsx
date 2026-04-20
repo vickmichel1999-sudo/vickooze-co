@@ -46,7 +46,7 @@ export function Hero({
           <div className={cn("mt-8 grid gap-3 sm:grid-cols-3", !showVisual && "mx-auto max-w-3xl")}>
             {["Audit clair", "ROI estimé", "Déploiement simple"].map((item) => (
               <div key={item} className="flex items-center justify-center gap-2 rounded-lg border border-charcoal/10 bg-cream-3 px-4 py-3 text-sm font-black text-charcoal">
-                <Check className="h-4 w-4 text-coral" />
+                <Check className="h-4 w-4 text-pine" />
                 {item}
               </div>
             ))}
@@ -85,12 +85,12 @@ export function Hero({
                 <span className="text-xs font-black uppercase tracking-[0.14em] text-charcoal/70">
                   Heures économisées
                 </span>
-                <TrendingUp className="h-4 w-4 text-coral" />
+                <TrendingUp className="h-4 w-4 text-pine" />
               </div>
               <p className="mt-3 text-3xl font-black text-charcoal">1 240h</p>
             </div>
 
-            <div className="absolute right-0 bottom-28 w-44 rounded-lg border border-charcoal/10 bg-coral p-4 text-white shadow-soft">
+            <div className="absolute right-0 bottom-28 w-44 rounded-lg border border-charcoal/10 bg-pine p-4 text-white shadow-soft">
               <div className="flex items-center gap-2">
                 <Bot className="h-5 w-5 text-white" />
                 <span className="text-sm font-bold">92% satisfaction</span>

@@ -40,7 +40,7 @@ export function LegalPage({ eyebrow, title, intro, updatedAt, sections }: LegalP
             </div>
 
             <div className="rounded-lg bg-cream-3 p-6 shadow-soft">
-              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-coral">
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-pine">
                 Documents utiles
               </p>
               <div className="mt-5 grid gap-3">
@@ -48,10 +48,10 @@ export function LegalPage({ eyebrow, title, intro, updatedAt, sections }: LegalP
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="flex items-center justify-between rounded-lg bg-white px-5 py-4 text-sm font-black text-charcoal shadow-sm transition-colors hover:text-coral"
+                    className="flex items-center justify-between rounded-lg bg-white px-5 py-4 text-sm font-black text-charcoal shadow-sm transition-colors hover:text-pine"
                   >
                     {link.label}
-                    <span className="text-coral">→</span>
+                    <span className="text-pine">→</span>
                   </Link>
                 ))}
               </div>
@@ -71,7 +71,7 @@ export function LegalPage({ eyebrow, title, intro, updatedAt, sections }: LegalP
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-white/70 transition-colors hover:text-coral"
+                  className="text-sm text-white/70 transition-colors hover:text-pine"
                 >
                   {link.label}
                 </Link>
@@ -94,7 +94,7 @@ export function LegalPage({ eyebrow, title, intro, updatedAt, sections }: LegalP
                   <ul className="mt-5 grid gap-3">
                     {section.bullets.map((bullet) => (
                       <li key={bullet} className="flex gap-3 leading-7 text-muted">
-                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-coral" />
+                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-pine" />
                         <span>{bullet}</span>
                       </li>
                     ))}

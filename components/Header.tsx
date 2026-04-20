@@ -33,22 +33,22 @@ export function Header() {
       className={cn(
         "fixed left-0 right-0 top-0 z-50 border-b transition-all duration-300",
         isScrolled
-          ? "border-charcoal/10 bg-white/82 shadow-sm backdrop-blur-xl"
-          : "border-transparent bg-transparent"
+          ? "border-charcoal/10 bg-white/92 shadow-sm backdrop-blur-xl"
+          : "border-charcoal/8 bg-white/92 backdrop-blur-xl"
       )}
     >
-      <div className="section-shell flex h-[76px] items-center justify-between gap-4">
+      <div className="section-shell relative flex h-14 items-center justify-between gap-4">
         <Link
           href="/"
-          className="flex items-center gap-3 whitespace-nowrap text-[17px] font-black tracking-[-0.01em] text-charcoal"
+          className="flex items-center gap-3 whitespace-nowrap text-[15px] font-black tracking-[-0.01em] text-charcoal"
         >
-          <span className="grid h-[34px] w-[34px] place-items-center rounded-lg bg-charcoal font-serif text-lg italic text-white">
+          <span className="grid h-7 w-7 place-items-center rounded-md bg-charcoal font-serif text-sm italic text-white">
             V
           </span>
           <span>{SITE_NAME}</span>
         </Link>
 
-        <nav className="hidden items-center gap-1 rounded-full border border-charcoal/10 bg-white/65 p-1.5 text-sm font-bold text-charcoal/75 backdrop-blur md:flex">
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-charcoal/10 bg-white/85 p-1.5 text-xs font-black text-charcoal/72 shadow-sm backdrop-blur md:flex">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
 
@@ -57,8 +57,8 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-full px-5 py-2.5 transition-colors hover:bg-charcoal hover:text-white",
-                  isActive ? "bg-charcoal text-white" : ""
+                  "rounded-full px-5 py-2 transition-colors hover:bg-cream-3 hover:text-pine",
+                  isActive ? "text-pine" : ""
                 )}
               >
                 {item.label}
@@ -94,8 +94,8 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-lg px-3 py-3 text-base font-bold text-charcoal transition-colors hover:bg-cream hover:text-coral",
-                  pathname === item.href ? "bg-charcoal text-white hover:bg-charcoal hover:text-white" : ""
+                  "rounded-lg px-3 py-3 text-base font-bold text-charcoal transition-colors hover:bg-cream hover:text-pine",
+                  pathname === item.href ? "bg-pine text-white hover:bg-pine hover:text-white" : ""
                 )}
                 onClick={() => setIsOpen(false)}
               >

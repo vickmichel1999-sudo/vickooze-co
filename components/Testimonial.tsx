@@ -11,9 +11,9 @@ type TestimonialProps = {
 export function Testimonial({ name, company, quote }: TestimonialProps) {
   return (
     <Card className="h-full p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
-      <div className="flex gap-1 text-coral" aria-label="5 étoiles">
+      <div className="flex gap-1 text-pine" aria-label="5 étoiles">
         {Array.from({ length: 5 }).map((_, index) => (
-          <Star key={index} className="h-5 w-5 fill-coral" />
+          <Star key={index} className="h-5 w-5 fill-pine" />
         ))}
       </div>
       <p className="mt-6 text-base leading-7 text-muted">“{quote}”</p>

@@ -116,7 +116,7 @@ export default function AboutPage() {
             {values.map((value, index) => (
               <Reveal key={value.title} delay={index * 0.05}>
                 <Card className="h-full p-7">
-                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-coral text-white">
+                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-pine text-white">
                     <value.icon className="h-6 w-6" />
                   </div>
                   <h3 className="mt-6 text-2xl font-black text-charcoal">{value.title}</h3>

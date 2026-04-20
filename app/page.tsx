@@ -293,7 +293,7 @@ function OfferVisual({ type }: { type: string }) {
                     <Star
                       key={`${item}-${starIndex}`}
                       className={`h-4 w-4 ${
-                        starIndex <= index ? "fill-coral text-coral" : "fill-white/20 text-white/20"
+                        starIndex <= index ? "fill-pine text-pine" : "fill-white/20 text-white/20"
                       }`}
                     />
                   ))}
@@ -320,9 +320,9 @@ function OfferVisual({ type }: { type: string }) {
               >
                 <span className="text-sm font-black text-charcoal">{item}</span>
                 {index === 1 ? (
-                  <span className="text-xs font-black uppercase text-coral">Actif</span>
+                  <span className="text-xs font-black uppercase text-pine">Actif</span>
                 ) : (
-                  <Bot className="h-5 w-5 text-coral" />
+                  <Bot className="h-5 w-5 text-pine" />
                 )}
               </div>
             )
@@ -344,13 +344,13 @@ function OfferVisual({ type }: { type: string }) {
             {[42, 68, 55, 82, 76].map((height, index) => (
               <div
                 key={height}
-                className={`w-10 rounded-sm ${index === 3 ? "bg-coral" : "bg-peach"}`}
+                className={`w-10 rounded-sm ${index === 3 ? "bg-pine" : "bg-peach"}`}
                 style={{ height: `${height * 1.5}px` }}
               />
             ))}
           </div>
         </div>
-        <div className="absolute bottom-10 right-10 rounded-lg bg-coral px-4 py-3 text-xs font-black text-white shadow-soft">
+        <div className="absolute bottom-10 right-10 rounded-lg bg-pine px-4 py-3 text-xs font-black text-white shadow-soft">
           Rapport envoyé
         </div>
       </div>
@@ -370,10 +370,10 @@ function OfferVisual({ type }: { type: string }) {
       <div className="absolute bottom-6 left-6 right-6 rounded-lg bg-white/90 p-4 shadow-soft backdrop-blur">
         <div className="flex items-center justify-between">
           <span className="text-sm font-black text-charcoal">Progression équipe</span>
-          <span className="rounded-lg bg-coral px-3 py-1 text-xs font-black text-white">92%</span>
+          <span className="rounded-lg bg-pine px-3 py-1 text-xs font-black text-white">92%</span>
         </div>
         <div className="mt-4 h-2 rounded-lg bg-cream">
-          <div className="h-2 w-[92%] rounded-lg bg-coral" />
+          <div className="h-2 w-[92%] rounded-lg bg-pine" />
         </div>
       </div>
     </div>
@@ -392,7 +392,7 @@ function AuditReportPreview() {
             Rapport d’audit IA
           </h3>
         </div>
-        <span className="w-fit rounded-lg bg-coral px-4 py-2 text-sm font-black text-white">
+        <span className="w-fit rounded-lg bg-pine px-4 py-2 text-sm font-black text-white">
           Score 42/100
         </span>
       </div>
@@ -401,7 +401,7 @@ function AuditReportPreview() {
         <div className="rounded-lg bg-white p-4 text-charcoal">
           <div className="flex items-center justify-between gap-4">
             <p className="text-sm font-black">Synthèse exécutive</p>
-            <MailCheck className="h-5 w-5 text-coral" />
+            <MailCheck className="h-5 w-5 text-pine" />
           </div>
           <p className="mt-3 text-sm leading-6 text-muted">
             PME de services avec relances manuelles, CRM incomplet et reporting dispersé.
@@ -456,36 +456,39 @@ function AuditReportPreview() {
 export default function HomePage() {
   return (
     <>
-      <section className="overflow-hidden bg-white pt-32 pb-20 md:pb-24">
-        <div className="section-shell grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+      <section className="overflow-hidden bg-white pt-24 pb-20 md:pt-28 md:pb-24">
+        <div className="section-shell grid items-start gap-10 lg:grid-cols-[0.95fr_1.05fr]">
           <Reveal>
             <p className="eyebrow">Audit IA offert pour PME françaises</p>
-            <h1 className="mt-5 max-w-3xl font-serif text-5xl leading-[1.05] text-charcoal md:text-[64px]">
-              Votre PME perd des heures sur des tâches que <span className="text-coral">l’IA</span> peut déjà gérer
+            <h1 className="mt-6 max-w-[620px] font-serif text-[56px] leading-[0.93] tracking-[-0.035em] text-charcoal sm:text-[70px] md:text-[86px] lg:text-[94px]">
+              Votre PME perd des heures sur des tâches que <span className="text-pine">l’IA</span> peut déjà gérer
             </h1>
-            <p className="mt-8 max-w-2xl text-lg leading-8 text-muted">
+            <p className="mt-8 max-w-[520px] text-[17px] leading-8 text-muted">
               Nous identifions les tâches qui ralentissent vos équipes, puis nous déployons les agents IA et automatisations qui libèrent du temps sans complexifier votre organisation.
             </p>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            <div className="mt-7 grid max-w-[520px] gap-3 sm:grid-cols-3">
               {heroPainPoints.map((pain) => (
-                <div key={pain} className="rounded-lg border border-charcoal/10 bg-cream px-4 py-3">
-                  <p className="text-sm font-black leading-5 text-charcoal">{pain}</p>
+                <div key={pain} className="rounded-md border border-charcoal/10 bg-cream-3 px-4 py-3">
+                  <p className="flex items-start gap-2 text-[12px] font-black leading-4 text-charcoal">
+                    <span className="mt-1 block h-px w-4 shrink-0 bg-pine" />
+                    {pain}
+                  </p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-8 rounded-lg border-l-4 border-coral bg-white p-5 shadow-soft">
-              <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+            <div className="mt-8 max-w-[520px] rounded-md border border-pine/30 bg-white p-6 shadow-soft">
+              <p className="font-mono text-[11px] font-black uppercase tracking-[0.18em] text-muted-2">
                 Résultat attendu
               </p>
-              <p className="mt-3 text-xl font-black leading-7 text-charcoal">
+              <p className="mt-3 text-[18px] font-black leading-7 text-charcoal">
                 En 30 minutes, vous repartez avec une vision claire des gains rapides à automatiser en priorité.
               </p>
               <ul className="mt-5 grid gap-3">
                 {heroOutcomes.map((outcome) => (
                   <li key={outcome} className="flex items-center gap-3 text-sm font-bold text-muted">
-                    <Check className="h-5 w-5 shrink-0 rounded-full bg-coral p-1 text-white" />
+                    <Check className="h-5 w-5 shrink-0 rounded-full bg-pine p-1 text-white" />
                     {outcome}
                   </li>
                 ))}
@@ -508,8 +511,8 @@ export default function HomePage() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.12} className="relative min-h-[460px]">
-            <div className="absolute inset-y-0 right-0 w-full overflow-hidden rounded-lg bg-charcoal shadow-soft lg:w-[82%]">
+          <Reveal delay={0.12} className="relative min-h-[540px] lg:mt-20">
+            <div className="absolute bottom-8 right-0 top-20 w-full overflow-hidden rounded-lg bg-charcoal shadow-soft lg:w-[78%]">
               <Image
                 src={PLACEHOLDER_IMAGES.founder}
                 alt={`${FOUNDER_NAME} travaille sur une stratégie IA`}
@@ -520,23 +523,23 @@ export default function HomePage() {
               />
             </div>
 
-            <div className="absolute inset-y-0 right-0 w-full rounded-lg bg-gradient-to-t from-charcoal/30 via-transparent to-transparent lg:w-[82%]" />
+            <div className="absolute bottom-8 right-0 top-20 w-full rounded-lg bg-gradient-to-t from-charcoal/50 via-charcoal/10 to-transparent lg:w-[78%]" />
 
-            <div className="absolute left-0 top-20 w-[280px] rounded-lg bg-peach/90 px-5 py-4 shadow-soft backdrop-blur">
+            <div className="absolute left-2 top-32 w-[280px] rounded-md bg-peach/95 px-5 py-4 shadow-soft backdrop-blur">
               <div className="flex items-center justify-between gap-5">
                 <span className="text-sm font-black text-charcoal">Tâches détectées</span>
-                <span className="font-black text-coral">12</span>
+                <span className="font-black text-pine">12</span>
               </div>
               <p className="mt-2 text-xs font-bold text-charcoal/62">dont 5 automatisables rapidement</p>
             </div>
 
-            <div className="absolute left-0 top-44 w-[230px] rounded-lg bg-charcoal p-5 text-white shadow-soft">
+            <div className="absolute left-8 top-56 w-[230px] rounded-md bg-charcoal p-5 text-white shadow-soft">
               <p className="text-sm font-black">Avant / après IA</p>
               <div className="mt-5 flex h-24 items-end gap-2">
                 {[34, 58, 52, 82, 70].map((height, index) => (
                   <div
                     key={height}
-                    className={`w-full rounded-sm ${index === 3 ? "bg-coral" : "bg-white/28"}`}
+                    className={`w-full rounded-sm ${index === 3 ? "bg-pine" : "bg-white/28"}`}
                     style={{ height: `${height}%` }}
                   />
                 ))}
@@ -548,7 +551,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="absolute bottom-8 right-6 w-[230px] rounded-lg bg-coral p-5 text-white shadow-soft">
+            <div className="absolute bottom-20 right-3 w-[230px] rounded-md bg-pine p-5 text-white shadow-soft">
               <p className="text-sm font-black">Gain potentiel</p>
               <p className="mt-4 font-serif text-5xl leading-none">+10h</p>
               <p className="mt-2 text-sm font-bold text-white/80">par semaine sur les opérations répétitives</p>
@@ -578,25 +581,25 @@ export default function HomePage() {
       <section className="bg-white py-16 md:py-24">
         <div className="section-shell">
           <Reveal className="mx-auto max-w-4xl text-center">
-            <p className="eyebrow">Preuve business</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
+            <p className="eyebrow eyebrow-center">Preuve business</p>
+            <h2 className="mx-auto mt-4 max-w-4xl font-serif text-[44px] leading-[0.98] tracking-[-0.028em] text-charcoal md:text-[64px]">
               Ce que l’IA peut changer dans une PME dès les premières semaines
             </h2>
-            <p className="mt-6 text-lg leading-8 text-muted">
+            <p className="mx-auto mt-5 max-w-2xl text-[16px] leading-7 text-muted">
               Avant de parler d’outils, on chiffre les irritants du quotidien : relances, saisie,
               reporting, comptes rendus et suivi client.
             </p>
           </Reveal>
 
-          <div className="mt-14 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div className="mt-16 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <Reveal>
               <div className="grid gap-6">
                 <div>
                   <p className="eyebrow">Exemple concret</p>
-                  <h3 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal">
+                  <h3 className="mt-4 max-w-lg font-serif text-[36px] leading-[1.02] tracking-[-0.02em] text-charcoal md:text-[46px]">
                     Comment récupérer 8h par semaine sans recruter
                   </h3>
-                  <p className="mt-5 text-lg leading-8 text-muted">
+                  <p className="mt-5 max-w-lg text-[16px] leading-7 text-muted">
                     Sur une PME de services de 15 à 20 personnes, l’audit permet souvent de repérer
                     plusieurs tâches simples à automatiser sans changer le CRM ni les habitudes de
                     travail.
@@ -604,22 +607,28 @@ export default function HomePage() {
                 </div>
 
                 <div className="grid gap-3">
-                  {timeSavingsExample.map((item) => (
+                  {timeSavingsExample.map((item, index) => (
                     <div
                       key={item.task}
-                      className="flex items-center justify-between gap-5 rounded-lg border border-charcoal/10 bg-cream px-5 py-4"
+                      className="grid grid-cols-[1fr_120px_56px] items-center gap-4 rounded-md border border-charcoal/10 bg-cream px-5 py-4"
                     >
                       <span className="text-sm font-black text-charcoal">{item.task}</span>
-                      <span className="font-serif text-3xl leading-none text-coral">{item.time}</span>
+                      <span className="relative h-1 overflow-hidden rounded-full bg-charcoal/10">
+                        <span
+                          className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-peach to-pine"
+                          style={{ width: `${[46, 54, 38, 46][index]}%` }}
+                        />
+                      </span>
+                      <span className="text-right font-serif text-2xl leading-none text-pine">{item.time}</span>
                     </div>
                   ))}
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-3">
                   {proofOutcomes.map((item) => (
-                    <div key={item.label} className="rounded-lg bg-charcoal p-5 text-white">
-                      <p className="font-serif text-4xl leading-none text-peach">{item.value}</p>
-                      <p className="mt-3 text-sm font-bold leading-5 text-white/70">{item.label}</p>
+                    <div key={item.label} className="rounded-md bg-charcoal p-5 text-white">
+                      <p className="font-serif text-[34px] leading-none text-peach">{item.value}</p>
+                      <p className="mt-2 text-[12px] font-bold leading-4 text-white/70">{item.label}</p>
                     </div>
                   ))}
                 </div>
@@ -628,24 +637,24 @@ export default function HomePage() {
 
             <Reveal delay={0.1}>
               <div className="grid gap-6">
-                <div className="rounded-lg bg-cream p-6 md:p-8">
+                <div className="rounded-md bg-cream p-7 md:p-10">
                   <p className="eyebrow">Mini étude de cas fictive</p>
-                  <h3 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal">
+                  <h3 className="mt-5 font-serif text-[34px] leading-[1.04] tracking-[-0.02em] text-charcoal md:text-[46px]">
                     PME B2B, 18 salariés, équipe commerciale débordée
                   </h3>
-                  <p className="mt-5 text-lg leading-8 text-muted">
+                  <p className="mt-5 text-[16px] leading-7 text-muted">
                     Situation de départ : leads traités à la main, relances oubliées, reporting
                     hebdomadaire reconstruit dans Google Sheets.
                   </p>
                   <ul className="mt-6 grid gap-4">
                     {sampleCaseResults.map((item) => (
                       <li key={item} className="flex gap-3 text-sm font-bold leading-6 text-charcoal">
-                        <Check className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-coral p-1 text-white" />
+                        <Check className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-pine p-1 text-white" />
                         {item}
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-6 rounded-lg bg-white p-4 text-sm font-bold leading-6 text-muted">
+                  <p className="mt-6 rounded-md bg-white p-4 text-sm font-bold leading-6 text-muted">
                     Exemple illustratif, pas un témoignage client. Il montre le type de diagnostic
                     que l’on cherche à produire après un premier échange.
                   </p>
@@ -674,7 +683,7 @@ export default function HomePage() {
             {afterCallItems.map((item, index) => (
               <Reveal key={item.title} delay={index * 0.05}>
                 <Card className="h-full p-6">
-                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-coral text-white">
+                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-pine text-white">
                     <item.icon className="h-6 w-6" />
                   </div>
                   <h3 className="mt-6 text-xl font-black leading-tight text-charcoal">
@@ -706,7 +715,7 @@ export default function HomePage() {
                 <Card className="overflow-hidden border-0 bg-white shadow-soft">
                   <div className="grid gap-8 p-7 md:p-10 lg:grid-cols-[0.86fr_1fr] lg:items-center">
                     <div>
-                      <span className="rounded-sm bg-peach/45 px-3 py-2 text-xs font-black uppercase tracking-[0.14em] text-coral">
+                      <span className="rounded-sm bg-peach/45 px-3 py-2 text-xs font-black uppercase tracking-[0.14em] text-pine">
                         {offer.tag}
                       </span>
                       <h3 className="mt-6 max-w-xl font-serif text-4xl leading-[1.05] text-charcoal md:text-5xl">
@@ -719,7 +728,7 @@ export default function HomePage() {
                       <ul className="mt-8 grid gap-4">
                         {offer.checkpoints.map((checkpoint) => (
                           <li key={checkpoint} className="flex gap-3 text-sm font-bold text-charcoal">
-                            <Check className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-coral p-1 text-white" />
+                            <Check className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-pine p-1 text-white" />
                             <span>{checkpoint}</span>
                           </li>
                         ))}
@@ -770,7 +779,7 @@ export default function HomePage() {
               ];
               return (
                 <div key={step.title} className={`absolute ${positions[index]} text-center`}>
-                  <div className="mx-auto grid h-12 w-12 place-items-center rounded-lg border border-dashed border-coral bg-white text-coral shadow-soft">
+                  <div className="mx-auto grid h-12 w-12 place-items-center rounded-lg border border-dashed border-pine bg-white text-pine shadow-soft">
                     <step.icon className="h-5 w-5" />
                   </div>
                   <p className="mt-3 max-w-[130px] text-sm font-bold leading-5 text-charcoal">
@@ -785,7 +794,7 @@ export default function HomePage() {
             {processSteps.map((step, index) => (
               <Reveal key={step.title} delay={index * 0.04}>
                 <div>
-                  <div className="grid h-10 w-10 place-items-center rounded-full bg-coral font-black text-white">
+                  <div className="grid h-10 w-10 place-items-center rounded-full bg-pine font-black text-white">
                     {step.step}
                   </div>
                   <h3 className="mt-5 text-xl font-black text-charcoal">{step.title}</h3>
@@ -809,7 +818,7 @@ export default function HomePage() {
             {reasons.map((reason, index) => (
               <Reveal key={reason.title} delay={index * 0.04}>
                 <div className="text-center">
-                  <reason.icon className="mx-auto h-8 w-8 text-coral" />
+                  <reason.icon className="mx-auto h-8 w-8 text-pine" />
                   <h3 className="mt-5 text-xl font-black text-charcoal">{reason.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-muted">{reason.text}</p>
                 </div>
@@ -828,7 +837,7 @@ export default function HomePage() {
               <div className="mt-12 grid gap-8 md:grid-cols-4">
                 {collaborationSteps.map((item, index) => (
                   <div key={item.title}>
-                    <div className="grid h-9 w-9 place-items-center rounded-full bg-coral text-sm font-black text-white">
+                    <div className="grid h-9 w-9 place-items-center rounded-full bg-pine text-sm font-black text-white">
                       {index + 1}
                     </div>
                     <h4 className="mt-5 text-lg font-black text-charcoal">{item.title}</h4>
@@ -891,7 +900,7 @@ export default function HomePage() {
                     <span>{faq.question}</span>
                     <span
                       aria-hidden="true"
-                      className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-coral text-lg font-black text-white transition-transform group-open:rotate-45"
+                      className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-pine text-lg font-black text-white transition-transform group-open:rotate-45"
                     >
                       +
                     </span>

@@ -31,7 +31,7 @@ export function ServiceCard({
             <p className="eyebrow">{tag}</p>
             <CardTitle className="mt-3 text-2xl md:text-[32px]">{title}</CardTitle>
           </div>
-          <div className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-cream text-coral transition-colors group-hover:bg-coral group-hover:text-white">
+          <div className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-cream text-pine transition-colors group-hover:bg-pine group-hover:text-white">
             <Icon className="h-6 w-6" />
           </div>
         </div>
@@ -41,14 +41,14 @@ export function ServiceCard({
         <ul className="mt-6 space-y-3">
           {checkpoints.map((checkpoint) => (
             <li key={checkpoint} className="flex gap-3 text-sm leading-6 text-charcoal">
-              <Check className="mt-0.5 h-5 w-5 shrink-0 text-coral" />
+              <Check className="mt-0.5 h-5 w-5 shrink-0 text-pine" />
               <span>{checkpoint}</span>
             </li>
           ))}
         </ul>
         <Link
           href={href}
-          className="mt-7 inline-flex w-fit items-center gap-2 text-sm font-black text-coral transition-colors hover:text-charcoal"
+          className="mt-7 inline-flex w-fit items-center gap-2 text-sm font-black text-pine transition-colors hover:text-charcoal"
         >
           {cta}
           <ArrowUpRight className="h-4 w-4" />

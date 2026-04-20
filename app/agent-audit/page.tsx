@@ -42,7 +42,7 @@ export default function AgentAuditPage() {
             <div className="mt-8 grid gap-3">
               {promises.map((promise) => (
                 <div key={promise} className="flex items-center gap-3 text-sm font-black text-charcoal">
-                  <Check className="h-5 w-5 rounded-full bg-coral p-1 text-white" />
+                  <Check className="h-5 w-5 rounded-full bg-pine p-1 text-white" />
                   {promise}
                 </div>
               ))}
@@ -65,7 +65,7 @@ export default function AgentAuditPage() {
           <Reveal delay={0.12}>
             <div className="rounded-lg bg-charcoal p-6 text-white shadow-soft md:p-8">
               <div className="flex items-center justify-between">
-                <div className="grid h-12 w-12 place-items-center rounded-lg bg-coral text-white">
+                <div className="grid h-12 w-12 place-items-center rounded-lg bg-pine text-white">
                   <Bot className="h-6 w-6" />
                 </div>
                 <span className="rounded-lg bg-white px-4 py-2 text-sm font-black text-charcoal">
@@ -89,7 +89,7 @@ export default function AgentAuditPage() {
                 ))}
               </div>
               <div className="mt-8 flex items-start gap-3 rounded-lg bg-white p-5 text-charcoal">
-                <ShieldCheck className="mt-0.5 h-6 w-6 shrink-0 text-coral" />
+                <ShieldCheck className="mt-0.5 h-6 w-6 shrink-0 text-pine" />
                 <p className="text-sm font-bold leading-6">
                   Les clés Anthropic, OpenAI et Resend restent côté serveur via la route API Next.js. Claude est utilisé en priorité, OpenAI prend le relais si besoin.
                 </p>

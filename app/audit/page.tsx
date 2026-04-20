@@ -172,8 +172,8 @@ export default function AuditPage() {
               En 30 minutes, nous analysons vos processus, repérons les gains rapides et posons les bases d’une roadmap IA claire, priorisée et mesurable.
             </p>
 
-            <div className="mt-8 rounded-lg border-l-4 border-coral bg-cream p-5">
-              <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+            <div className="mt-8 rounded-lg border-l-4 border-pine bg-cream p-5">
+              <p className="text-sm font-black uppercase tracking-[0.14em] text-pine">
                 Promesse
               </p>
               <p className="mt-3 text-xl font-black leading-7 text-charcoal">
@@ -199,7 +199,7 @@ export default function AuditPage() {
 
           <Reveal delay={0.12}>
             <div className="relative min-h-[500px] rounded-lg bg-charcoal p-6 text-white shadow-soft">
-              <div className="absolute right-6 top-6 rounded-lg bg-coral px-4 py-3 text-sm font-black">
+              <div className="absolute right-6 top-6 rounded-lg bg-pine px-4 py-3 text-sm font-black">
                 Audit offert 30min
               </div>
               <div className="pt-16">
@@ -218,7 +218,7 @@ export default function AuditPage() {
                   ].map((item) => (
                     <div key={item.label} className="flex items-center justify-between rounded-lg bg-white p-5 text-charcoal">
                       <span className="text-sm font-black">{item.label}</span>
-                      <span className="font-serif text-3xl text-coral">{item.value}</span>
+                      <span className="font-serif text-3xl text-pine">{item.value}</span>
                     </div>
                   ))}
                 </div>
@@ -256,7 +256,7 @@ export default function AuditPage() {
             {painPoints.map((point, index) => (
               <Reveal key={point.title} delay={index * 0.05}>
                 <Card className="h-full p-6">
-                  <point.icon className="h-8 w-8 text-coral" />
+                  <point.icon className="h-8 w-8 text-pine" />
                   <h3 className="mt-6 text-xl font-black text-charcoal">{point.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-muted">{point.text}</p>
                 </Card>
@@ -282,7 +282,7 @@ export default function AuditPage() {
             {included.map((item, index) => (
               <Reveal key={item} delay={index * 0.03}>
                 <div className="flex items-start gap-4 rounded-lg border border-charcoal/10 bg-cream p-5">
-                  <Check className="mt-0.5 h-6 w-6 shrink-0 rounded-full bg-coral p-1 text-white" />
+                  <Check className="mt-0.5 h-6 w-6 shrink-0 rounded-full bg-pine p-1 text-white" />
                   <p className="font-bold leading-7 text-charcoal">{item}</p>
                 </div>
               </Reveal>
@@ -308,7 +308,7 @@ export default function AuditPage() {
             {afterAuditCall.map((item, index) => (
               <Reveal key={item.title} delay={index * 0.05}>
                 <div className="h-full rounded-lg border border-white/10 bg-white/[0.04] p-6">
-                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-coral text-white">
+                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-pine text-white">
                     <item.icon className="h-6 w-6" />
                   </div>
                   <h3 className="mt-6 text-xl font-black leading-tight text-white">
@@ -365,7 +365,7 @@ export default function AuditPage() {
             {useCases.map((item, index) => (
               <Reveal key={item} delay={index * 0.035}>
                 <div className="flex h-full items-start gap-4 rounded-lg bg-cream p-5">
-                  <Bot className="mt-0.5 h-6 w-6 shrink-0 text-coral" />
+                  <Bot className="mt-0.5 h-6 w-6 shrink-0 text-pine" />
                   <p className="font-bold leading-7 text-charcoal">{item}</p>
                 </div>
               </Reveal>
@@ -388,7 +388,7 @@ export default function AuditPage() {
               <Reveal key={step.title} delay={index * 0.05}>
                 <Card className="h-full p-6">
                   <div className="flex items-center justify-between">
-                    <div className="grid h-11 w-11 place-items-center rounded-lg bg-coral text-white">
+                    <div className="grid h-11 w-11 place-items-center rounded-lg bg-pine text-white">
                       <step.icon className="h-5 w-5" />
                     </div>
                     <span className="font-serif text-4xl text-peach">0{index + 1}</span>
@@ -420,7 +420,7 @@ export default function AuditPage() {
               {outcomes.map((outcome, index) => (
                 <Reveal key={outcome.title} delay={index * 0.05}>
                   <Card className="h-full p-6">
-                    <outcome.icon className="h-8 w-8 text-coral" />
+                    <outcome.icon className="h-8 w-8 text-pine" />
                     <h3 className="mt-6 text-xl font-black text-charcoal">{outcome.title}</h3>
                     <p className="mt-3 text-sm leading-6 text-muted">{outcome.text}</p>
                   </Card>

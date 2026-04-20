@@ -16,6 +16,8 @@ const config: Config = {
         coral: "#FF6B35",
         "coral-600": "#E9551F",
         peach: "#FF9B7A",
+        pine: "#2C5F5D",
+        "pine-900": "#193B39",
         charcoal: "#1A1A1A",
         muted: "#555555",
         "muted-2": "#8A8076",
@@ -57,7 +59,7 @@ const config: Config = {
       },
       backgroundImage: {
         "hero-gradient": "linear-gradient(135deg, #F5EDE4 0%, #FFC5A8 100%)",
-        "cta-gradient": "linear-gradient(135deg, #FF6B35 0%, #FF9B7A 100%)"
+        "cta-gradient": "linear-gradient(135deg, #2C5F5D 0%, #FF9B7A 100%)"
       },
       borderRadius: {
         lg: "8px",

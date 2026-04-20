@@ -231,7 +231,7 @@ export default function ServicesPage() {
 
           <Reveal delay={0.12}>
             <div className="relative min-h-[500px] rounded-lg bg-charcoal p-6 text-white shadow-soft">
-              <div className="absolute right-6 top-6 rounded-lg bg-coral px-4 py-3 text-sm font-black">
+              <div className="absolute right-6 top-6 rounded-lg bg-pine px-4 py-3 text-sm font-black">
                 +10h/semaine
               </div>
               <div className="pt-16">
@@ -254,7 +254,7 @@ export default function ServicesPage() {
                 <div className="mt-5 grid gap-3">
                   {outcomes.map((item) => (
                     <div key={item} className="flex items-center gap-3 rounded-lg bg-white p-4 text-charcoal">
-                      <Check className="h-5 w-5 shrink-0 rounded-full bg-coral p-1 text-white" />
+                      <Check className="h-5 w-5 shrink-0 rounded-full bg-pine p-1 text-white" />
                       <span className="text-sm font-black">{item}</span>
                     </div>
                   ))}
@@ -281,7 +281,7 @@ export default function ServicesPage() {
             {painPoints.map((point, index) => (
               <Reveal key={point.title} delay={index * 0.05}>
                 <Card className="h-full p-6">
-                  <point.icon className="h-8 w-8 text-coral" />
+                  <point.icon className="h-8 w-8 text-pine" />
                   <h3 className="mt-6 text-xl font-black text-charcoal">{point.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-muted">{point.text}</p>
                 </Card>
@@ -309,7 +309,7 @@ export default function ServicesPage() {
                 <Card className="overflow-hidden border-0 bg-cream shadow-soft">
                   <div className="grid gap-8 p-7 md:p-10 lg:grid-cols-[0.8fr_1fr]">
                     <div>
-                      <div className="grid h-12 w-12 place-items-center rounded-lg bg-coral text-white">
+                      <div className="grid h-12 w-12 place-items-center rounded-lg bg-pine text-white">
                         <pillar.icon className="h-6 w-6" />
                       </div>
                       <h3 className="mt-6 font-serif text-4xl leading-[1.05] text-charcoal">
@@ -320,13 +320,13 @@ export default function ServicesPage() {
 
                     <div className="grid gap-5 md:grid-cols-2">
                       <div className="rounded-lg bg-white p-5">
-                        <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+                        <p className="text-sm font-black uppercase tracking-[0.14em] text-pine">
                           Cas d’usage
                         </p>
                         <ul className="mt-4 grid gap-3">
                           {pillar.useCases.map((item) => (
                             <li key={item} className="flex gap-3 text-sm leading-6 text-muted">
-                              <Check className="mt-0.5 h-5 w-5 shrink-0 text-coral" />
+                              <Check className="mt-0.5 h-5 w-5 shrink-0 text-pine" />
                               {item}
                             </li>
                           ))}
@@ -367,7 +367,7 @@ export default function ServicesPage() {
             {services.map((service, index) => (
               <Reveal key={service.title} delay={index * 0.035}>
                 <Card className="group h-full p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
-                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-white text-coral transition-colors group-hover:bg-coral group-hover:text-white">
+                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-white text-pine transition-colors group-hover:bg-pine group-hover:text-white">
                     <service.icon className="h-6 w-6" />
                   </div>
                   <h3 className="mt-6 text-xl font-black leading-tight text-charcoal">{service.title}</h3>
@@ -396,7 +396,7 @@ export default function ServicesPage() {
               <Reveal key={step.title} delay={index * 0.05}>
                 <div className="h-full rounded-lg border border-charcoal/10 p-6">
                   <div className="flex items-center justify-between">
-                    <div className="grid h-11 w-11 place-items-center rounded-lg bg-coral text-white">
+                    <div className="grid h-11 w-11 place-items-center rounded-lg bg-pine text-white">
                       <step.icon className="h-5 w-5" />
                     </div>
                     <span className="font-serif text-4xl text-peach">0{index + 1}</span>

@@ -186,7 +186,7 @@ export default function TrainingPage() {
                 {[38, 54, 47, 72, 66, 83].map((height, index) => (
                   <div
                     key={height + index}
-                    className="w-full rounded-sm bg-coral/80"
+                    className="w-full rounded-sm bg-pine/80"
                     style={{ height: `${height}%` }}
                   />
                 ))}
@@ -198,7 +198,7 @@ export default function TrainingPage() {
               <div className="mt-4 space-y-3 text-sm">
                 {["Emails clients", "Compte-rendu", "Qualification leads", "Agent interne"].map((item) => (
                   <div key={item} className="flex items-center gap-3">
-                    <CheckCircle2 className="h-4 w-4 text-coral" />
+                    <CheckCircle2 className="h-4 w-4 text-pine" />
                     <span className="text-muted">{item}</span>
                   </div>
                 ))}
@@ -220,7 +220,7 @@ export default function TrainingPage() {
             {painPoints.map((item, index) => (
               <Reveal key={item.title} delay={index * 0.05}>
                 <div>
-                  <item.icon className="h-8 w-8 text-coral" />
+                  <item.icon className="h-8 w-8 text-pine" />
                   <h3 className="mt-6 text-xl font-black text-charcoal">{item.title}</h3>
                   <p className="mt-3 text-base leading-7 text-muted">{item.text}</p>
                 </div>
@@ -277,7 +277,7 @@ export default function TrainingPage() {
                         <div className="space-y-4">
                           {[1, 2, 3, 4].map((item) => (
                             <div key={item} className="flex items-center gap-4">
-                              <span className="grid h-8 w-8 place-items-center rounded-lg bg-coral text-xs font-black text-white">
+                              <span className="grid h-8 w-8 place-items-center rounded-lg bg-pine text-xs font-black text-white">
                                 !
                               </span>
                               <span className="h-2 w-28 rounded-lg bg-charcoal/10" />
@@ -285,7 +285,7 @@ export default function TrainingPage() {
                           ))}
                         </div>
                       ) : (
-                        <div className="rounded-lg bg-coral p-5 text-white">
+                        <div className="rounded-lg bg-pine p-5 text-white">
                           <p className="text-5xl font-black">+10h</p>
                           <p className="mt-2 text-sm font-bold">gagnées par semaine</p>
                         </div>
@@ -321,7 +321,7 @@ export default function TrainingPage() {
                       <h3 className="mt-3 text-xl font-black text-charcoal md:text-2xl">{module.title}</h3>
                     </div>
                     <div className="flex items-center gap-3 text-sm font-bold text-muted">
-                      <module.icon className="h-5 w-5 text-coral" />
+                      <module.icon className="h-5 w-5 text-pine" />
                       {module.duration}
                     </div>
                   </Card>
@@ -339,7 +339,7 @@ export default function TrainingPage() {
                 <div className="mt-8 space-y-4">
                   {pricingBullets.map((item) => (
                     <div key={item} className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-coral" />
+                      <CheckCircle2 className="h-5 w-5 text-pine" />
                       <span className="font-bold text-charcoal">{item}</span>
                     </div>
                   ))}
@@ -350,7 +350,7 @@ export default function TrainingPage() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </a>
                 </Button>
-                <p className="mt-5 text-center text-xs font-black uppercase tracking-[0.18em] text-coral">
+                <p className="mt-5 text-center text-xs font-black uppercase tracking-[0.18em] text-pine">
                   Réservez un appel gratuit en amont
                 </p>
               </Card>
@@ -434,7 +434,7 @@ export default function TrainingPage() {
             {deliverables.map((item, index) => (
               <Reveal key={item.title} delay={index * 0.05}>
                 <div>
-                  <item.icon className="h-7 w-7 text-coral" />
+                  <item.icon className="h-7 w-7 text-pine" />
                   <h3 className="mt-5 text-lg font-black text-charcoal">{item.title}</h3>
                   <p className="mt-3 leading-7 text-muted">{item.text}</p>
                 </div>

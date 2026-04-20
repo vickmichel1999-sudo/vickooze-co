@@ -121,7 +121,7 @@ function Field({
   onChange: (value: string) => void;
 }) {
   const className =
-    "mt-2 w-full rounded-lg border border-charcoal/10 bg-white px-4 py-3 text-sm font-medium text-charcoal outline-none transition-colors placeholder:text-muted/55 focus:border-coral";
+    "mt-2 w-full rounded-lg border border-charcoal/10 bg-white px-4 py-3 text-sm font-medium text-charcoal outline-none transition-colors placeholder:text-muted/55 focus:border-pine";
 
   return (
     <label className="block">
@@ -199,13 +199,13 @@ function ReportCard({ report }: { report: AuditReport }) {
                     <span className="rounded-lg bg-cream px-3 py-2 text-xs font-black text-charcoal">
                       Difficulté {automation.difficulty}
                     </span>
-                    <span className="rounded-lg bg-coral px-3 py-2 text-xs font-black text-white">
+                    <span className="rounded-lg bg-pine px-3 py-2 text-xs font-black text-white">
                       {automation.estimatedTimeSaved}
                     </span>
                   </div>
                 </div>
                 <div className="rounded-lg bg-cream p-5">
-                  <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+                  <p className="text-sm font-black uppercase tracking-[0.14em] text-pine">
                     Solution proposée
                   </p>
                   <p className="mt-3 text-sm leading-6 text-muted">{automation.aiSolution}</p>
@@ -231,7 +231,7 @@ function ReportCard({ report }: { report: AuditReport }) {
           <ul className="mt-5 grid gap-3">
             {report.recommendedProcess.map((item) => (
               <li key={item} className="flex gap-3 text-sm leading-6 text-muted">
-                <Check className="mt-0.5 h-5 w-5 shrink-0 text-coral" />
+                <Check className="mt-0.5 h-5 w-5 shrink-0 text-pine" />
                 {item}
               </li>
             ))}
@@ -243,7 +243,7 @@ function ReportCard({ report }: { report: AuditReport }) {
           <ul className="mt-5 grid gap-3">
             {report.questionsToClarify.map((item) => (
               <li key={item} className="flex gap-3 text-sm leading-6 text-muted">
-                <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-coral" />
+                <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-pine" />
                 {item}
               </li>
             ))}
@@ -269,14 +269,14 @@ function ReportCard({ report }: { report: AuditReport }) {
         </div>
       </section>
 
-      <Card className="border-coral/30 bg-coral/10 p-6">
-        <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+      <Card className="border-pine/30 bg-pine/10 p-6">
+        <p className="text-sm font-black uppercase tracking-[0.14em] text-pine">
           Proposition commerciale indicative
         </p>
         <h2 className="mt-3 font-serif text-3xl leading-tight text-charcoal">
           {report.commercialOffer.title}
         </h2>
-        <p className="mt-4 font-serif text-4xl leading-none text-coral">
+        <p className="mt-4 font-serif text-4xl leading-none text-pine">
           {report.commercialOffer.recommendedPrice}
         </p>
         <p className="mt-4 text-lg leading-8 text-muted">
@@ -288,7 +288,7 @@ function ReportCard({ report }: { report: AuditReport }) {
             <ul className="mt-3 grid gap-2">
               {report.commercialOffer.includedDeliverables.map((item) => (
                 <li key={item} className="flex gap-2 text-sm leading-6 text-muted">
-                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-coral" />
+                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-pine" />
                   {item}
                 </li>
               ))}
@@ -299,7 +299,7 @@ function ReportCard({ report }: { report: AuditReport }) {
             <ul className="mt-3 grid gap-2">
               {report.commercialOffer.optionalUpsells.map((item) => (
                 <li key={item} className="flex gap-2 text-sm leading-6 text-muted">
-                  <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-coral" />
+                  <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-pine" />
                   {item}
                 </li>
               ))}
@@ -394,7 +394,7 @@ export function AuditAgentForm() {
           <button
             type="button"
             onClick={() => setForm(demoForm)}
-            className="rounded-lg border border-charcoal/10 px-4 py-3 text-sm font-black text-charcoal transition-colors hover:border-coral hover:text-coral"
+            className="rounded-lg border border-charcoal/10 px-4 py-3 text-sm font-black text-charcoal transition-colors hover:border-pine hover:text-pine"
           >
             Remplir un exemple
           </button>
@@ -411,7 +411,7 @@ export function AuditAgentForm() {
           ))}
 
           {error ? (
-            <div className="rounded-lg border border-coral/30 bg-coral/10 p-4 text-sm font-bold leading-6 text-charcoal">
+            <div className="rounded-lg border border-pine/30 bg-pine/10 p-4 text-sm font-bold leading-6 text-charcoal">
               {error}
             </div>
           ) : null}
@@ -437,9 +437,9 @@ export function AuditAgentForm() {
           <div className="grid gap-5">
             {provider ? (
               <Card className="flex items-start gap-4 border-charcoal/10 bg-white p-5">
-                <Sparkles className="mt-0.5 h-6 w-6 shrink-0 text-coral" />
+                <Sparkles className="mt-0.5 h-6 w-6 shrink-0 text-pine" />
                 <div>
-                  <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+                  <p className="text-sm font-black uppercase tracking-[0.14em] text-pine">
                     Rapport généré avec {provider === "openai" ? "OpenAI" : "Claude"}
                   </p>
                   <p className="mt-2 text-sm leading-6 text-muted">
@@ -450,10 +450,10 @@ export function AuditAgentForm() {
               </Card>
             ) : null}
             {emailStatus?.status === "sent" ? (
-              <Card className="flex items-start gap-4 border-coral/30 bg-coral/10 p-5">
-                <Mail className="mt-0.5 h-6 w-6 shrink-0 text-coral" />
+              <Card className="flex items-start gap-4 border-pine/30 bg-pine/10 p-5">
+                <Mail className="mt-0.5 h-6 w-6 shrink-0 text-pine" />
                 <div>
-                  <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+                  <p className="text-sm font-black uppercase tracking-[0.14em] text-pine">
                     Rapport envoyé par email
                   </p>
                   <p className="mt-2 text-sm leading-6 text-charcoal">
@@ -463,10 +463,10 @@ export function AuditAgentForm() {
                 </div>
               </Card>
             ) : emailStatus?.status === "queued" ? (
-              <Card className="flex items-start gap-4 border-coral/30 bg-coral/10 p-5">
-                <Mail className="mt-0.5 h-6 w-6 shrink-0 text-coral" />
+              <Card className="flex items-start gap-4 border-pine/30 bg-pine/10 p-5">
+                <Mail className="mt-0.5 h-6 w-6 shrink-0 text-pine" />
                 <div>
-                  <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+                  <p className="text-sm font-black uppercase tracking-[0.14em] text-pine">
                     Envoi email lancé
                   </p>
                   <p className="mt-2 text-sm leading-6 text-charcoal">
@@ -495,7 +495,7 @@ export function AuditAgentForm() {
         ) : (
           <Card className="grid min-h-[620px] place-items-center bg-cream p-8 text-center">
             <div className="max-w-xl">
-              <div className="mx-auto grid h-14 w-14 place-items-center rounded-lg bg-coral text-white">
+              <div className="mx-auto grid h-14 w-14 place-items-center rounded-lg bg-pine text-white">
                 <Sparkles className="h-7 w-7" />
               </div>
               <h2 className="mt-6 font-serif text-4xl leading-tight text-charcoal">
