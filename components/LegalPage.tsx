@@ -24,10 +24,11 @@ const legalLinks = [
 
 export function LegalPage({ eyebrow, title, intro, updatedAt, sections }: LegalPageProps) {
   return (
-    <main className="bg-cream">
-      <section className="sparkle-field pt-32 pb-16 md:pb-20">
+    <main className="bg-white">
+      <section className="pt-32 pb-16 md:pb-20">
         <div className="section-shell">
-          <div className="max-w-4xl">
+          <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
+            <div className="max-w-4xl">
             <p className="eyebrow">{eyebrow}</p>
             <h1 className="mt-4 font-serif text-5xl leading-[1.05] text-charcoal md:text-[64px]">
               {title}
@@ -36,11 +37,30 @@ export function LegalPage({ eyebrow, title, intro, updatedAt, sections }: LegalP
             <p className="mt-6 text-sm font-bold text-charcoal">
               Dernière mise à jour : {updatedAt}
             </p>
+            </div>
+
+            <div className="rounded-lg bg-cream-3 p-6 shadow-soft">
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-coral">
+                Documents utiles
+              </p>
+              <div className="mt-5 grid gap-3">
+                {legalLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="flex items-center justify-between rounded-lg bg-white px-5 py-4 text-sm font-black text-charcoal shadow-sm transition-colors hover:text-coral"
+                  >
+                    {link.label}
+                    <span className="text-coral">→</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-white py-16 md:py-24">
+      <section className="bg-cream py-16 md:py-24">
         <div className="section-shell grid gap-8 lg:grid-cols-[280px_1fr]">
           <aside className="h-fit rounded-lg bg-charcoal p-6 text-white lg:sticky lg:top-28">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-white">

@@ -105,7 +105,7 @@ export function Footer() {
           </div>
           <div className="mt-6 flex flex-col gap-3 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
             <span>Copyright © {SITE_NAME} 2026</span>
-            <span>Fait à Bali, pour les PME françaises, avec Claude.</span>
+            <span>Fait à Bali, pour les PME françaises, avec IA et méthode.</span>
           </div>
         </div>
       </div>

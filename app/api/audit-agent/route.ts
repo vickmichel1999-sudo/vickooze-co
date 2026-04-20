@@ -15,6 +15,7 @@ export const maxDuration = 60;
 
 const ANTHROPIC_TIMEOUT_MS = 50_000;
 const ANTHROPIC_API_VERSION = "2023-06-01";
+const OPENAI_TIMEOUT_MS = 50_000;
 
 const requiredFields: Array<keyof AuditAgentInput> = [
   "companyName",
@@ -93,9 +94,7 @@ async function generateReportWithAnthropic(input: AuditAgentInput) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
 
   if (!apiKey) {
-    throw new Error(
-      "ANTHROPIC_API_KEY est manquante. Ajoute ta clé Anthropic dans .env.local ou dans les variables d’environnement Vercel."
-    );
+    throw new Error("ANTHROPIC_API_KEY est manquante.");
   }
 
   const model = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-20250514";
@@ -151,6 +150,102 @@ async function generateReportWithAnthropic(input: AuditAgentInput) {
   return report;
 }
 
+async function generateReportWithOpenAI(input: AuditAgentInput) {
+  const apiKey = process.env.OPENAI_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("OPENAI_API_KEY est manquante.");
+  }
+
+  const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
+  const openAiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json"
+    },
+    signal: AbortSignal.timeout(OPENAI_TIMEOUT_MS),
+    body: JSON.stringify({
+      model,
+      messages: [
+        {
+          role: "system",
+          content: AUDIT_AGENT_SYSTEM_PROMPT
+        },
+        {
+          role: "user",
+          content: buildAuditUserPrompt(input)
+        }
+      ],
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: AUDIT_AGENT_RESPONSE_FORMAT.name,
+          strict: AUDIT_AGENT_RESPONSE_FORMAT.strict,
+          schema: AUDIT_AGENT_RESPONSE_FORMAT.schema
+        }
+      },
+      temperature: 0.2,
+      max_tokens: 4200
+    })
+  });
+
+  const data = await readJsonResponse(openAiResponse);
+
+  if (!openAiResponse.ok) {
+    const message =
+      data?.error?.message ||
+      "Impossible de générer l’audit avec OpenAI pour le moment. Vérifie la clé API et le modèle configuré.";
+    throw new Error(message);
+  }
+
+  const content = data?.choices?.[0]?.message?.content;
+
+  if (typeof content !== "string" || content.length === 0) {
+    throw new Error("OpenAI n’a pas renvoyé de rapport exploitable.");
+  }
+
+  return JSON.parse(content) as AuditReport;
+}
+
+async function generateReport(input: AuditAgentInput) {
+  const providerErrors: string[] = [];
+
+  if (process.env.ANTHROPIC_API_KEY) {
+    try {
+      return {
+        report: await generateReportWithAnthropic(input),
+        provider: "anthropic"
+      };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Erreur Anthropic inconnue.";
+      providerErrors.push(`Anthropic: ${message}`);
+      console.error("Anthropic audit generation failed, falling back to OpenAI", message);
+    }
+  } else {
+    providerErrors.push("Anthropic: ANTHROPIC_API_KEY est manquante.");
+  }
+
+  if (process.env.OPENAI_API_KEY) {
+    try {
+      return {
+        report: await generateReportWithOpenAI(input),
+        provider: "openai"
+      };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Erreur OpenAI inconnue.";
+      providerErrors.push(`OpenAI: ${message}`);
+      console.error("OpenAI audit generation failed", message);
+    }
+  } else {
+    providerErrors.push("OpenAI: OPENAI_API_KEY est manquante.");
+  }
+
+  throw new Error(
+    `Aucun fournisseur IA disponible pour générer l’audit. ${providerErrors.join(" ")}`
+  );
+}
+
 async function sendReportInBackground(input: AuditAgentInput, report: AuditReport) {
   try {
     const excelBuffer = await createAuditWorkbook(input, report);
@@ -183,7 +278,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const report = await generateReportWithAnthropic(input);
+    const { report, provider } = await generateReport(input);
     const canSendEmail = Boolean(process.env.RESEND_API_KEY);
 
     if (canSendEmail) {
@@ -192,6 +287,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       report,
+      provider,
       emailSent: false,
       emailQueued: canSendEmail,
       emailError: canSendEmail ? undefined : "RESEND_API_KEY manquante."
@@ -201,7 +297,7 @@ export async function POST(request: Request) {
       error instanceof Error
         ? error.message
         : "Une erreur inattendue est survenue pendant la génération de l’audit.";
-    const status = message.includes("_API_KEY est manquante") ? 503 : 500;
+    const status = message.includes("Aucun fournisseur IA disponible") ? 503 : 500;
 
     return NextResponse.json(
       {

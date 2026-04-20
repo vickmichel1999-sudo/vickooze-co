@@ -341,6 +341,7 @@ export function AuditAgentForm() {
     recipient: string;
     message?: string;
   } | null>(null);
+  const [provider, setProvider] = useState<"anthropic" | "openai" | null>(null);
 
   function updateField(name: keyof AuditAgentInput, value: string) {
     setForm((current) => ({ ...current, [name]: value }));
@@ -351,6 +352,7 @@ export function AuditAgentForm() {
     setError("");
     setReport(null);
     setEmailStatus(null);
+    setProvider(null);
     setIsLoading(true);
 
     try {
@@ -366,6 +368,7 @@ export function AuditAgentForm() {
       }
 
       setReport(data.report);
+      setProvider(data.provider === "openai" ? "openai" : "anthropic");
       setEmailStatus({
         status: data.emailSent ? "sent" : data.emailQueued ? "queued" : "failed",
         recipient: form.email,
@@ -432,6 +435,20 @@ export function AuditAgentForm() {
       <div>
         {report ? (
           <div className="grid gap-5">
+            {provider ? (
+              <Card className="flex items-start gap-4 border-charcoal/10 bg-white p-5">
+                <Sparkles className="mt-0.5 h-6 w-6 shrink-0 text-coral" />
+                <div>
+                  <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+                    Rapport généré avec {provider === "openai" ? "OpenAI" : "Claude"}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-muted">
+                    L’agent utilise Claude en priorité et bascule sur OpenAI si le premier fournisseur
+                    n’est pas disponible.
+                  </p>
+                </div>
+              </Card>
+            ) : null}
             {emailStatus?.status === "sent" ? (
               <Card className="flex items-start gap-4 border-coral/30 bg-coral/10 p-5">
                 <Mail className="mt-0.5 h-6 w-6 shrink-0 text-coral" />
