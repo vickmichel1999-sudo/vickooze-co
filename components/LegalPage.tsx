@@ -60,18 +60,6 @@ export function LegalPage({ eyebrow, title, intro, updatedAt, sections }: LegalP
           </aside>
 
           <div className="grid gap-6">
-            <Card className="border-coral/30 bg-coral/10 p-6">
-              <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
-                À vérifier avant publication
-              </p>
-              <p className="mt-3 leading-7 text-muted">
-                Cette page fournit une base claire pour le site VICKOOZE & Co.
-                Les informations juridiques, fiscales et administratives doivent
-                être complétées avec les données exactes de l’entreprise avant la
-                mise en ligne officielle.
-              </p>
-            </Card>
-
             {sections.map((section) => (
               <Card key={section.title} className="p-6 md:p-8">
                 <h2 className="font-serif text-3xl leading-tight text-charcoal">

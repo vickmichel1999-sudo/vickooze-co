@@ -1,5 +1,5 @@
 export const CALENDLY_URL = "https://calendly.com/vickmichel1999/30min";
-export const CONTACT_EMAIL = "contact@vickooze.com";
+export const CONTACT_EMAIL = "Vicolango@gmail.com";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/vick-emmanuel-michel-1b66a2176/";
 
 export const SITE_URL = "https://vickooze.com";

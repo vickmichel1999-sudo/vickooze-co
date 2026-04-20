@@ -66,7 +66,7 @@ export function Hero({
             <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-charcoal/10 bg-white shadow-soft">
               <Image
                 src={PLACEHOLDER_IMAGES.founder}
-                alt="Portrait placeholder du fondateur Vick-Emmanuel Michel"
+                alt="Portrait du fondateur Vick-Emmanuel Michel"
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 520px"

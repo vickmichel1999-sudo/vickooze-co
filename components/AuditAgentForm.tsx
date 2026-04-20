@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { ArrowRight, Check, Loader2, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Loader2, Mail, Sparkles } from "lucide-react";
 
 import type { AuditAgentInput, AuditReport } from "@/lib/audit-agent";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 
 const emptyForm: AuditAgentInput = {
   companyName: "",
+  email: "",
   sector: "",
   teamSize: "",
   currentTools: "",
@@ -22,6 +23,7 @@ const emptyForm: AuditAgentInput = {
 
 const demoForm: AuditAgentInput = {
   companyName: "PME exemple",
+  email: "",
   sector: "Services B2B",
   teamSize: "18 salariés",
   currentTools: "Gmail, Google Sheets, HubSpot, Slack, Notion",
@@ -43,11 +45,18 @@ const fields: Array<{
   label: string;
   placeholder: string;
   textarea?: boolean;
+  type?: string;
 }> = [
   {
     name: "companyName",
     label: "Nom de l’entreprise",
     placeholder: "Ex: Cabinet Martin & Associés"
+  },
+  {
+    name: "email",
+    label: "Email du client (pour recevoir le rapport)",
+    placeholder: "client@entreprise.com",
+    type: "email"
   },
   {
     name: "sector",
@@ -127,6 +136,7 @@ function Field({
         />
       ) : (
         <input
+          type={field.type || "text"}
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={field.placeholder}
@@ -260,6 +270,45 @@ function ReportCard({ report }: { report: AuditReport }) {
       </section>
 
       <Card className="border-coral/30 bg-coral/10 p-6">
+        <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+          Proposition commerciale indicative
+        </p>
+        <h2 className="mt-3 font-serif text-3xl leading-tight text-charcoal">
+          {report.commercialOffer.title}
+        </h2>
+        <p className="mt-4 font-serif text-4xl leading-none text-coral">
+          {report.commercialOffer.recommendedPrice}
+        </p>
+        <p className="mt-4 text-lg leading-8 text-muted">
+          {report.commercialOffer.priceJustification}
+        </p>
+        <div className="mt-6 grid gap-5 md:grid-cols-2">
+          <div>
+            <p className="text-sm font-black text-charcoal">Inclus</p>
+            <ul className="mt-3 grid gap-2">
+              {report.commercialOffer.includedDeliverables.map((item) => (
+                <li key={item} className="flex gap-2 text-sm leading-6 text-muted">
+                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-coral" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="text-sm font-black text-charcoal">Options possibles</p>
+            <ul className="mt-3 grid gap-2">
+              {report.commercialOffer.optionalUpsells.map((item) => (
+                <li key={item} className="flex gap-2 text-sm leading-6 text-muted">
+                  <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-coral" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Card>
+
+      <Card className="p-6">
         <h2 className="font-serif text-3xl leading-tight text-charcoal">Prochaine étape</h2>
         <p className="mt-4 text-lg leading-8 text-muted">{report.nextStep}</p>
       </Card>
@@ -272,6 +321,11 @@ export function AuditAgentForm() {
   const [report, setReport] = useState<AuditReport | null>(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [emailStatus, setEmailStatus] = useState<{
+    sent: boolean;
+    recipient: string;
+    message?: string;
+  } | null>(null);
 
   function updateField(name: keyof AuditAgentInput, value: string) {
     setForm((current) => ({ ...current, [name]: value }));
@@ -281,6 +335,7 @@ export function AuditAgentForm() {
     event.preventDefault();
     setError("");
     setReport(null);
+    setEmailStatus(null);
     setIsLoading(true);
 
     try {
@@ -296,6 +351,11 @@ export function AuditAgentForm() {
       }
 
       setReport(data.report);
+      setEmailStatus({
+        sent: Boolean(data.emailSent),
+        recipient: form.email,
+        message: data.emailError
+      });
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Erreur inattendue.");
     } finally {
@@ -356,7 +416,36 @@ export function AuditAgentForm() {
 
       <div>
         {report ? (
-          <ReportCard report={report} />
+          <div className="grid gap-5">
+            {emailStatus?.sent ? (
+              <Card className="flex items-start gap-4 border-coral/30 bg-coral/10 p-5">
+                <Mail className="mt-0.5 h-6 w-6 shrink-0 text-coral" />
+                <div>
+                  <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+                    Rapport envoyé par email
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-charcoal">
+                    Le rapport complet a été envoyé à <strong>{emailStatus.recipient}</strong> avec
+                    la version Excel et PDF en pièces jointes. Pensez à vérifier vos spams.
+                  </p>
+                </div>
+              </Card>
+            ) : emailStatus ? (
+              <Card className="flex items-start gap-4 border-charcoal/15 bg-cream p-5">
+                <Mail className="mt-0.5 h-6 w-6 shrink-0 text-charcoal" />
+                <div>
+                  <p className="text-sm font-black uppercase tracking-[0.14em] text-charcoal">
+                    Rapport disponible ci-dessous
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-muted">
+                    L’envoi par email n’a pas pu aboutir, mais le rapport reste consultable ici.
+                    {emailStatus.message ? ` Détail: ${emailStatus.message}` : ""}
+                  </p>
+                </div>
+              </Card>
+            ) : null}
+            <ReportCard report={report} />
+          </div>
         ) : (
           <Card className="grid min-h-[620px] place-items-center bg-cream p-8 text-center">
             <div className="max-w-xl">

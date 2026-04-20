@@ -8,18 +8,22 @@ import { Button } from "@/components/ui/button";
 import { CALENDLY_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Agent audit IA",
+  title: "Agent audit IA interne",
   description:
-    "Agent IA de diagnostic pour analyser les processus d’une PME, détecter les manques, prioriser les automatisations et proposer une roadmap.",
+    "Agent IA interne pour analyser les informations récoltées après rendez-vous, détecter les manques, générer un reporting et préparer une proposition commerciale.",
   alternates: {
     canonical: "/agent-audit"
+  },
+  robots: {
+    index: false,
+    follow: false
   }
 };
 
 const promises = [
   "Détecte les manques opérationnels",
   "Priorise les agents et workflows IA",
-  "Propose une roadmap 30 / 60 / 90 jours"
+  "Génère un reporting PDF + Excel avec prix indicatif"
 ];
 
 export default function AgentAuditPage() {
@@ -30,10 +34,10 @@ export default function AgentAuditPage() {
           <Reveal>
             <p className="eyebrow">Agent IA interne</p>
             <h1 className="mt-5 max-w-3xl font-serif text-5xl leading-[1.05] text-charcoal md:text-[64px]">
-              Réalisez un pré-audit IA en quelques minutes
+              Transformez vos rendez-vous en rapports d’audit prêts à envoyer
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-muted">
-              Renseignez les outils, tâches répétitives et objectifs d’une PME. L’agent identifie les manques, les automatisations prioritaires et le processus à suivre.
+              Après un appel avec un dirigeant, renseignez les informations récoltées. L’agent analyse les manques, prépare les automatisations prioritaires, ajoute une proposition de prix justifiée et envoie un reporting professionnel au client.
             </p>
             <div className="mt-8 grid gap-3">
               {promises.map((promise) => (
@@ -76,7 +80,8 @@ export default function AgentAuditPage() {
                   "Score de maturité IA",
                   "Manques détectés",
                   "Automatisations prioritaires",
-                  "Roadmap et garde-fous"
+                  "Roadmap, prix et garde-fous",
+                  "Email client avec PDF et Excel"
                 ].map((item) => (
                   <div key={item} className="rounded-lg border border-white/10 bg-white/[0.04] p-4">
                     <p className="text-sm font-bold text-white/78">{item}</p>
@@ -86,7 +91,7 @@ export default function AgentAuditPage() {
               <div className="mt-8 flex items-start gap-3 rounded-lg bg-white p-5 text-charcoal">
                 <ShieldCheck className="mt-0.5 h-6 w-6 shrink-0 text-coral" />
                 <p className="text-sm font-bold leading-6">
-                  La clé OpenAI reste côté serveur via la route API Next.js. Rien n’est exposé dans le navigateur.
+                  Les clés OpenAI et Resend restent côté serveur via la route API Next.js. Rien n’est exposé dans le navigateur.
                 </p>
               </div>
             </div>

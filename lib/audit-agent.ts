@@ -1,5 +1,6 @@
 export type AuditAgentInput = {
   companyName: string;
+  email: string;
   sector: string;
   teamSize: string;
   currentTools: string;
@@ -35,6 +36,14 @@ export type RoadmapItem = {
   actions: string[];
 };
 
+export type CommercialOffer = {
+  title: string;
+  recommendedPrice: string;
+  priceJustification: string;
+  includedDeliverables: string[];
+  optionalUpsells: string[];
+};
+
 export type AuditReport = {
   executiveSummary: string;
   maturityScore: number;
@@ -45,6 +54,7 @@ export type AuditReport = {
   roadmap: RoadmapItem[];
   questionsToClarify: string[];
   risksAndSafeguards: string[];
+  commercialOffer: CommercialOffer;
   nextStep: string;
 };
 
@@ -66,6 +76,13 @@ Règles:
 - Privilégie les PME sans équipe technique interne.
 - Si une information manque, formule une hypothèse raisonnable et ajoute une question dans questionsToClarify.
 - Le résultat doit aider Vick-Emmanuel Michel à préparer un audit ou une proposition commerciale.
+- Termine par une proposition commerciale indicative et justifiée.
+- Pour le prix, reste cohérent pour une PME française:
+  - mission simple: 900 à 1 500 €;
+  - agent IA ou workflow standard: 1 500 à 3 000 €;
+  - mission complète avec plusieurs automatisations: 3 000 à 7 000 €;
+  - accompagnement mensuel optionnel: 490 à 1 500 €/mois.
+- Le prix doit être présenté comme indicatif et à valider après cadrage humain.
 `.trim();
 
 export function buildAuditUserPrompt(input: AuditAgentInput) {
@@ -92,7 +109,8 @@ Produis un audit structuré avec:
 6. une roadmap 30 / 60 / 90 jours;
 7. les questions à clarifier;
 8. les risques et garde-fous;
-9. la meilleure prochaine étape commerciale.
+9. une proposition commerciale indicative avec prix et justification;
+10. la meilleure prochaine étape commerciale.
 `.trim();
 }
 
@@ -186,6 +204,30 @@ export const AUDIT_AGENT_RESPONSE_FORMAT = {
         type: "array",
         items: { type: "string" }
       },
+      commercialOffer: {
+        type: "object",
+        additionalProperties: false,
+        properties: {
+          title: { type: "string" },
+          recommendedPrice: { type: "string" },
+          priceJustification: { type: "string" },
+          includedDeliverables: {
+            type: "array",
+            items: { type: "string" }
+          },
+          optionalUpsells: {
+            type: "array",
+            items: { type: "string" }
+          }
+        },
+        required: [
+          "title",
+          "recommendedPrice",
+          "priceJustification",
+          "includedDeliverables",
+          "optionalUpsells"
+        ]
+      },
       nextStep: { type: "string" }
     },
     required: [
@@ -198,6 +240,7 @@ export const AUDIT_AGENT_RESPONSE_FORMAT = {
       "roadmap",
       "questionsToClarify",
       "risksAndSafeguards",
+      "commercialOffer",
       "nextStep"
     ]
   }

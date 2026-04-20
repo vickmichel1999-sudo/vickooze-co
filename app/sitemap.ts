@@ -7,7 +7,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/a-propos",
     "/audit",
-    "/agent-audit",
     "/services",
     "/formation",
     "/mentions-legales",

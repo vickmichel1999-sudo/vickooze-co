@@ -3,16 +3,18 @@ import { NextResponse } from "next/server";
 import {
   AUDIT_AGENT_RESPONSE_FORMAT,
   AUDIT_AGENT_SYSTEM_PROMPT,
-  AuditAgentInput,
-  AuditReport,
   buildAuditUserPrompt
 } from "@/lib/audit-agent";
+import type { AuditAgentInput, AuditReport } from "@/lib/audit-agent";
+import { createAuditPdf, createAuditWorkbook } from "@/lib/audit-report-assets";
+import { sendAuditReportEmails } from "@/lib/audit-report-email";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
 const requiredFields: Array<keyof AuditAgentInput> = [
   "companyName",
+  "email",
   "sector",
   "teamSize",
   "currentTools",
@@ -39,6 +41,10 @@ function sanitizeInput(payload: unknown): AuditAgentInput {
   const missing = requiredFields.filter((field) => input[field].length < 2);
   if (missing.length > 0) {
     throw new Error("Merci de compléter tous les champs avant de lancer l’audit.");
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email)) {
+    throw new Error("Merci d’indiquer une adresse email valide.");
   }
 
   return input;
@@ -131,7 +137,20 @@ export async function POST(request: Request) {
     }
 
     const report = JSON.parse(outputText) as AuditReport;
-    return NextResponse.json({ report });
+    const excelBuffer = await createAuditWorkbook(input, report);
+    const pdfBuffer = await createAuditPdf(input, report);
+    const emailResult = await sendAuditReportEmails({
+      input,
+      report,
+      excelBuffer,
+      pdfBuffer
+    });
+
+    return NextResponse.json({
+      report,
+      emailSent: emailResult.sent,
+      emailError: emailResult.error
+    });
   } catch (error) {
     return NextResponse.json(
       {

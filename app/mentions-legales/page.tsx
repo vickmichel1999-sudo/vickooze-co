@@ -22,24 +22,10 @@ const sections = [
     ]
   },
   {
-    title: "Informations administratives à compléter",
-    paragraphs: [
-      "Les informations ci-dessous doivent être remplacées par les données exactes de l’entreprise avant publication."
-    ],
-    bullets: [
-      "Dénomination sociale : VICKOOZE & Co.",
-      "Forme juridique : à compléter.",
-      "Adresse du siège social : à compléter.",
-      "Numéro SIREN ou RCS : à compléter.",
-      "Numéro de TVA intracommunautaire : à compléter si applicable.",
-      "Capital social : à compléter si applicable."
-    ]
-  },
-  {
     title: "Hébergement",
     paragraphs: [
-      "Le site est prévu pour être déployé sur Vercel. Les coordonnées exactes de l’hébergeur doivent être confirmées au moment du déploiement final.",
-      "Hébergeur : à compléter selon la plateforme effectivement utilisée en production."
+      "Le site est hébergé par Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.",
+      "Site de l’hébergeur : https://vercel.com."
     ]
   },
   {

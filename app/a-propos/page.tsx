@@ -99,7 +99,7 @@ export default function AboutPage() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-charcoal/10 bg-cream shadow-soft">
               <Image
                 src={PLACEHOLDER_IMAGES.founder}
-                alt="Photo placeholder de Vick-Emmanuel Michel"
+                alt="Photo de Vick-Emmanuel Michel"
                 fill
                 sizes="(max-width: 1024px) 90vw, 460px"
                 className="object-cover"

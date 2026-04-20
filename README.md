@@ -27,10 +27,13 @@ Crée un fichier `.env.local` à la racine du projet:
 ```bash
 OPENAI_API_KEY="sk-..."
 OPENAI_MODEL="gpt-4.1-mini"
+RESEND_API_KEY="re_..."
+RESEND_FROM="VICKOOZE & Co <onboarding@resend.dev>"
+NOTIFICATION_EMAIL="Vicolango@gmail.com"
 ```
 
 L’agent est disponible sur `http://localhost:3000/agent-audit`.
-La clé OpenAI est utilisée uniquement côté serveur dans `app/api/audit-agent/route.ts`.
+Les clés OpenAI et Resend sont utilisées uniquement côté serveur dans `app/api/audit-agent/route.ts`.
 
 Sur Vercel, ajoute les mêmes variables dans Project Settings → Environment Variables.
 
