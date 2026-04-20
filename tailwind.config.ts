@@ -11,10 +11,14 @@ const config: Config = {
     extend: {
       colors: {
         cream: "#F5EDE4",
+        "cream-2": "#EFE4D6",
+        "cream-3": "#FAF5EE",
         coral: "#FF6B35",
+        "coral-600": "#E9551F",
         peach: "#FF9B7A",
         charcoal: "#1A1A1A",
         muted: "#555555",
+        "muted-2": "#8A8076",
         ink: "#000000",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

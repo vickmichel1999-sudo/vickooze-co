@@ -1,910 +1,372 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowRight,
-  BarChart3,
-  BookOpen,
-  Bot,
-  Calculator,
-  Check,
-  ClipboardCheck,
-  Clock,
-  FileSearch,
-  FileText,
-  LineChart,
-  Link2,
-  ListChecks,
-  LucideIcon,
-  MailCheck,
-  RefreshCw,
-  Settings2,
-  Sparkles,
-  Star,
-  TrendingUp,
-  Zap
-} from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 
-import { FinalCTA } from "@/components/FinalCTA";
-import { FounderVisual } from "@/components/FounderVisual";
+import { AgentDemo } from "@/components/AgentDemo";
+import { Marquee } from "@/components/Marquee";
+import { ProcessSteps } from "@/components/ProcessSteps";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { CALENDLY_URL, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
+import { CALENDLY_URL, CONTACT_EMAIL, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Conseil IA, agents IA et automatisation pour PME",
   description:
-    "VICKOOZE & Co accompagne les PME françaises avec audit IA, agents IA sur mesure, automatisation des processus et formation des équipes.",
+    "VICKOOZE & Co accompagne les PME françaises avec audit IA, agents Claude, automatisation des processus et formation des équipes.",
   alternates: {
     canonical: "/"
   }
 };
 
-const heroStats = [
-  { value: "5+ ans", label: "d’expérience IA & automatisation" },
-  { value: "100%", label: "sur mesure, déployé sur vos outils" },
-  { value: "30min", label: "pour identifier vos 3 gains rapides" }
+const heroMeta = [
+  { value: "47", label: "missions IA cadrées" },
+  { value: "6,2 M€", label: "ROI potentiel cartographié" },
+  { value: "4.9/5", label: "satisfaction ateliers" }
 ];
 
-const timeSavingsExample = [
-  { task: "Relances prospects", time: "2h" },
-  { task: "Reporting commercial", time: "2h30" },
-  { task: "Comptes rendus de RDV", time: "1h30" },
-  { task: "Tri emails et demandes", time: "2h" }
+const stats = [
+  { value: "47", suffix: ".", label: "Entreprises et projets accompagnés depuis 2023" },
+  { value: "6,2", suffix: "M€", label: "Économies et revenus potentiels identifiés" },
+  { value: "14", suffix: "x", label: "Accélération moyenne sur les workflows automatisés" },
+  { value: "~48", suffix: "h", label: "Délai moyen entre audit et premier prototype" }
 ];
 
-const proofOutcomes = [
-  { label: "Temps récupérable", value: "8h/sem" },
-  { label: "Volume mensuel", value: "32h/mois" },
-  { label: "Priorités IA", value: "3 actions" }
-];
-
-const afterCallItems: Array<{ title: string; text: string; icon: LucideIcon }> = [
+const services = [
   {
-    title: "Carte des tâches chronophages",
-    text: "Les tâches répétitives sont classées par volume, impact et niveau de frustration.",
-    icon: ClipboardCheck
+    number: "01 / AUDIT",
+    icon: "A",
+    title: "Audit & cadrage stratégique",
+    text:
+      "Nous cartographions vos processus, identifions les 3 à 5 points où l'IA a le meilleur retour, et chiffrons précisément l'impact.",
+    tags: ["2 semaines", "Livrable chiffré", "Comité direction"]
   },
   {
-    title: "Top 3 des automatisations",
-    text: "Vous savez quoi automatiser en premier, avec quels outils et dans quel ordre.",
-    icon: Sparkles
+    number: "02 / BUILD",
+    icon: "B",
+    title: "Agents & automatisations sur mesure",
+    text:
+      "Nous construisons des agents Claude, workflows Make/n8n/Zapier et systèmes de reporting reliés à vos outils existants.",
+    tags: ["4 à 12 semaines", "Claude · RAG · open source", "Déploiement Vercel/AWS"]
   },
   {
-    title: "Estimation de ROI",
-    text: "Chaque piste est reliée à un gain de temps potentiel et un niveau de difficulté.",
-    icon: Calculator
-  },
-  {
-    title: "Rapport prêt à partager",
-    text: "Un résumé clair avec roadmap, risques, prochaines étapes et proposition indicative.",
-    icon: FileText
+    number: "03 / ENABLE",
+    icon: "F",
+    title: "Formation & acculturation",
+    text:
+      "Nous formons vos équipes pour qu'elles sachent utiliser, piloter et améliorer les outils IA sans dépendre de nous au quotidien.",
+    tags: ["1 à 3 jours", "Sur mesure", "Cas pratiques PME"]
   }
 ];
 
-const sampleCaseResults = [
-  "32h/mois de tâches administratives identifiées",
-  "3 workflows à lancer en priorité",
-  "Une roadmap 30 / 60 / 90 jours pour cadrer le déploiement"
+const auditBullets = [
+  "Score de maturité IA et manques opérationnels",
+  "Automatisations prioritaires avec ROI et difficulté",
+  "Roadmap 30 / 60 / 90 jours",
+  "Rapport PDF + Excel envoyé par email"
 ];
 
-const heroPainPoints = [
-  "Vos équipes noyées sous les emails",
-  "Des devis qui traînent 3 jours",
-  "Des leads perdus faute de relance"
-];
-
-const heroOutcomes = [
-  "3 à 5 automatisations prioritaires",
-  "ROI estimé avant déploiement",
-  "Agents IA intégrés à vos outils"
-];
-
-const offers = [
+const testimonials = [
   {
-    tag: "Analyse & benchmark",
-    title: "Audit complet de vos processus",
-    description:
-      "Identifiez les tâches à plus fort potentiel d’automatisation et repartez avec une roadmap priorisée.",
-    checkpoints: [
-      "Cartographie des processus internes",
-      "Identification des tâches à automatiser",
-      "Roadmap priorisée avec ROI chiffré"
-    ],
-    cta: "Accéder à l’audit",
-    href: "/audit",
-    visual: "audit"
+    initials: "CL",
+    quote:
+      "En deux semaines, nous avons enfin compris où l'IA pouvait vraiment nous faire gagner du temps. La roadmap était claire, chiffrée et actionnable.",
+    author: "Camille Lefèvre",
+    role: "Directrice opérations · PME logistique"
   },
   {
-    tag: "Implémentation",
-    title: "Agents IA personnalisés",
-    description:
-      "Déployez des assistants IA adaptés à vos équipes, vos clients et vos flux opérationnels.",
-    checkpoints: [
-      "Chatbots clients intelligents",
-      "Assistants internes pour support, RH et ops",
-      "Agents de qualification de leads"
-    ],
-    cta: "Découvrir les agents",
-    href: "/services",
-    visual: "agents"
-  },
-  {
-    tag: "Optimisation",
-    title: "Workflows automatisés",
-    description:
-      "Connectez vos outils et automatisez les tâches répétitives avec Make, n8n, Zapier et l’IA.",
-    checkpoints: [
-      "Traitement automatique des emails et leads",
-      "Génération de devis et reportings",
-      "Intégration avec votre CRM et vos outils"
-    ],
-    cta: "Voir les automatisations",
-    href: "/services",
-    visual: "workflow"
-  },
-  {
-    tag: "Accompagnement",
-    title: "Formation IA pour vos équipes",
-    description:
-      "Rendez vos collaborateurs autonomes sur les outils IA du marché avec une pédagogie concrète.",
-    checkpoints: [
-      "Fondamentaux ChatGPT et Claude",
-      "Prompt engineering avancé",
-      "Automatisation et agents IA"
-    ],
-    cta: "Accéder à la formation",
-    href: "/formation",
-    visual: "training"
+    initials: "YB",
+    quote:
+      "L'audit a transformé une envie floue d'utiliser l'IA en plan concret : agents de relance, reporting automatique et formation des équipes.",
+    author: "Yanis Boutros",
+    role: "Co-fondateur · SaaS B2B"
   }
 ];
-
-const processSteps = [
-  {
-    step: "1",
-    title: "Audit IA",
-    description:
-      "Nous identifions les tâches chronophages, les points de friction et les gains rapides.",
-    icon: FileSearch
-  },
-  {
-    step: "2",
-    title: "Recommandations",
-    description:
-      "Vous recevez un plan d’action clair, priorisé et relié à vos enjeux business.",
-    icon: ListChecks
-  },
-  {
-    step: "3",
-    title: "Implémentation",
-    description:
-      "Nous déployons les agents, automatisations et templates avec vos équipes.",
-    icon: Settings2
-  },
-  {
-    step: "4",
-    title: "Intégration",
-    description:
-      "Les solutions se connectent à vos outils existants: CRM, emails, Slack ou Notion.",
-    icon: Link2
-  },
-  {
-    step: "5",
-    title: "Suivi régulier",
-    description:
-      "Nous mesurons les gains, ajustons les workflows et améliorons les usages dans le temps.",
-    icon: LineChart
-  }
-];
-
-const reasons: Array<{ title: string; text: string; icon: LucideIcon }> = [
-  {
-    title: "Des solutions déployées, pas des slides",
-    text: "Nous livrons des agents et workflows opérationnels, pas des rapports PowerPoint.",
-    icon: Sparkles
-  },
-  {
-    title: "Gain de temps mesurable",
-    text: "Nous ciblons en priorité les tâches qui rendent +5h à +10h par semaine à vos équipes.",
-    icon: Clock
-  },
-  {
-    title: "ROI chiffré avant déploiement",
-    text: "Chaque automatisation est chiffrée en heures/mois gagnées avant de lancer le projet.",
-    icon: TrendingUp
-  },
-  {
-    title: "Équipes autonomes en 4 sessions",
-    text: "Formation pratique et cadre de travail clair pour que l’IA reste utile sans nous.",
-    icon: BookOpen
-  },
-  {
-    title: "Intégration à vos outils existants",
-    text: "Make, n8n, Zapier, HubSpot, Notion, Slack : pas besoin de changer votre stack.",
-    icon: BarChart3
-  },
-  {
-    title: "Vos données restent chez vous",
-    text: "Hébergement européen, pas d’entraînement sur vos données, RGPD par défaut.",
-    icon: RefreshCw
-  }
-];
-
-const faqs = [
-  {
-    question: "Combien de temps pour voir les premiers résultats ?",
-    answer:
-      "Les premières automatisations sont en général déployées en 2 à 4 semaines après l’audit. Vous mesurez les gains dès les premières semaines d’usage."
-  },
-  {
-    question: "Faut-il changer nos outils actuels ?",
-    answer:
-      "Non. Nous nous intégrons à votre stack existante (CRM, emails, Slack, Notion, HubSpot, Make, n8n, Zapier). L’objectif est d’ajouter de l’intelligence, pas de tout remplacer."
-  },
-  {
-    question: "Mes données restent-elles sécurisées ?",
-    answer:
-      "Oui. Nous privilégions les solutions hébergées en Europe, sans entraînement sur vos données, et nous signons un accord de confidentialité dès le premier échange."
-  },
-  {
-    question: "Combien ça coûte ?",
-    answer:
-      "L’audit découverte de 30 minutes est offert. Les missions sont ensuite chiffrées au forfait, en fonction du périmètre et des gains estimés. Aucun engagement avant validation du ROI."
-  },
-  {
-    question: "Et si on n’a aucune expertise technique en interne ?",
-    answer:
-      "C’est le cas pour la majorité de nos clients. Nous déployons, documentons et formons vos équipes pour qu’elles restent autonomes sur les usages au quotidien."
-  }
-];
-
-const collaborationSteps = [
-  {
-    title: "Appel découverte",
-    text: "Nous analysons vos besoins, objectifs et blocages opérationnels."
-  },
-  {
-    title: "Proposition adaptée",
-    text: "Nous proposons une offre sur mesure reliée à vos priorités."
-  },
-  {
-    title: "Déploiement",
-    text: "Nous mettons en place les agents, workflows et supports."
-  },
-  {
-    title: "Optimisation",
-    text: "Nous suivons les résultats et ajustons les solutions dans le temps."
-  }
-];
-
-function OfferVisual({ type }: { type: string }) {
-  if (type === "audit") {
-    return (
-      <div className="grid h-full min-h-[300px] place-items-center rounded-lg bg-[#E9F4E8] p-6">
-        <div className="w-full max-w-sm rounded-lg bg-charcoal p-5 text-white shadow-soft">
-          <p className="text-sm font-black">Audit IA complet</p>
-          <div className="mt-5 grid gap-3">
-            {["Processus", "Emails", "CRM", "Reporting", "Support"].map((item, index) => (
-              <div key={item} className="grid grid-cols-[92px_1fr] items-center gap-4 text-xs">
-                <span className="text-white/68">{item}</span>
-                <div className="flex gap-1">
-                  {Array.from({ length: 5 }).map((_, starIndex) => (
-                    <Star
-                      key={`${item}-${starIndex}`}
-                      className={`h-4 w-4 ${
-                        starIndex <= index ? "fill-coral text-coral" : "fill-white/20 text-white/20"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (type === "agents") {
-    return (
-      <div className="grid h-full min-h-[300px] place-items-center rounded-lg bg-[#EAF2F4] p-6">
-        <div className="w-full max-w-sm space-y-4">
-          {["Assistant support", "Agent commercial", "Bot RH", "Qualification leads"].map(
-            (item, index) => (
-              <div
-                key={item}
-                className={`flex items-center justify-between rounded-lg bg-white px-5 py-4 shadow-soft ${
-                  index === 1 ? "bg-peach/55" : ""
-                }`}
-              >
-                <span className="text-sm font-black text-charcoal">{item}</span>
-                {index === 1 ? (
-                  <span className="text-xs font-black uppercase text-coral">Actif</span>
-                ) : (
-                  <Bot className="h-5 w-5 text-coral" />
-                )}
-              </div>
-            )
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  if (type === "workflow") {
-    return (
-      <div className="relative grid h-full min-h-[300px] place-items-center rounded-lg bg-[#F0E8F6] p-6">
-        <div className="absolute left-10 top-10 rounded-lg bg-white px-4 py-3 text-xs font-black text-charcoal shadow-soft">
-          Email reçu
-        </div>
-        <div className="rounded-lg bg-white p-5 shadow-soft">
-          <p className="text-sm font-black text-charcoal">Workflow automatisé</p>
-          <div className="mt-5 flex items-end gap-3">
-            {[42, 68, 55, 82, 76].map((height, index) => (
-              <div
-                key={height}
-                className={`w-10 rounded-sm ${index === 3 ? "bg-coral" : "bg-peach"}`}
-                style={{ height: `${height * 1.5}px` }}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="absolute bottom-10 right-10 rounded-lg bg-coral px-4 py-3 text-xs font-black text-white shadow-soft">
-          Rapport envoyé
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative h-full min-h-[300px] overflow-hidden rounded-lg bg-charcoal">
-      <Image
-        src={PLACEHOLDER_IMAGES.founder}
-        alt={`${FOUNDER_NAME} anime une formation IA`}
-        fill
-        sizes="(max-width: 1024px) 92vw, 520px"
-        className="object-cover object-[48%_42%] opacity-70 grayscale"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-charcoal/20 to-transparent" />
-      <div className="absolute bottom-6 left-6 right-6 rounded-lg bg-white/90 p-4 shadow-soft backdrop-blur">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-black text-charcoal">Progression équipe</span>
-          <span className="rounded-lg bg-coral px-3 py-1 text-xs font-black text-white">92%</span>
-        </div>
-        <div className="mt-4 h-2 rounded-lg bg-cream">
-          <div className="h-2 w-[92%] rounded-lg bg-coral" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function AuditReportPreview() {
-  return (
-    <div className="rounded-lg bg-charcoal p-5 text-white shadow-soft md:p-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-peach">
-            Aperçu type
-          </p>
-          <h3 className="mt-3 font-serif text-3xl leading-tight text-white">
-            Rapport d’audit IA
-          </h3>
-        </div>
-        <span className="w-fit rounded-lg bg-coral px-4 py-2 text-sm font-black text-white">
-          Score 42/100
-        </span>
-      </div>
-
-      <div className="mt-6 grid gap-4">
-        <div className="rounded-lg bg-white p-4 text-charcoal">
-          <div className="flex items-center justify-between gap-4">
-            <p className="text-sm font-black">Synthèse exécutive</p>
-            <MailCheck className="h-5 w-5 text-coral" />
-          </div>
-          <p className="mt-3 text-sm leading-6 text-muted">
-            PME de services avec relances manuelles, CRM incomplet et reporting dispersé.
-            Trois automatisations peuvent rendre du temps sans changer les outils actuels.
-          </p>
-        </div>
-
-        <div className="grid gap-3 md:grid-cols-3">
-          {[
-            ["Manque", "Relances non systématiques"],
-            ["Gain", "8h/semaine estimées"],
-            ["Action", "Workflow CRM + email"]
-          ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-white/10 bg-white/[0.06] p-4">
-              <p className="text-xs font-black uppercase tracking-[0.14em] text-peach">{label}</p>
-              <p className="mt-2 text-sm font-bold leading-5 text-white/82">{value}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="rounded-lg bg-white/[0.06] p-4">
-          <div className="grid grid-cols-[1fr_90px_90px] gap-3 text-xs font-black uppercase tracking-[0.12em] text-peach">
-            <span>Automatisation</span>
-            <span>ROI</span>
-            <span>Difficulté</span>
-          </div>
-          {[
-            ["Relances prospects", "Fort", "Faible"],
-            ["Compte rendu RDV", "Moyen", "Faible"],
-            ["Reporting hebdo", "Fort", "Moyenne"]
-          ].map((row) => (
-            <div
-              key={row[0]}
-              className="mt-3 grid grid-cols-[1fr_90px_90px] gap-3 border-t border-white/10 pt-3 text-sm text-white/82"
-            >
-              <span>{row[0]}</span>
-              <span>{row[1]}</span>
-              <span>{row[2]}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <p className="mt-5 text-xs font-bold leading-5 text-white/56">
-        Exemple illustratif basé sur une PME fictive. Les gains réels dépendent de vos volumes,
-        outils et habitudes d’équipe.
-      </p>
-    </div>
-  );
-}
 
 export default function HomePage() {
   return (
     <>
-      <section className="overflow-hidden bg-white pt-32 pb-20 md:pb-24">
-        <div className="section-shell grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+      <section className="overflow-hidden bg-cream py-24 md:py-28">
+        <div className="section-shell grid items-end gap-14 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
           <Reveal>
-            <p className="eyebrow">Audit IA offert pour PME françaises</p>
-            <h1 className="mt-5 max-w-3xl font-serif text-5xl leading-[1.05] text-charcoal md:text-[64px]">
-              Votre PME perd des heures sur des tâches que <span className="text-coral">l’IA</span> peut déjà gérer
+            <p className="eyebrow">Cabinet conseil IA · PME françaises</p>
+            <h1 className="mt-8 max-w-5xl font-serif text-5xl font-medium leading-[0.98] text-charcoal sm:text-6xl lg:text-7xl xl:text-[92px]">
+              L’IA qui <em className="font-normal italic text-coral">travaille</em> pour vos
+              équipes, pas contre elles.
             </h1>
-            <p className="mt-8 max-w-2xl text-lg leading-8 text-muted">
-              Nous identifions les tâches qui ralentissent vos équipes, puis nous déployons les agents IA et automatisations qui libèrent du temps sans complexifier votre organisation.
+            <p className="mt-7 max-w-xl text-lg leading-8 text-muted">
+              Audit, agents IA et automatisation des processus internes pour libérer vos équipes
+              des tâches répétitives, sans recruter une équipe technique.
             </p>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {heroPainPoints.map((pain) => (
-                <div key={pain} className="rounded-lg border border-charcoal/10 bg-cream px-4 py-3">
-                  <p className="text-sm font-black leading-5 text-charcoal">{pain}</p>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <Button asChild size="xl">
+                <Link href="/agent-audit">
+                  Lancer l’audit IA gratuit
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="xl">
+                <Link href="#process">Voir notre méthode</Link>
+              </Button>
+            </div>
+
+            <div className="mt-12 flex flex-wrap gap-8 border-t border-charcoal/10 pt-6">
+              {heroMeta.map((item) => (
+                <div key={item.label} className="text-sm leading-5 text-muted">
+                  <strong className="mb-1 block font-serif text-2xl font-medium leading-none text-charcoal">
+                    {item.value}
+                  </strong>
+                  {item.label}
                 </div>
               ))}
             </div>
+          </Reveal>
 
-            <div className="mt-8 rounded-lg border-l-4 border-coral bg-white p-5 shadow-soft">
-              <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
-                Résultat attendu
+          <Reveal delay={0.12}>
+            <div className="relative aspect-[4/5] overflow-hidden rounded border border-charcoal/10 bg-cream-3">
+              <div className="hero-stripes absolute inset-0" />
+              <span className="absolute left-5 top-5 border border-charcoal/10 bg-cream px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-charcoal">
+                EST. 2023
+              </span>
+              <span className="absolute -right-[12%] -top-[12%] h-[46%] w-[46%] rounded-full bg-coral" />
+              <span className="absolute bottom-[18%] left-[12%] h-[22%] w-[22%] rounded-full bg-charcoal" />
+              <span className="absolute left-1/2 top-[38%] h-[10%] w-[10%] rounded-full bg-peach" />
+              <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
+                <span>Fig. 01</span>
+                <span>Indice de croissance</span>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <Marquee />
+
+      <section className="bg-cream py-0">
+        <div className="section-shell">
+          <div className="grid border-y border-charcoal/10 md:grid-cols-4">
+            {stats.map((stat, index) => (
+              <Reveal
+                key={stat.label}
+                delay={index * 0.04}
+                className="border-charcoal/10 px-6 py-9 md:border-l md:first:border-l-0"
+              >
+                <p className="font-serif text-5xl font-medium leading-none text-charcoal">
+                  {stat.value}
+                  <span className="text-coral">{stat.suffix}</span>
+                </p>
+                <p className="mt-4 font-mono text-[11px] uppercase leading-5 tracking-[0.12em] text-muted">
+                  {stat.label}
+                </p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="services" className="bg-cream py-20 md:py-28">
+        <div className="section-shell">
+          <Reveal className="grid gap-8 md:grid-cols-[1fr_2fr]">
+            <p className="eyebrow">Services — 01</p>
+            <h2 className="font-serif text-4xl font-medium leading-[1.02] text-charcoal md:text-6xl">
+              Trois façons de nous mettre au travail.
+            </h2>
+          </Reveal>
+
+          <div className="mt-14 grid gap-px overflow-hidden rounded border border-charcoal/10 bg-charcoal/10 lg:grid-cols-3">
+            {services.map((service, index) => (
+              <Reveal key={service.title} delay={index * 0.06}>
+                <article className="min-h-full bg-cream p-8 transition-colors duration-200 hover:bg-cream-3">
+                  <div className="flex items-start justify-between gap-6">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+                      {service.number}
+                    </p>
+                    <span className="grid h-12 w-12 place-items-center rounded-full bg-coral font-serif text-2xl text-white">
+                      {service.icon}
+                    </span>
+                  </div>
+                  <h3 className="mt-14 font-serif text-4xl font-medium leading-tight text-charcoal">
+                    {service.title}
+                  </h3>
+                  <p className="mt-5 text-base leading-7 text-muted">{service.text}</p>
+                  <div className="mt-10 flex flex-wrap gap-2">
+                    {service.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-charcoal/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.08em] text-muted"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="process" className="bg-cream-3 py-20 md:py-28">
+        <div className="section-shell">
+          <Reveal className="grid gap-8 md:grid-cols-[1fr_2fr]">
+            <p className="eyebrow">Méthode — 02</p>
+            <h2 className="font-serif text-4xl font-medium leading-[1.02] text-charcoal md:text-6xl">
+              Une méthode courte, mesurable, pensée pour les PME.
+            </h2>
+          </Reveal>
+
+          <div className="mt-14">
+            <ProcessSteps />
+          </div>
+        </div>
+      </section>
+
+      <section id="audit" className="bg-cream py-20 md:py-28">
+        <div className="section-shell">
+          <Reveal className="grid gap-8 md:grid-cols-[1fr_2fr]">
+            <p className="eyebrow">Audit IA — 03</p>
+            <h2 className="font-serif text-4xl font-medium leading-[1.02] text-charcoal md:text-6xl">
+              Un agent d’audit pour transformer un échange en plan d’action.
+            </h2>
+          </Reveal>
+
+          <div className="mt-14 grid gap-12 lg:grid-cols-2 lg:items-center">
+            <Reveal>
+              <p className="text-lg leading-8 text-muted">
+                Après votre rendez-vous, vous me donnez les informations utiles sur l’entreprise.
+                L’agent analyse les manques, priorise les automatisations et prépare un reporting
+                professionnel à envoyer au client.
               </p>
-              <p className="mt-3 text-xl font-black leading-7 text-charcoal">
-                En 30 minutes, vous repartez avec une vision claire des gains rapides à automatiser en priorité.
-              </p>
-              <ul className="mt-5 grid gap-3">
-                {heroOutcomes.map((outcome) => (
-                  <li key={outcome} className="flex items-center gap-3 text-sm font-bold text-muted">
-                    <Check className="h-5 w-5 shrink-0 rounded-full bg-coral p-1 text-white" />
-                    {outcome}
+              <ul className="mt-8 grid gap-4">
+                {auditBullets.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-base font-medium text-charcoal">
+                    <Check className="mt-1 h-5 w-5 shrink-0 rounded-full bg-coral p-1 text-white" />
+                    {item}
                   </li>
                 ))}
               </ul>
-            </div>
+              <Button asChild size="xl" className="mt-10">
+                <Link href="/agent-audit">
+                  Démarrer mon audit
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </Reveal>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <Reveal delay={0.12}>
+              <AgentDemo />
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-cream-3 py-20 md:py-28">
+        <div className="section-shell">
+          <Reveal className="grid gap-8 md:grid-cols-[1fr_2fr]">
+            <p className="eyebrow">Preuve — 04</p>
+            <div>
+              <h2 className="font-serif text-4xl font-medium leading-[1.02] text-charcoal md:text-6xl">
+                Le sentiment recherché : clarté, vitesse, contrôle.
+              </h2>
+              <p className="mt-5 text-sm leading-6 text-muted">
+                Exemples représentatifs à remplacer par vos vrais témoignages clients dès que vous
+                en aurez.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="mt-14 grid gap-6 lg:grid-cols-2">
+            {testimonials.map((testimonial, index) => (
+              <Reveal key={testimonial.author} delay={index * 0.08}>
+                <article className="rounded border border-charcoal/10 bg-cream-3 p-8">
+                  <div className="font-serif text-7xl leading-none text-coral">&quot;</div>
+                  <blockquote className="mt-5 font-serif text-2xl italic leading-snug text-charcoal">
+                    {testimonial.quote}
+                  </blockquote>
+                  <div className="mt-10 flex items-center gap-4">
+                    <span className="grid h-11 w-11 place-items-center rounded-full bg-peach font-serif text-lg text-charcoal">
+                      {testimonial.initials}
+                    </span>
+                    <div className="text-sm">
+                      <strong className="block text-charcoal">{testimonial.author}</strong>
+                      <span className="text-muted">{testimonial.role}</span>
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className="bg-cream py-20 md:py-28">
+        <div className="section-shell grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-center lg:gap-16">
+          <Reveal>
+            <div className="relative aspect-[4/5] overflow-hidden rounded border border-charcoal/10 bg-peach">
+              <Image
+                src={PLACEHOLDER_IMAGES.founder}
+                alt={`${FOUNDER_NAME}, fondateur de VICKOOZE & Co`}
+                fill
+                sizes="(max-width: 1024px) 92vw, 520px"
+                className="object-cover object-[50%_42%] grayscale"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 via-transparent to-transparent" />
+              <div className="absolute bottom-5 left-5 right-5 rounded bg-cream px-4 py-3 font-mono text-[11px] uppercase tracking-[0.12em] text-charcoal">
+                {FOUNDER_NAME} · Fondateur
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.12}>
+            <p className="eyebrow">Fondateur — 05</p>
+            <h2 className="mt-6 font-serif text-4xl font-medium leading-[1.04] text-charcoal md:text-6xl">
+              L’IA n’est pas une fin. C’est un <em className="italic text-coral">multiplicateur</em>.
+            </h2>
+            <div className="mt-8 max-w-xl space-y-5 text-base leading-8 text-muted">
+              <p>
+                Je suis Vick-Emmanuel Michel, fondateur de VICKOOZE & Co. J’aide les PME
+                françaises à transformer leurs tâches répétitives en systèmes simples, mesurables
+                et utilisables par leurs équipes.
+              </p>
+              <p>
+                Mon approche est volontairement pragmatique : on commence par les irritants
+                quotidiens, on chiffre le potentiel, puis on déploie des agents et automatisations
+                connectés à vos outils existants.
+              </p>
+            </div>
+            <p className="mt-8 font-serif text-2xl italic text-charcoal">— Vick-Emmanuel</p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section id="contact" className="relative overflow-hidden bg-charcoal py-20 text-cream md:py-28">
+        <div className="absolute -right-32 -top-52 h-[500px] w-[500px] rounded-full bg-coral/40 blur-3xl" />
+        <div className="section-shell relative">
+          <Reveal>
+            <p className="eyebrow text-cream/70">Prochaine étape</p>
+            <h2 className="mt-6 max-w-5xl font-serif text-5xl font-medium leading-[1.02] text-cream md:text-7xl lg:text-[84px]">
+              Un appel de 30 minutes, un <em className="italic text-peach">plan</em> clair à la
+              sortie.
+            </h2>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-cream/70">
+              Partagez vos besoins, vos outils et vos blocages. Nous identifions les premières
+              automatisations à tester et la meilleure façon de les déployer.
+            </p>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="xl">
                 <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
-                  Réserver mon audit gratuit
+                  Réserver un créneau
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </Button>
-              <Button asChild variant="outline" size="xl">
-                <Link href="#offres">Voir ce qu’on automatise</Link>
+              <Button asChild variant="ghost" size="xl" className="border border-cream/25 text-cream hover:bg-cream/10 hover:text-cream">
+                <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
               </Button>
             </div>
-            <p className="mt-4 text-sm font-bold text-muted">
-              Pour dirigeants de PME de 5 à 50 salariés qui veulent passer à l’IA sans recruter une équipe technique.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.12} className="relative min-h-[460px]">
-            <div className="absolute inset-y-0 right-0 w-full overflow-hidden rounded-lg bg-charcoal shadow-soft lg:w-[82%]">
-              <Image
-                src={PLACEHOLDER_IMAGES.founder}
-                alt={`${FOUNDER_NAME} travaille sur une stratégie IA`}
-                fill
-                priority
-                sizes="(max-width: 1024px) 92vw, 700px"
-                className="object-cover object-[48%_45%] opacity-82 grayscale"
-              />
-            </div>
-
-            <div className="absolute inset-y-0 right-0 w-full rounded-lg bg-gradient-to-t from-charcoal/30 via-transparent to-transparent lg:w-[82%]" />
-
-            <div className="absolute left-0 top-20 w-[280px] rounded-lg bg-peach/90 px-5 py-4 shadow-soft backdrop-blur">
-              <div className="flex items-center justify-between gap-5">
-                <span className="text-sm font-black text-charcoal">Tâches détectées</span>
-                <span className="font-black text-coral">12</span>
-              </div>
-              <p className="mt-2 text-xs font-bold text-charcoal/62">dont 5 automatisables rapidement</p>
-            </div>
-
-            <div className="absolute left-0 top-44 w-[230px] rounded-lg bg-charcoal p-5 text-white shadow-soft">
-              <p className="text-sm font-black">Avant / après IA</p>
-              <div className="mt-5 flex h-24 items-end gap-2">
-                {[34, 58, 52, 82, 70].map((height, index) => (
-                  <div
-                    key={height}
-                    className={`w-full rounded-sm ${index === 3 ? "bg-coral" : "bg-white/28"}`}
-                    style={{ height: `${height}%` }}
-                  />
-                ))}
-              </div>
-              <div className="mt-4 grid grid-cols-3 gap-2 text-xs text-white/60">
-                <span>Temps</span>
-                <span>Coût</span>
-                <span>Qualité</span>
-              </div>
-            </div>
-
-            <div className="absolute bottom-8 right-6 w-[230px] rounded-lg bg-coral p-5 text-white shadow-soft">
-              <p className="text-sm font-black">Gain potentiel</p>
-              <p className="mt-4 font-serif text-5xl leading-none">+10h</p>
-              <p className="mt-2 text-sm font-bold text-white/80">par semaine sur les opérations répétitives</p>
-            </div>
           </Reveal>
         </div>
       </section>
-
-      <section className="bg-ink py-12 text-white">
-        <div className="section-shell grid gap-8 md:grid-cols-3">
-          {heroStats.map((stat, index) => (
-            <Reveal key={stat.label} delay={index * 0.04}>
-              <div className="flex items-center justify-center gap-8 text-center md:justify-start">
-                <div>
-                  <p className="font-serif text-5xl leading-none text-peach md:text-6xl">{stat.value}</p>
-                  <p className="mt-3 max-w-[190px] text-sm leading-5 text-white/70">{stat.label}</p>
-                </div>
-                {index < heroStats.length - 1 ? (
-                  <Zap className="hidden h-5 w-5 fill-peach text-peach md:block" />
-                ) : null}
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-white py-16 md:py-24">
-        <div className="section-shell">
-          <Reveal className="mx-auto max-w-4xl text-center">
-            <p className="eyebrow">Preuve business</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
-              Ce que l’IA peut changer dans une PME dès les premières semaines
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-muted">
-              Avant de parler d’outils, on chiffre les irritants du quotidien : relances, saisie,
-              reporting, comptes rendus et suivi client.
-            </p>
-          </Reveal>
-
-          <div className="mt-14 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <Reveal>
-              <div className="grid gap-6">
-                <div>
-                  <p className="eyebrow">Exemple concret</p>
-                  <h3 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal">
-                    Comment récupérer 8h par semaine sans recruter
-                  </h3>
-                  <p className="mt-5 text-lg leading-8 text-muted">
-                    Sur une PME de services de 15 à 20 personnes, l’audit permet souvent de repérer
-                    plusieurs tâches simples à automatiser sans changer le CRM ni les habitudes de
-                    travail.
-                  </p>
-                </div>
-
-                <div className="grid gap-3">
-                  {timeSavingsExample.map((item) => (
-                    <div
-                      key={item.task}
-                      className="flex items-center justify-between gap-5 rounded-lg border border-charcoal/10 bg-cream px-5 py-4"
-                    >
-                      <span className="text-sm font-black text-charcoal">{item.task}</span>
-                      <span className="font-serif text-3xl leading-none text-coral">{item.time}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="grid gap-4 sm:grid-cols-3">
-                  {proofOutcomes.map((item) => (
-                    <div key={item.label} className="rounded-lg bg-charcoal p-5 text-white">
-                      <p className="font-serif text-4xl leading-none text-peach">{item.value}</p>
-                      <p className="mt-3 text-sm font-bold leading-5 text-white/70">{item.label}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <div className="grid gap-6">
-                <div className="rounded-lg bg-cream p-6 md:p-8">
-                  <p className="eyebrow">Mini étude de cas fictive</p>
-                  <h3 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal">
-                    PME B2B, 18 salariés, équipe commerciale débordée
-                  </h3>
-                  <p className="mt-5 text-lg leading-8 text-muted">
-                    Situation de départ : leads traités à la main, relances oubliées, reporting
-                    hebdomadaire reconstruit dans Google Sheets.
-                  </p>
-                  <ul className="mt-6 grid gap-4">
-                    {sampleCaseResults.map((item) => (
-                      <li key={item} className="flex gap-3 text-sm font-bold leading-6 text-charcoal">
-                        <Check className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-coral p-1 text-white" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mt-6 rounded-lg bg-white p-4 text-sm font-bold leading-6 text-muted">
-                    Exemple illustratif, pas un témoignage client. Il montre le type de diagnostic
-                    que l’on cherche à produire après un premier échange.
-                  </p>
-                </div>
-                <AuditReportPreview />
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-cream py-16 md:py-24">
-        <div className="section-shell">
-          <Reveal className="mx-auto max-w-4xl text-center">
-            <p className="eyebrow">Après l’appel</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
-              Vous obtenez une base de décision, pas un simple échange commercial
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-muted">
-              Le premier rendez-vous sert à clarifier les priorités, vérifier le potentiel réel et
-              préparer les prochaines actions.
-            </p>
-          </Reveal>
-
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {afterCallItems.map((item, index) => (
-              <Reveal key={item.title} delay={index * 0.05}>
-                <Card className="h-full p-6">
-                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-coral text-white">
-                    <item.icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="mt-6 text-xl font-black leading-tight text-charcoal">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-muted">{item.text}</p>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="offres" className="bg-white py-16 md:py-24">
-        <div className="section-shell">
-          <Reveal className="mx-auto max-w-4xl text-center">
-            <p className="eyebrow">Votre transformation IA commence ici</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
-              Un cabinet full-service pour passer de l’idée IA aux résultats concrets
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-muted">
-              Nous accompagnons les dirigeants de PME dans le lancement, l’implémentation et l’optimisation de solutions IA utiles au quotidien.
-            </p>
-          </Reveal>
-
-          <div className="mt-14 grid gap-8">
-            {offers.map((offer, index) => (
-              <Reveal key={offer.title} delay={index * 0.05}>
-                <Card className="overflow-hidden border-0 bg-white shadow-soft">
-                  <div className="grid gap-8 p-7 md:p-10 lg:grid-cols-[0.86fr_1fr] lg:items-center">
-                    <div>
-                      <span className="rounded-sm bg-peach/45 px-3 py-2 text-xs font-black uppercase tracking-[0.14em] text-coral">
-                        {offer.tag}
-                      </span>
-                      <h3 className="mt-6 max-w-xl font-serif text-4xl leading-[1.05] text-charcoal md:text-5xl">
-                        {offer.title}
-                      </h3>
-                      <p className="mt-5 max-w-xl leading-7 text-muted">{offer.description}</p>
-                      <Button asChild variant="secondary" className="mt-7">
-                        <Link href={offer.href}>{offer.cta}</Link>
-                      </Button>
-                      <ul className="mt-8 grid gap-4">
-                        {offer.checkpoints.map((checkpoint) => (
-                          <li key={checkpoint} className="flex gap-3 text-sm font-bold text-charcoal">
-                            <Check className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-coral p-1 text-white" />
-                            <span>{checkpoint}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <OfferVisual type={offer.visual} />
-                  </div>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="overflow-hidden bg-white py-16 md:py-24">
-        <div className="section-shell">
-          <Reveal className="mx-auto max-w-3xl text-center">
-            <p className="eyebrow">Comment ça marche</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
-              Nous facilitons l’intégration de l’IA dans votre PME
-            </h2>
-            <p className="mt-5 text-lg leading-8 text-muted">
-              Découvrez le parcours type de nos clients. Nous adaptons notre offre à vos défis spécifiques.
-            </p>
-          </Reveal>
-
-          <div className="relative mt-16 hidden min-h-[440px] lg:block">
-            <svg
-              viewBox="0 0 1400 360"
-              className="absolute inset-x-1/2 top-4 h-[360px] w-[1700px] -translate-x-1/2"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M20 260 C150 60 300 70 420 230 C560 420 670 60 830 150 C980 235 960 420 1090 280 C1190 170 1260 220 1380 40"
-                stroke="#8A5A3B"
-                strokeWidth="2"
-                strokeDasharray="9 12"
-              />
-            </svg>
-            {processSteps.map((step, index) => {
-              const positions = [
-                "left-[4%] top-[120px]",
-                "left-[22%] bottom-[30px]",
-                "left-[45%] top-[150px]",
-                "right-[20%] bottom-[80px]",
-                "right-[3%] top-[110px]"
-              ];
-              return (
-                <div key={step.title} className={`absolute ${positions[index]} text-center`}>
-                  <div className="mx-auto grid h-12 w-12 place-items-center rounded-lg border border-dashed border-coral bg-white text-coral shadow-soft">
-                    <step.icon className="h-5 w-5" />
-                  </div>
-                  <p className="mt-3 max-w-[130px] text-sm font-bold leading-5 text-charcoal">
-                    {step.title}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="mt-12 grid gap-8 md:grid-cols-5 lg:mt-0">
-            {processSteps.map((step, index) => (
-              <Reveal key={step.title} delay={index * 0.04}>
-                <div>
-                  <div className="grid h-10 w-10 place-items-center rounded-full bg-coral font-black text-white">
-                    {step.step}
-                  </div>
-                  <h3 className="mt-5 text-xl font-black text-charcoal">{step.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-muted">{step.description}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-cream py-16 md:py-24">
-        <div className="section-shell">
-          <Reveal className="mx-auto max-w-3xl text-center">
-            <p className="eyebrow">Un accompagnement de A à Z</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
-              Pourquoi nous choisir ?
-            </h2>
-          </Reveal>
-          <div className="mx-auto mt-12 grid max-w-5xl gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {reasons.map((reason, index) => (
-              <Reveal key={reason.title} delay={index * 0.04}>
-                <div className="text-center">
-                  <reason.icon className="mx-auto h-8 w-8 text-coral" />
-                  <h3 className="mt-5 text-xl font-black text-charcoal">{reason.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-muted">{reason.text}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="mx-auto mt-16 max-w-5xl">
-            <div className="rounded-lg bg-white p-8 shadow-soft md:p-12">
-              <div className="text-center">
-                <p className="eyebrow">En 4 étapes</p>
-                <h3 className="mt-3 font-serif text-4xl leading-[1.1] text-charcoal">
-                  Comment travailler avec nous
-                </h3>
-              </div>
-              <div className="mt-12 grid gap-8 md:grid-cols-4">
-                {collaborationSteps.map((item, index) => (
-                  <div key={item.title}>
-                    <div className="grid h-9 w-9 place-items-center rounded-full bg-coral text-sm font-black text-white">
-                      {index + 1}
-                    </div>
-                    <h4 className="mt-5 text-lg font-black text-charcoal">{item.title}</h4>
-                    <p className="mt-3 text-sm leading-6 text-muted">{item.text}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="bg-white py-16">
-        <div className="section-shell">
-          <Reveal>
-            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-              <div>
-                <p className="eyebrow">Pourquoi nous</p>
-                <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
-                  Qui va vous accompagner ?
-                </h2>
-                <p className="mt-6 max-w-xl text-lg leading-8 text-muted">
-                  VICKOOZE & Co aide les PME à transformer les idées IA en systèmes utiles: agents, automatisations, méthodes et reporting.
-                </p>
-                <p className="mt-5 max-w-xl text-lg leading-8 text-charcoal">
-                  Intervention à distance depuis Bali, avec un accompagnement clair, humain et orienté résultats.
-                </p>
-                <Button asChild className="mt-8" variant="outline">
-                  <Link href="/a-propos">
-                    Découvrir l’histoire
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-              <div className="min-h-[420px] overflow-hidden rounded-lg">
-                <FounderVisual
-                  caption="IA utile, process clairs, équipes autonomes."
-                  className="h-full min-h-[420px]"
-                  imageClassName="object-[48%_42%]"
-                />
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="bg-white py-16 md:py-24">
-        <div className="section-shell">
-          <Reveal className="mx-auto max-w-3xl text-center">
-            <p className="eyebrow">Questions fréquentes</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
-              Les réponses aux questions que vous vous posez
-            </h2>
-          </Reveal>
-          <div className="mx-auto mt-12 max-w-3xl space-y-3">
-            {faqs.map((faq, index) => (
-              <Reveal key={faq.question} delay={index * 0.04}>
-                <details className="group rounded-lg border border-charcoal/10 bg-cream p-5 open:bg-white open:shadow-soft">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base font-black text-charcoal md:text-lg">
-                    <span>{faq.question}</span>
-                    <span
-                      aria-hidden="true"
-                      className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-coral text-lg font-black text-white transition-transform group-open:rotate-45"
-                    >
-                      +
-                    </span>
-                  </summary>
-                  <p className="mt-4 text-sm leading-7 text-muted md:text-base">{faq.answer}</p>
-                </details>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <FinalCTA />
     </>
   );
 }
