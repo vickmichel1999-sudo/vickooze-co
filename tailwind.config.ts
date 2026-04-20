@@ -44,7 +44,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "Inter", "sans-serif"],
-        serif: ["var(--font-playfair)", "Playfair Display", "serif"]
+        serif: ["var(--font-playfair)", "Playfair Display", "serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"]
       },
       boxShadow: {
         soft: "0 24px 70px rgba(26, 26, 26, 0.08)",
