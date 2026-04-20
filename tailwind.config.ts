@@ -52,8 +52,8 @@ const config: Config = {
         mono: ["var(--font-mono)", "JetBrains Mono", "monospace"]
       },
       boxShadow: {
-        soft: "0 24px 70px rgba(26, 26, 26, 0.08)",
-        lift: "0 18px 45px rgba(255, 107, 53, 0.18)"
+        soft: "0 10px 30px rgba(15, 15, 15, 0.06), 0 2px 6px rgba(15, 15, 15, 0.04)",
+        lift: "0 20px 60px rgba(15, 15, 15, 0.12), 0 4px 12px rgba(15, 15, 15, 0.06)"
       },
       backgroundImage: {
         "hero-gradient": "linear-gradient(135deg, #F5EDE4 0%, #FFC5A8 100%)",

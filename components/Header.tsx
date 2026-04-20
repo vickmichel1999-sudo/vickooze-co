@@ -10,80 +10,74 @@ import { CALENDLY_URL, SITE_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { label: "Services", href: "/#services", section: "services" },
-  { label: "Méthode", href: "/#process", section: "process" },
-  { label: "Audit IA", href: "/#audit", section: "audit" },
-  { label: "À propos", href: "/#about", section: "about" },
-  { label: "Contact", href: "/#contact", section: "contact" }
+  { label: "Audit", href: "/audit" },
+  { label: "Services", href: "/services" },
+  { label: "Formation", href: "/formation" },
+  { label: "À propos", href: "/a-propos" }
 ];
 
 export function Header() {
   const pathname = usePathname();
-  const [activeSection, setActiveSection] = useState("services");
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (pathname !== "/") {
-      setActiveSection("");
-      return;
-    }
-
-    const onScroll = () => {
-      const current = navItems.reduce((active, item) => {
-        const section = document.getElementById(item.section);
-
-        if (section && section.offsetTop <= window.scrollY + 140) {
-          return item.section;
-        }
-
-        return active;
-      }, "services");
-
-      setActiveSection(current);
-    };
-
+    const onScroll = () => setIsScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-
     return () => window.removeEventListener("scroll", onScroll);
-  }, [pathname]);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-charcoal/10 bg-cream/88 backdrop-blur-xl">
-      <div className="section-shell flex h-[72px] items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-3 whitespace-nowrap">
-          <span className="relative h-7 w-7 rounded-full bg-coral before:absolute before:inset-1.5 before:rounded-full before:bg-cream after:absolute after:inset-2.5 after:rounded-full after:bg-coral" />
-          <span className="font-serif text-xl leading-none text-charcoal">{SITE_NAME}</span>
+    <header
+      className={cn(
+        "fixed left-0 right-0 top-0 z-50 border-b transition-all duration-300",
+        isScrolled
+          ? "border-charcoal/10 bg-white/82 shadow-sm backdrop-blur-xl"
+          : "border-transparent bg-transparent"
+      )}
+    >
+      <div className="section-shell flex h-[76px] items-center justify-between gap-4">
+        <Link
+          href="/"
+          className="flex items-center gap-3 whitespace-nowrap text-[17px] font-black tracking-[-0.01em] text-charcoal"
+        >
+          <span className="grid h-[34px] w-[34px] place-items-center rounded-lg bg-charcoal font-serif text-lg italic text-white">
+            V
+          </span>
+          <span>{SITE_NAME}</span>
         </Link>
 
-        <nav className="hidden items-center gap-8 text-sm font-medium text-muted md:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "relative transition-colors hover:text-charcoal",
-                activeSection === item.section
-                  ? "text-charcoal after:absolute after:-bottom-[27px] after:left-0 after:right-0 after:h-0.5 after:bg-coral"
-                  : ""
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="hidden items-center gap-1 rounded-full border border-charcoal/10 bg-white/65 p-1.5 text-sm font-bold text-charcoal/75 backdrop-blur md:flex">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "rounded-full px-5 py-2.5 transition-colors hover:bg-charcoal hover:text-white",
+                  isActive ? "bg-charcoal text-white" : ""
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden md:block">
-          <Button asChild variant="secondary">
+          <Button asChild size="default">
             <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
-              Réserver un appel →
+              Prendre rendez-vous
             </a>
           </Button>
         </div>
 
         <button
           type="button"
-          className="grid h-11 w-11 place-items-center rounded-lg border border-charcoal/10 bg-cream-3 text-charcoal md:hidden"
+          className="grid h-11 w-11 place-items-center rounded-lg border border-charcoal/10 bg-white/80 text-charcoal shadow-sm md:hidden"
           aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((value) => !value)}
@@ -93,21 +87,24 @@ export function Header() {
       </div>
 
       {isOpen ? (
-        <div className="border-t border-charcoal/10 bg-cream px-5 py-5 shadow-soft md:hidden">
+        <div className="border-t border-charcoal/10 bg-white/95 px-5 py-5 shadow-soft backdrop-blur-xl md:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-2">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-lg px-3 py-3 text-base font-medium text-charcoal transition-colors hover:bg-cream-3 hover:text-coral"
+                className={cn(
+                  "rounded-lg px-3 py-3 text-base font-bold text-charcoal transition-colors hover:bg-cream hover:text-coral",
+                  pathname === item.href ? "bg-charcoal text-white hover:bg-charcoal hover:text-white" : ""
+                )}
                 onClick={() => setIsOpen(false)}
               >
                 {item.label}
               </Link>
             ))}
-            <Button asChild variant="secondary" className="mt-3 w-full">
+            <Button asChild className="mt-3 w-full">
               <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
-                Réserver un appel →
+                Prendre rendez-vous
               </a>
             </Button>
           </nav>
