@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { waitUntil } from "@vercel/functions";
 
 import {
   AUDIT_AGENT_RESPONSE_FORMAT,
@@ -11,6 +12,8 @@ import { sendAuditReportEmails } from "@/lib/audit-report-email";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
+
+const OPENAI_TIMEOUT_MS = 50_000;
 
 const requiredFields: Array<keyof AuditAgentInput> = [
   "companyName",
@@ -67,6 +70,39 @@ function extractOutputText(response: any): string {
   return chunks.join("\n");
 }
 
+async function readJsonResponse(response: Response) {
+  const text = await response.text();
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(
+      `Réponse non JSON reçue du fournisseur IA (${response.status}). Début de réponse: ${text
+        .replace(/\s+/g, " ")
+        .slice(0, 180)}`
+    );
+  }
+}
+
+async function sendReportInBackground(input: AuditAgentInput, report: AuditReport) {
+  try {
+    const excelBuffer = await createAuditWorkbook(input, report);
+    const pdfBuffer = await createAuditPdf(input, report);
+    const emailResult = await sendAuditReportEmails({
+      input,
+      report,
+      excelBuffer,
+      pdfBuffer
+    });
+
+    if (!emailResult.sent || emailResult.error) {
+      console.error("Audit report email issue", emailResult.error);
+    }
+  } catch (error) {
+    console.error("Audit report background email failed", error);
+  }
+}
+
 export async function POST(request: Request) {
   let input: AuditAgentInput;
 
@@ -99,6 +135,7 @@ export async function POST(request: Request) {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json"
       },
+      signal: AbortSignal.timeout(OPENAI_TIMEOUT_MS),
       body: JSON.stringify({
         model,
         input: [
@@ -119,7 +156,7 @@ export async function POST(request: Request) {
       })
     });
 
-    const data = await openAiResponse.json();
+    const data = await readJsonResponse(openAiResponse);
 
     if (!openAiResponse.ok) {
       const message =
@@ -137,19 +174,17 @@ export async function POST(request: Request) {
     }
 
     const report = JSON.parse(outputText) as AuditReport;
-    const excelBuffer = await createAuditWorkbook(input, report);
-    const pdfBuffer = await createAuditPdf(input, report);
-    const emailResult = await sendAuditReportEmails({
-      input,
-      report,
-      excelBuffer,
-      pdfBuffer
-    });
+    const canSendEmail = Boolean(process.env.RESEND_API_KEY);
+
+    if (canSendEmail) {
+      waitUntil(sendReportInBackground(input, report));
+    }
 
     return NextResponse.json({
       report,
-      emailSent: emailResult.sent,
-      emailError: emailResult.error
+      emailSent: false,
+      emailQueued: canSendEmail,
+      emailError: canSendEmail ? undefined : "RESEND_API_KEY manquante."
     });
   } catch (error) {
     return NextResponse.json(

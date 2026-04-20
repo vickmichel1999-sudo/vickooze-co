@@ -316,13 +316,28 @@ function ReportCard({ report }: { report: AuditReport }) {
   );
 }
 
+async function readApiJson(response: Response) {
+  const text = await response.text();
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    const preview = text.replace(/\s+/g, " ").slice(0, 180);
+    throw new Error(
+      response.status >= 500
+        ? `Le serveur Vercel a renvoyé une erreur technique (${response.status}) au lieu d’un JSON. Réessaie avec moins de texte dans les champs, puis consulte les logs Vercel si ça persiste. Détail: ${preview}`
+        : `Réponse serveur illisible (${response.status}). Détail: ${preview}`
+    );
+  }
+}
+
 export function AuditAgentForm() {
   const [form, setForm] = useState<AuditAgentInput>(emptyForm);
   const [report, setReport] = useState<AuditReport | null>(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [emailStatus, setEmailStatus] = useState<{
-    sent: boolean;
+    status: "sent" | "queued" | "failed";
     recipient: string;
     message?: string;
   } | null>(null);
@@ -344,7 +359,7 @@ export function AuditAgentForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form)
       });
-      const data = await response.json();
+      const data = await readApiJson(response);
 
       if (!response.ok) {
         throw new Error(data.error || "Impossible de générer l’audit.");
@@ -352,7 +367,7 @@ export function AuditAgentForm() {
 
       setReport(data.report);
       setEmailStatus({
-        sent: Boolean(data.emailSent),
+        status: data.emailSent ? "sent" : data.emailQueued ? "queued" : "failed",
         recipient: form.email,
         message: data.emailError
       });
@@ -417,7 +432,7 @@ export function AuditAgentForm() {
       <div>
         {report ? (
           <div className="grid gap-5">
-            {emailStatus?.sent ? (
+            {emailStatus?.status === "sent" ? (
               <Card className="flex items-start gap-4 border-coral/30 bg-coral/10 p-5">
                 <Mail className="mt-0.5 h-6 w-6 shrink-0 text-coral" />
                 <div>
@@ -427,6 +442,20 @@ export function AuditAgentForm() {
                   <p className="mt-2 text-sm leading-6 text-charcoal">
                     Le rapport complet a été envoyé à <strong>{emailStatus.recipient}</strong> avec
                     la version Excel et PDF en pièces jointes. Pensez à vérifier vos spams.
+                  </p>
+                </div>
+              </Card>
+            ) : emailStatus?.status === "queued" ? (
+              <Card className="flex items-start gap-4 border-coral/30 bg-coral/10 p-5">
+                <Mail className="mt-0.5 h-6 w-6 shrink-0 text-coral" />
+                <div>
+                  <p className="text-sm font-black uppercase tracking-[0.14em] text-coral">
+                    Envoi email lancé
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-charcoal">
+                    Le rapport est prêt ci-dessous. Le PDF et l’Excel sont générés puis envoyés en
+                    arrière-plan à <strong>{emailStatus.recipient}</strong>. Sur Resend sans domaine
+                    vérifié, seuls les emails de test autorisés peuvent recevoir le message.
                   </p>
                 </div>
               </Card>
