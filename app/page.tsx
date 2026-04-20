@@ -6,20 +6,22 @@ import {
   BarChart3,
   BookOpen,
   Bot,
+  Calculator,
   Check,
+  ClipboardCheck,
   Clock,
   FileSearch,
-  GraduationCap,
+  FileText,
   LineChart,
   Link2,
   ListChecks,
   LucideIcon,
+  MailCheck,
   RefreshCw,
   Settings2,
   Sparkles,
   Star,
   TrendingUp,
-  Workflow,
   Zap
 } from "lucide-react";
 
@@ -43,6 +45,48 @@ const heroStats = [
   { value: "5+ ans", label: "d’expérience IA & automatisation" },
   { value: "100%", label: "sur mesure, déployé sur vos outils" },
   { value: "30min", label: "pour identifier vos 3 gains rapides" }
+];
+
+const timeSavingsExample = [
+  { task: "Relances prospects", time: "2h" },
+  { task: "Reporting commercial", time: "2h30" },
+  { task: "Comptes rendus de RDV", time: "1h30" },
+  { task: "Tri emails et demandes", time: "2h" }
+];
+
+const proofOutcomes = [
+  { label: "Temps récupérable", value: "8h/sem" },
+  { label: "Volume mensuel", value: "32h/mois" },
+  { label: "Priorités IA", value: "3 actions" }
+];
+
+const afterCallItems: Array<{ title: string; text: string; icon: LucideIcon }> = [
+  {
+    title: "Carte des tâches chronophages",
+    text: "Les tâches répétitives sont classées par volume, impact et niveau de frustration.",
+    icon: ClipboardCheck
+  },
+  {
+    title: "Top 3 des automatisations",
+    text: "Vous savez quoi automatiser en premier, avec quels outils et dans quel ordre.",
+    icon: Sparkles
+  },
+  {
+    title: "Estimation de ROI",
+    text: "Chaque piste est reliée à un gain de temps potentiel et un niveau de difficulté.",
+    icon: Calculator
+  },
+  {
+    title: "Rapport prêt à partager",
+    text: "Un résumé clair avec roadmap, risques, prochaines étapes et proposition indicative.",
+    icon: FileText
+  }
+];
+
+const sampleCaseResults = [
+  "32h/mois de tâches administratives identifiées",
+  "3 workflows à lancer en priorité",
+  "Une roadmap 30 / 60 / 90 jours pour cadrer le déploiement"
 ];
 
 const heroPainPoints = [
@@ -336,6 +380,79 @@ function OfferVisual({ type }: { type: string }) {
   );
 }
 
+function AuditReportPreview() {
+  return (
+    <div className="rounded-lg bg-charcoal p-5 text-white shadow-soft md:p-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <p className="text-xs font-black uppercase tracking-[0.16em] text-peach">
+            Aperçu type
+          </p>
+          <h3 className="mt-3 font-serif text-3xl leading-tight text-white">
+            Rapport d’audit IA
+          </h3>
+        </div>
+        <span className="w-fit rounded-lg bg-coral px-4 py-2 text-sm font-black text-white">
+          Score 42/100
+        </span>
+      </div>
+
+      <div className="mt-6 grid gap-4">
+        <div className="rounded-lg bg-white p-4 text-charcoal">
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-sm font-black">Synthèse exécutive</p>
+            <MailCheck className="h-5 w-5 text-coral" />
+          </div>
+          <p className="mt-3 text-sm leading-6 text-muted">
+            PME de services avec relances manuelles, CRM incomplet et reporting dispersé.
+            Trois automatisations peuvent rendre du temps sans changer les outils actuels.
+          </p>
+        </div>
+
+        <div className="grid gap-3 md:grid-cols-3">
+          {[
+            ["Manque", "Relances non systématiques"],
+            ["Gain", "8h/semaine estimées"],
+            ["Action", "Workflow CRM + email"]
+          ].map(([label, value]) => (
+            <div key={label} className="rounded-lg border border-white/10 bg-white/[0.06] p-4">
+              <p className="text-xs font-black uppercase tracking-[0.14em] text-peach">{label}</p>
+              <p className="mt-2 text-sm font-bold leading-5 text-white/82">{value}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-lg bg-white/[0.06] p-4">
+          <div className="grid grid-cols-[1fr_90px_90px] gap-3 text-xs font-black uppercase tracking-[0.12em] text-peach">
+            <span>Automatisation</span>
+            <span>ROI</span>
+            <span>Difficulté</span>
+          </div>
+          {[
+            ["Relances prospects", "Fort", "Faible"],
+            ["Compte rendu RDV", "Moyen", "Faible"],
+            ["Reporting hebdo", "Fort", "Moyenne"]
+          ].map((row) => (
+            <div
+              key={row[0]}
+              className="mt-3 grid grid-cols-[1fr_90px_90px] gap-3 border-t border-white/10 pt-3 text-sm text-white/82"
+            >
+              <span>{row[0]}</span>
+              <span>{row[1]}</span>
+              <span>{row[2]}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p className="mt-5 text-xs font-bold leading-5 text-white/56">
+        Exemple illustratif basé sur une PME fictive. Les gains réels dépendent de vos volumes,
+        outils et habitudes d’équipe.
+      </p>
+    </div>
+  );
+}
+
 export default function HomePage() {
   return (
     <>
@@ -458,7 +575,120 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="offres" className="bg-cream py-16 md:py-24">
+      <section className="bg-white py-16 md:py-24">
+        <div className="section-shell">
+          <Reveal className="mx-auto max-w-4xl text-center">
+            <p className="eyebrow">Preuve business</p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
+              Ce que l’IA peut changer dans une PME dès les premières semaines
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-muted">
+              Avant de parler d’outils, on chiffre les irritants du quotidien : relances, saisie,
+              reporting, comptes rendus et suivi client.
+            </p>
+          </Reveal>
+
+          <div className="mt-14 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <Reveal>
+              <div className="grid gap-6">
+                <div>
+                  <p className="eyebrow">Exemple concret</p>
+                  <h3 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal">
+                    Comment récupérer 8h par semaine sans recruter
+                  </h3>
+                  <p className="mt-5 text-lg leading-8 text-muted">
+                    Sur une PME de services de 15 à 20 personnes, l’audit permet souvent de repérer
+                    plusieurs tâches simples à automatiser sans changer le CRM ni les habitudes de
+                    travail.
+                  </p>
+                </div>
+
+                <div className="grid gap-3">
+                  {timeSavingsExample.map((item) => (
+                    <div
+                      key={item.task}
+                      className="flex items-center justify-between gap-5 rounded-lg border border-charcoal/10 bg-cream px-5 py-4"
+                    >
+                      <span className="text-sm font-black text-charcoal">{item.task}</span>
+                      <span className="font-serif text-3xl leading-none text-coral">{item.time}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-3">
+                  {proofOutcomes.map((item) => (
+                    <div key={item.label} className="rounded-lg bg-charcoal p-5 text-white">
+                      <p className="font-serif text-4xl leading-none text-peach">{item.value}</p>
+                      <p className="mt-3 text-sm font-bold leading-5 text-white/70">{item.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <div className="grid gap-6">
+                <div className="rounded-lg bg-cream p-6 md:p-8">
+                  <p className="eyebrow">Mini étude de cas fictive</p>
+                  <h3 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal">
+                    PME B2B, 18 salariés, équipe commerciale débordée
+                  </h3>
+                  <p className="mt-5 text-lg leading-8 text-muted">
+                    Situation de départ : leads traités à la main, relances oubliées, reporting
+                    hebdomadaire reconstruit dans Google Sheets.
+                  </p>
+                  <ul className="mt-6 grid gap-4">
+                    {sampleCaseResults.map((item) => (
+                      <li key={item} className="flex gap-3 text-sm font-bold leading-6 text-charcoal">
+                        <Check className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-coral p-1 text-white" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-6 rounded-lg bg-white p-4 text-sm font-bold leading-6 text-muted">
+                    Exemple illustratif, pas un témoignage client. Il montre le type de diagnostic
+                    que l’on cherche à produire après un premier échange.
+                  </p>
+                </div>
+                <AuditReportPreview />
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-cream py-16 md:py-24">
+        <div className="section-shell">
+          <Reveal className="mx-auto max-w-4xl text-center">
+            <p className="eyebrow">Après l’appel</p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
+              Vous obtenez une base de décision, pas un simple échange commercial
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-muted">
+              Le premier rendez-vous sert à clarifier les priorités, vérifier le potentiel réel et
+              préparer les prochaines actions.
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {afterCallItems.map((item, index) => (
+              <Reveal key={item.title} delay={index * 0.05}>
+                <Card className="h-full p-6">
+                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-coral text-white">
+                    <item.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-6 text-xl font-black leading-tight text-charcoal">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-muted">{item.text}</p>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="offres" className="bg-white py-16 md:py-24">
         <div className="section-shell">
           <Reveal className="mx-auto max-w-4xl text-center">
             <p className="eyebrow">Votre transformation IA commence ici</p>

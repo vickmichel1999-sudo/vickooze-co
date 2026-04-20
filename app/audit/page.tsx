@@ -85,6 +85,29 @@ const deliverables = [
   }
 ];
 
+const afterAuditCall = [
+  {
+    title: "Diagnostic des pertes de temps",
+    text: "Un classement des tâches qui bloquent vos équipes et qui méritent une automatisation.",
+    icon: FileSearch
+  },
+  {
+    title: "Priorités IA chiffrées",
+    text: "Une estimation du gain potentiel, de la difficulté et du ROI pour chaque piste.",
+    icon: BarChart3
+  },
+  {
+    title: "Aperçu du rapport généré",
+    text: "Une synthèse claire avec manques détectés, roadmap, risques et prochaine étape.",
+    icon: FileText
+  },
+  {
+    title: "Décision simple",
+    text: "Vous savez si une mission IA est pertinente maintenant, plus tard, ou pas nécessaire.",
+    icon: Route
+  }
+];
+
 const outcomes = [
   {
     title: "Une vision claire",
@@ -261,6 +284,37 @@ export default function AuditPage() {
                 <div className="flex items-start gap-4 rounded-lg border border-charcoal/10 bg-cream p-5">
                   <Check className="mt-0.5 h-6 w-6 shrink-0 rounded-full bg-coral p-1 text-white" />
                   <p className="font-bold leading-7 text-charcoal">{item}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-charcoal py-16 text-white md:py-24">
+        <div className="section-shell">
+          <Reveal className="mx-auto max-w-4xl text-center">
+            <p className="eyebrow text-peach">Ce que vous obtenez après l’appel</p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-white md:text-5xl">
+              Une preuve de potentiel avant d’investir
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-white/72">
+              L’objectif du premier échange est simple : vérifier s’il existe assez de gains
+              concrets pour justifier une mission IA.
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {afterAuditCall.map((item, index) => (
+              <Reveal key={item.title} delay={index * 0.05}>
+                <div className="h-full rounded-lg border border-white/10 bg-white/[0.04] p-6">
+                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-coral text-white">
+                    <item.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-6 text-xl font-black leading-tight text-white">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-white/68">{item.text}</p>
                 </div>
               </Reveal>
             ))}
