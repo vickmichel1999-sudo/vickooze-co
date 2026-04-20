@@ -1,0 +1,14 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">VICKOOZE &amp; Co</title>
+  <desc id="desc">Image Open Graph pour VICKOOZE &amp; Co.</desc>
+  <rect width="1200" height="630" fill="#F5EDE4"/>
+  <path d="M0 0H1200V190C1002 152 825 176 668 262C486 361 258 365 0 274V0Z" fill="#FFC5A8"/>
+  <rect x="72" y="78" width="1056" height="474" rx="8" fill="white" fill-opacity="0.72" stroke="#1A1A1A" stroke-opacity="0.08"/>
+  <text x="132" y="178" fill="#FF6B35" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800" letter-spacing="5">CONSEIL IA POUR PME</text>
+  <text x="132" y="306" fill="#1A1A1A" font-family="Georgia, 'Times New Roman', serif" font-size="82" font-weight="700">VICKOOZE &amp; Co</text>
+  <text x="132" y="385" fill="#555555" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="600">Audit IA, agents IA et automatisation</text>
+  <rect x="132" y="444" width="278" height="64" rx="8" fill="#FF6B35"/>
+  <text x="271" y="486" text-anchor="middle" fill="white" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800">Prendre rendez-vous</text>
+  <path d="M875 170V468M726 319H1024" stroke="#1A1A1A" stroke-width="14" stroke-linecap="round" opacity="0.9"/>
+  <circle cx="875" cy="319" r="86" stroke="#FF6B35" stroke-width="18"/>
+</svg>

@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 31 41% 93%;
+  --foreground: 0 0% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
+  --primary: 16 100% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 18 100% 74%;
+  --secondary-foreground: 0 0% 10%;
+  --accent: 16 100% 60%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% 88%;
+  --input: 0 0% 88%;
+  --ring: 16 100% 60%;
+}
+
+* {
+  @apply border-border;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream font-sans text-charcoal antialiased;
+}
+
+::selection {
+  background: #ff9b7a;
+  color: #1a1a1a;
+}
+
+.section-shell {
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+}
+
+.eyebrow {
+  @apply text-xs font-bold uppercase tracking-[0.18em] text-coral;
+}
+
+.sparkle-field {
+  background-image:
+    radial-gradient(circle at 12% 20%, rgba(255, 107, 53, 0.22) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 80% 12%, rgba(26, 26, 26, 0.16) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 68% 74%, rgba(255, 155, 122, 0.22) 0 2px, transparent 2.5px);
+  background-size: 180px 180px, 220px 220px, 260px 260px;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
