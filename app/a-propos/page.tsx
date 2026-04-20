@@ -76,7 +76,7 @@ export default function AboutPage() {
                 construisons une roadmap claire avec un ROI mesurable.
               </p>
               <p>
-                Aujourd’hui, j’accompagne les dirigeants à distance depuis Bali avec
+                Aujourd’hui, j’accompagne les dirigeants à distance depuis Paris avec
                 une approche très opérationnelle : audit IA, création d’agents IA sur
                 mesure, automatisation de workflows avec Make, n8n ou Zapier, et
                 formation des équipes pour qu’elles deviennent autonomes sur les bons

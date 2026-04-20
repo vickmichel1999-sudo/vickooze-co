@@ -863,7 +863,7 @@ export default function HomePage() {
                   VICKOOZE & Co aide les PME à transformer les idées IA en systèmes utiles: agents, automatisations, méthodes et reporting.
                 </p>
                 <p className="mt-5 max-w-xl text-lg leading-8 text-charcoal">
-                  Intervention à distance depuis Bali, avec un accompagnement clair, humain et orienté résultats.
+                  Intervention à distance depuis Paris, avec un accompagnement clair, humain et orienté résultats.
                 </p>
                 <Button asChild className="mt-8" variant="outline">
                   <Link href="/a-propos">
