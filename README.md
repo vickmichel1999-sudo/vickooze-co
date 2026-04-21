@@ -25,11 +25,11 @@ Le site sera disponible sur `http://localhost:3000`.
 Crée un fichier `.env.local` à la racine du projet:
 
 ```bash
-ANTHROPIC_API_KEY="sk-ant-..."
-ANTHROPIC_MODEL="claude-sonnet-4-20250514"
-
 OPENAI_API_KEY="sk-..."
 OPENAI_MODEL="gpt-4.1-mini"
+
+ANTHROPIC_API_KEY="sk-ant-..."
+ANTHROPIC_MODEL="claude-sonnet-4-20250514"
 
 RESEND_API_KEY="re_..."
 RESEND_FROM="VICKOOZE & Co <onboarding@resend.dev>"
@@ -37,9 +37,9 @@ NOTIFICATION_EMAIL="Vicolango@gmail.com"
 ```
 
 L’agent est disponible sur `http://localhost:3000/agent-audit`.
-Les clés Anthropic, OpenAI et Resend sont utilisées uniquement côté serveur dans `app/api/audit-agent/route.ts`.
+Les clés OpenAI, Anthropic et Resend sont utilisées uniquement côté serveur dans `app/api/audit-agent/route.ts`.
 
-Claude génère le JSON du rapport en priorité. Si Anthropic échoue (crédit insuffisant, quota, timeout ou modèle indisponible), la route bascule automatiquement sur OpenAI. Le code du site transforme ensuite ce rapport en aperçu, PDF, Excel et email.
+OpenAI génère le JSON du rapport en priorité. Si OpenAI échoue (crédit insuffisant, quota, timeout ou modèle indisponible), la route bascule automatiquement sur Anthropic. Le code du site transforme ensuite ce rapport en aperçu, PDF, Excel et email.
 
 Sur Vercel, ajoute les mêmes variables dans Project Settings → Environment Variables, coche `Production`, `Preview` et `Development`, puis redéploie le site pour que les nouvelles clés soient prises en compte.
 

@@ -91,7 +91,7 @@ export default function AgentAuditPage() {
               <div className="mt-8 flex items-start gap-3 rounded-lg bg-white p-5 text-charcoal">
                 <ShieldCheck className="mt-0.5 h-6 w-6 shrink-0 text-pine" />
                 <p className="text-sm font-bold leading-6">
-                  Les clés Anthropic, OpenAI et Resend restent côté serveur via la route API Next.js. Claude est utilisé en priorité, OpenAI prend le relais si besoin.
+                  Les clés OpenAI, Anthropic et Resend restent côté serveur via la route API Next.js. OpenAI est utilisé en priorité, Claude prend le relais si besoin.
                 </p>
               </div>
             </div>

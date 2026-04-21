@@ -443,7 +443,7 @@ export function AuditAgentForm() {
                     Rapport généré avec {provider === "openai" ? "OpenAI" : "Claude"}
                   </p>
                   <p className="mt-2 text-sm leading-6 text-muted">
-                    L’agent utilise Claude en priorité et bascule sur OpenAI si le premier fournisseur
+                    L’agent utilise OpenAI en priorité et bascule sur Claude si le premier fournisseur
                     n’est pas disponible.
                   </p>
                 </div>

@@ -211,21 +211,6 @@ async function generateReportWithOpenAI(input: AuditAgentInput) {
 async function generateReport(input: AuditAgentInput) {
   const providerErrors: string[] = [];
 
-  if (process.env.ANTHROPIC_API_KEY) {
-    try {
-      return {
-        report: await generateReportWithAnthropic(input),
-        provider: "anthropic"
-      };
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Erreur Anthropic inconnue.";
-      providerErrors.push(`Anthropic: ${message}`);
-      console.error("Anthropic audit generation failed, falling back to OpenAI", message);
-    }
-  } else {
-    providerErrors.push("Anthropic: ANTHROPIC_API_KEY est manquante.");
-  }
-
   if (process.env.OPENAI_API_KEY) {
     try {
       return {
@@ -235,10 +220,25 @@ async function generateReport(input: AuditAgentInput) {
     } catch (error) {
       const message = error instanceof Error ? error.message : "Erreur OpenAI inconnue.";
       providerErrors.push(`OpenAI: ${message}`);
-      console.error("OpenAI audit generation failed", message);
+      console.error("OpenAI audit generation failed, falling back to Anthropic", message);
     }
   } else {
     providerErrors.push("OpenAI: OPENAI_API_KEY est manquante.");
+  }
+
+  if (process.env.ANTHROPIC_API_KEY) {
+    try {
+      return {
+        report: await generateReportWithAnthropic(input),
+        provider: "anthropic"
+      };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Erreur Anthropic inconnue.";
+      providerErrors.push(`Anthropic: ${message}`);
+      console.error("Anthropic audit generation failed", message);
+    }
+  } else {
+    providerErrors.push("Anthropic: ANTHROPIC_API_KEY est manquante.");
   }
 
   throw new Error(
