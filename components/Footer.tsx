@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Linkedin, Mail } from "lucide-react";
 
-import { CONTACT_EMAIL, LINKEDIN_URL, SITE_NAME } from "@/lib/constants";
+import { CONTACT_EMAIL, LINKEDIN_URL, LOGO_IMAGE, SITE_NAME } from "@/lib/constants";
 
 const footerColumns = [
   {
@@ -37,14 +38,21 @@ export function Footer() {
       <div className="section-shell">
         <div className="grid gap-10 text-center lg:grid-cols-[1.2fr_1.8fr] lg:text-left">
           <div className="mx-auto max-w-md lg:mx-0">
-            <Link href="/" className="flex items-center justify-center gap-3 text-xl font-black lg:justify-start">
-              <span className="grid h-10 w-10 place-items-center rounded-lg bg-pine font-serif text-lg italic text-white">
-                V
-              </span>
-              <span>{SITE_NAME}</span>
+            <Link
+              href="/"
+              className="relative mx-auto block h-12 w-[220px] overflow-hidden rounded-md bg-white lg:mx-0"
+              aria-label={`${SITE_NAME} - Accueil`}
+            >
+              <Image
+                src={LOGO_IMAGE}
+                alt={SITE_NAME}
+                fill
+                sizes="220px"
+                className="object-contain"
+              />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-6 text-white/62">
-              Conseil IA pour PME françaises : audit, agents IA, automatisation et formation pour
+              Conseil IA pour TPE/PME françaises : audit, agents IA, automatisation et formation pour
               rendre vos équipes plus rapides sans complexifier votre organisation.
             </p>
             <a
@@ -105,7 +113,7 @@ export function Footer() {
           </div>
           <div className="mt-6 flex flex-col gap-3 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
             <span>Copyright © {SITE_NAME} 2026</span>
-            <span>Fait à Paris, pour les PME françaises, avec IA et méthode.</span>
+            <span>Fait à Paris, pour les TPE/PME françaises, avec IA et méthode.</span>
           </div>
         </div>
       </div>

@@ -157,7 +157,7 @@ export default function TrainingPage() {
             <div className="relative min-h-[340px] overflow-hidden rounded-lg bg-charcoal shadow-soft md:min-h-[520px]">
               <Image
                 src={PLACEHOLDER_IMAGES.founder}
-                alt={`${FOUNDER_NAME} prépare une formation IA pour une PME`}
+                alt={`${FOUNDER_NAME} prépare une formation IA pour une TPE/PME`}
                 fill
                 priority
                 sizes="(max-width: 1024px) 92vw, 1120px"
@@ -238,7 +238,7 @@ export default function TrainingPage() {
       <section className="bg-white py-16 md:py-24">
         <div className="section-shell">
           <Reveal className="text-center lg:text-left">
-            <p className="eyebrow">Formation IA pour PME</p>
+            <p className="eyebrow">Formation IA pour TPE/PME</p>
             <h2 className="mx-auto mt-4 max-w-5xl font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl lg:mx-0">
               Vous voulez être plus efficace avec l’IA mais vous êtes bloqué au point de départ ?
             </h2>
@@ -430,7 +430,7 @@ export default function TrainingPage() {
               Qui va vous apprendre ?
             </h2>
             <p className="mt-6 text-lg leading-8 text-muted">
-              Fondateur de VICKOOZE & Co, {FOUNDER_NAME} accompagne les PME sur leurs usages IA, leurs automatisations internes et la création d’agents IA utiles au quotidien.
+              Fondateur de VICKOOZE & Co, {FOUNDER_NAME} accompagne les TPE/PME sur leurs usages IA, leurs automatisations internes et la création d’agents IA utiles au quotidien.
             </p>
             <p className="mt-5 text-lg leading-8 text-muted">
               L’objectif : vous rendre opérationnel, autonome et capable d’utiliser l’IA sans dépendre d’un empilement d’outils mal configurés.

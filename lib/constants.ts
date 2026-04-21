@@ -5,6 +5,7 @@ export const LINKEDIN_URL = "https://www.linkedin.com/in/vick-emmanuel-michel-1b
 export const SITE_URL = "https://vickooze.com";
 export const SITE_NAME = "VICKOOZE & Co";
 export const FOUNDER_NAME = "Vick-Emmanuel Michel";
+export const LOGO_IMAGE = "/vickooze-logo.png";
 
 export const PLACEHOLDER_IMAGES = {
   founder: "/founder-vick-emmanuel.jpg",

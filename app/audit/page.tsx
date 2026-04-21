@@ -243,7 +243,7 @@ export default function AuditPage() {
       <section className="overflow-hidden bg-white pt-28 pb-16 md:pt-32 md:pb-24">
         <div className="section-shell grid items-center gap-10 text-center lg:grid-cols-[0.95fr_1.05fr] lg:text-left">
           <Reveal className="mx-auto max-w-3xl lg:mx-0">
-            <p className="eyebrow">Audit IA pour PME</p>
+            <p className="eyebrow">Audit IA pour TPE/PME</p>
             <h1 className="mx-auto mt-5 max-w-3xl font-serif text-[44px] leading-[1.02] tracking-[-0.02em] text-charcoal sm:text-5xl md:text-[64px] lg:mx-0">
               Avant d’automatiser, identifiez les tâches qui rapportent vraiment.
             </h1>
@@ -256,7 +256,7 @@ export default function AuditPage() {
                 Promesse
               </p>
               <p className="mt-3 text-xl font-black leading-7 text-charcoal">
-                Vous repartez avec les 3 à 5 automatisations les plus utiles pour votre PME, pas avec une liste d’outils à tester au hasard.
+                Vous repartez avec les 3 à 5 automatisations les plus utiles pour votre TPE/PME, pas avec une liste d’outils à tester au hasard.
               </p>
             </div>
 
@@ -272,7 +272,7 @@ export default function AuditPage() {
               </Button>
             </div>
             <p className="mt-4 text-sm font-bold text-muted">
-              Pour dirigeants de PME qui veulent passer à l’IA avec méthode, sans perdre du temps dans des tests dispersés.
+              Pour dirigeants de TPE/PME qui veulent passer à l’IA avec méthode, sans perdre du temps dans des tests dispersés.
             </p>
           </Reveal>
 
@@ -312,14 +312,14 @@ export default function AuditPage() {
                 </div>
               </div>
 
-              <div className="absolute bottom-5 left-4 right-4 rounded-lg bg-white p-5 text-charcoal shadow-lift sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-[360px]">
-                <p className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-pine">
+              <div className="absolute bottom-5 left-4 right-4 rounded-lg border border-white/16 bg-charcoal/68 p-5 text-white shadow-lift backdrop-blur-md sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-[360px]">
+                <p className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-peach">
                   Appel audit offert
                 </p>
-                <h2 className="mt-3 font-serif text-3xl leading-tight text-charcoal sm:text-4xl">
+                <h2 className="mt-3 font-serif text-3xl leading-tight text-white sm:text-4xl">
                   On part de vos vrais process, pas d’une démo d’outil.
                 </h2>
-                <p className="mt-3 text-sm font-bold leading-6 text-muted">
+                <p className="mt-3 text-sm font-bold leading-6 text-white/78">
                   {FOUNDER_NAME} analyse vos tâches, vos outils et vos premiers gains possibles avant toute mission.
                 </p>
                 <div className="mt-4 grid grid-cols-3 gap-2 text-center">
@@ -328,9 +328,9 @@ export default function AuditPage() {
                     ["3-5", "priorités"],
                     ["90j", "roadmap"]
                   ].map(([value, label]) => (
-                    <div key={label} className="rounded-md bg-cream px-2 py-3">
-                      <p className="font-serif text-2xl leading-none text-pine">{value}</p>
-                      <p className="mt-1 text-[10px] font-black uppercase tracking-[0.08em] text-muted">
+                    <div key={label} className="rounded-md bg-white/12 px-2 py-3">
+                      <p className="font-serif text-2xl leading-none text-peach">{value}</p>
+                      <p className="mt-1 text-[10px] font-black uppercase tracking-[0.08em] text-white/68">
                         {label}
                       </p>
                     </div>
@@ -359,14 +359,14 @@ export default function AuditPage() {
               <div className="relative aspect-[16/10] min-h-[280px] md:aspect-[16/7]">
                 <Image
                   src={auditImages.pain}
-                  alt="Dirigeant de PME débordé devant des emails, documents et post-it"
+                  alt="Dirigeant de TPE/PME débordé devant des emails, documents et post-it"
                   fill
                   sizes="(max-width: 1024px) 92vw, 1160px"
                   className="object-cover object-[48%_46%] grayscale-[12%]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/72 via-charcoal/10 to-transparent" />
-                <div className="absolute bottom-5 left-5 right-5 max-w-2xl rounded-lg bg-white/92 p-5 text-charcoal shadow-soft backdrop-blur md:bottom-8 md:left-8">
-                  <p className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-pine">
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/86 via-charcoal/24 to-charcoal/8" />
+                <div className="absolute bottom-5 left-5 right-5 max-w-2xl rounded-lg border border-white/18 bg-charcoal/58 p-5 text-white shadow-soft backdrop-blur-md md:bottom-8 md:left-8">
+                  <p className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-peach">
                     Le vrai point de départ
                   </p>
                   <p className="mt-2 text-lg font-black leading-7 md:text-xl">

@@ -12,7 +12,7 @@ import { FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "À propos",
   description:
-    "Découvrez VICKOOZE & Co, cabinet de conseil IA fondé par Vick-Emmanuel Michel pour accompagner les PME françaises.",
+    "Découvrez VICKOOZE & Co, cabinet de conseil IA fondé par Vick-Emmanuel Michel pour accompagner les TPE/PME françaises.",
   alternates: {
     canonical: "/a-propos"
   }
@@ -40,9 +40,9 @@ export default function AboutPage() {
   return (
     <>
       <Hero
-        badge="Cabinet conseil IA pour PME françaises"
+        badge="Cabinet conseil IA pour TPE/PME françaises"
         title="Le cabinet IA qui propulse votre efficacité"
-        subtitle="Des premiers tests IA aux automatisations concrètes, découvrez comment notre approche pragmatique aide les PME françaises à gagner du temps et à structurer leur croissance."
+        subtitle="Des premiers tests IA aux automatisations concrètes, découvrez comment notre approche pragmatique aide les TPE/PME françaises à gagner du temps et à structurer leur croissance."
         showVisual={false}
       />
 
@@ -57,7 +57,7 @@ export default function AboutPage() {
               <p>
                 Je suis Vick-Emmanuel Michel, fondateur de VICKOOZE & Co. Mon
                 aventure avec l’IA a commencé par un constat simple : beaucoup de
-                dirigeants de PME entendent parler de ChatGPT, d’agents IA et
+                dirigeants de TPE/PME entendent parler de ChatGPT, d’agents IA et
                 d’automatisation, mais très peu savent par où commencer sans perdre du
                 temps dans des outils mal choisis.
               </p>
@@ -69,7 +69,7 @@ export default function AboutPage() {
                 qui manquent de méthode pour utiliser l’IA efficacement.
               </p>
               <p>
-                C’est là que l’idée de VICKOOZE & Co est née : aider les PME françaises
+                C’est là que l’idée de VICKOOZE & Co est née : aider les TPE/PME françaises
                 à transformer l’IA en systèmes concrets. Pas de démonstrations
                 impressionnantes mais inutiles. Pas de jargon. Nous partons de vos
                 processus réels, identifions les tâches à plus fort potentiel, puis

@@ -30,7 +30,7 @@ import { CALENDLY_URL } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "Services IA à la demande",
   description:
-    "Agents IA personnalisés, automatisation Make/n8n/Zapier, chatbots, qualification de leads, veille automatisée et formation IA pour PME.",
+    "Agents IA personnalisés, automatisation Make/n8n/Zapier, chatbots, qualification de leads, veille automatisée et formation IA pour TPE/PME.",
   alternates: {
     canonical: "/services"
   }
@@ -225,7 +225,7 @@ export default function ServicesPage() {
               </Button>
             </div>
             <p className="mt-4 text-sm font-bold text-muted">
-              Idéal pour les PME de 5 à 50 salariés qui veulent automatiser sans embaucher une équipe technique.
+              Idéal pour les TPE/PME de 5 à 50 salariés qui veulent automatiser sans embaucher une équipe technique.
             </p>
           </Reveal>
 

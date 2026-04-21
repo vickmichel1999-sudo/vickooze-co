@@ -6,7 +6,7 @@ import { CALENDLY_URL, CONTACT_EMAIL, SITE_NAME } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "Conditions générales d’utilisation",
   description:
-    "Conditions générales d’utilisation du site VICKOOZE & Co, cabinet de conseil IA pour PME.",
+    "Conditions générales d’utilisation du site VICKOOZE & Co, cabinet de conseil IA pour TPE/PME.",
   alternates: {
     canonical: "/cgu"
   }

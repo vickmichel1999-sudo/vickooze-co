@@ -22,7 +22,7 @@ const emptyForm: AuditAgentInput = {
 };
 
 const demoForm: AuditAgentInput = {
-  companyName: "PME exemple",
+  companyName: "TPE/PME exemple",
   email: "",
   sector: "Services B2B",
   teamSize: "18 salariés",

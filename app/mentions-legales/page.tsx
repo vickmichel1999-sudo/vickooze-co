@@ -6,7 +6,7 @@ import { CONTACT_EMAIL, FOUNDER_NAME, SITE_NAME, SITE_URL } from "@/lib/constant
 export const metadata: Metadata = {
   title: "Mentions légales",
   description:
-    "Mentions légales du site VICKOOZE & Co, cabinet de conseil en IA pour PME françaises.",
+    "Mentions légales du site VICKOOZE & Co, cabinet de conseil en IA pour TPE/PME françaises.",
   alternates: {
     canonical: "/mentions-legales"
   }
@@ -16,7 +16,7 @@ const sections = [
   {
     title: "Éditeur du site",
     paragraphs: [
-      `${SITE_NAME} est un cabinet de conseil en intelligence artificielle qui accompagne les PME françaises dans l’audit IA, l’implémentation d’agents IA et l’automatisation de leurs processus internes.`,
+      `${SITE_NAME} est un cabinet de conseil en intelligence artificielle qui accompagne les TPE/PME françaises dans l’audit IA, l’implémentation d’agents IA et l’automatisation de leurs processus internes.`,
       `Directeur de la publication : ${FOUNDER_NAME}.`,
       `Site internet : ${SITE_URL}. Contact : ${CONTACT_EMAIL}.`
     ]

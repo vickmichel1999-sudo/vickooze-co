@@ -1,12 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { CALENDLY_URL, SITE_NAME } from "@/lib/constants";
+import { CALENDLY_URL, LOGO_IMAGE, SITE_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -40,12 +41,17 @@ export function Header() {
       <div className="section-shell relative flex h-16 items-center justify-between gap-3 md:h-14 md:gap-4">
         <Link
           href="/"
-          className="flex min-w-0 items-center gap-2 text-[14px] font-black tracking-[-0.01em] text-charcoal sm:gap-3 sm:text-[15px]"
+          className="relative block h-10 w-[176px] shrink-0 overflow-hidden rounded-md bg-white sm:w-[210px]"
+          aria-label={`${SITE_NAME} - Accueil`}
         >
-          <span className="grid h-7 w-7 place-items-center rounded-md bg-charcoal font-serif text-sm italic text-white">
-            V
-          </span>
-          <span className="truncate">{SITE_NAME}</span>
+          <Image
+            src={LOGO_IMAGE}
+            alt={SITE_NAME}
+            fill
+            priority
+            sizes="(max-width: 640px) 176px, 210px"
+            className="object-contain"
+          />
         </Link>
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-charcoal/10 bg-white/85 p-1.5 text-xs font-black text-charcoal/72 shadow-sm backdrop-blur md:flex">

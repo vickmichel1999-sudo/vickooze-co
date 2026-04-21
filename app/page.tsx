@@ -33,9 +33,9 @@ import { Card } from "@/components/ui/card";
 import { CALENDLY_URL, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Conseil IA, agents IA et automatisation pour PME",
+  title: "Conseil IA, agents IA et automatisation pour TPE/PME",
   description:
-    "VICKOOZE & Co accompagne les PME françaises avec audit IA, agents IA sur mesure, automatisation des processus et formation des équipes.",
+    "VICKOOZE & Co accompagne les TPE/PME françaises avec audit IA, agents IA sur mesure, automatisation des processus et formation des équipes.",
   alternates: {
     canonical: "/"
   }
@@ -404,7 +404,7 @@ function AuditReportPreview() {
             <MailCheck className="h-5 w-5 text-pine" />
           </div>
           <p className="mt-3 text-sm leading-6 text-muted">
-            PME de services avec relances manuelles, CRM incomplet et reporting dispersé.
+            TPE/PME de services avec relances manuelles, CRM incomplet et reporting dispersé.
             Trois automatisations peuvent rendre du temps sans changer les outils actuels.
           </p>
         </div>
@@ -446,7 +446,7 @@ function AuditReportPreview() {
       </div>
 
       <p className="mt-5 text-xs font-bold leading-5 text-white/56">
-        Exemple illustratif basé sur une PME fictive. Les gains réels dépendent de vos volumes,
+        Exemple illustratif basé sur une TPE/PME fictive. Les gains réels dépendent de vos volumes,
         outils et habitudes d’équipe.
       </p>
     </div>
@@ -459,9 +459,9 @@ export default function HomePage() {
       <section className="overflow-hidden bg-white pt-24 pb-16 md:pt-28 md:pb-24">
         <div className="section-shell grid items-start gap-10 lg:grid-cols-[0.95fr_1.05fr]">
           <Reveal className="mx-auto max-w-3xl text-center lg:mx-0 lg:text-left">
-            <p className="eyebrow">Audit IA offert pour PME françaises</p>
+            <p className="eyebrow">Audit IA offert pour TPE/PME françaises</p>
             <h1 className="mx-auto mt-6 max-w-[620px] font-serif text-[46px] leading-[0.96] tracking-[-0.032em] text-charcoal sm:text-[64px] md:text-[82px] lg:mx-0 lg:text-[94px]">
-              Votre PME perd des heures sur des tâches que <span className="text-pine">l’IA</span> peut déjà gérer
+              Votre TPE/PME perd des heures sur des tâches que <span className="text-pine">l’IA</span> peut déjà gérer
             </h1>
             <p className="mx-auto mt-7 max-w-[520px] text-[16px] leading-7 text-muted sm:text-[17px] sm:leading-8 lg:mx-0">
               Nous identifions les tâches qui ralentissent vos équipes, puis nous déployons les agents IA et automatisations qui libèrent du temps sans complexifier votre organisation.
@@ -507,7 +507,7 @@ export default function HomePage() {
               </Button>
             </div>
             <p className="mt-4 text-sm font-bold text-muted">
-              Pour dirigeants de PME de 5 à 50 salariés qui veulent passer à l’IA sans recruter une équipe technique.
+              Pour dirigeants de TPE/PME de 5 à 50 salariés qui veulent passer à l’IA sans recruter une équipe technique.
             </p>
           </Reveal>
 
@@ -625,7 +625,7 @@ export default function HomePage() {
           <Reveal className="mx-auto max-w-4xl text-center">
             <p className="eyebrow eyebrow-center">Preuve business</p>
             <h2 className="mx-auto mt-4 max-w-4xl font-serif text-[38px] leading-[1] tracking-[-0.026em] text-charcoal sm:text-[44px] md:text-[64px]">
-              Ce que l’IA peut changer dans une PME dès les premières semaines
+              Ce que l’IA peut changer dans une TPE/PME dès les premières semaines
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-[16px] leading-7 text-muted">
               Avant de parler d’outils, on chiffre les irritants du quotidien : relances, saisie,
@@ -642,7 +642,7 @@ export default function HomePage() {
                     Comment récupérer 8h par semaine sans recruter
                   </h3>
                   <p className="mt-5 max-w-lg text-[16px] leading-7 text-muted">
-                    Sur une PME de services de 15 à 20 personnes, l’audit permet souvent de repérer
+                    Sur une TPE/PME de services de 15 à 20 personnes, l’audit permet souvent de repérer
                     plusieurs tâches simples à automatiser sans changer le CRM ni les habitudes de
                     travail.
                   </p>
@@ -682,7 +682,7 @@ export default function HomePage() {
                 <div className="rounded-md bg-cream p-7 md:p-10">
                   <p className="eyebrow">Mini étude de cas fictive</p>
                   <h3 className="mt-5 font-serif text-[34px] leading-[1.04] tracking-[-0.02em] text-charcoal md:text-[46px]">
-                    PME B2B, 18 salariés, équipe commerciale débordée
+                    TPE/PME B2B, 18 salariés, équipe commerciale débordée
                   </h3>
                   <p className="mt-5 text-[16px] leading-7 text-muted">
                     Situation de départ : leads traités à la main, relances oubliées, reporting
@@ -747,7 +747,7 @@ export default function HomePage() {
               Un cabinet full-service pour passer de l’idée IA aux résultats concrets
             </h2>
             <p className="mt-6 text-lg leading-8 text-muted">
-              Nous accompagnons les dirigeants de PME dans le lancement, l’implémentation et l’optimisation de solutions IA utiles au quotidien.
+              Nous accompagnons les dirigeants de TPE/PME dans le lancement, l’implémentation et l’optimisation de solutions IA utiles au quotidien.
             </p>
           </Reveal>
 
@@ -790,7 +790,7 @@ export default function HomePage() {
           <Reveal className="mx-auto max-w-3xl text-center">
             <p className="eyebrow">Comment ça marche</p>
             <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
-              Nous facilitons l’intégration de l’IA dans votre PME
+              Nous facilitons l’intégration de l’IA dans votre TPE/PME
             </h2>
             <p className="mt-5 text-lg leading-8 text-muted">
               Découvrez le parcours type de nos clients. Nous adaptons notre offre à vos défis spécifiques.
@@ -902,7 +902,7 @@ export default function HomePage() {
                   Qui va vous accompagner ?
                 </h2>
                 <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-muted lg:mx-0">
-                  VICKOOZE & Co aide les PME à transformer les idées IA en systèmes utiles: agents, automatisations, méthodes et reporting.
+                  VICKOOZE & Co aide les TPE/PME à transformer les idées IA en systèmes utiles: agents, automatisations, méthodes et reporting.
                 </p>
                 <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-charcoal lg:mx-0">
                   Intervention à distance depuis Paris, avec un accompagnement clair, humain et orienté résultats.

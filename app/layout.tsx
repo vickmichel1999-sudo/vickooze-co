@@ -29,16 +29,16 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | Conseil IA pour PME françaises`,
+    default: `${SITE_NAME} | Conseil IA pour TPE/PME françaises`,
     template: `%s | ${SITE_NAME}`
   },
   description:
-    "Audit IA, agents IA sur mesure et automatisation des processus internes pour les PME françaises.",
+    "Audit IA, agents IA sur mesure et automatisation des processus internes pour les TPE/PME françaises.",
   keywords: [
-    "conseil IA PME",
+    "conseil IA TPE/PME",
     "audit IA",
     "agents IA",
-    "automatisation PME",
+    "automatisation TPE/PME",
     "formation IA entreprise"
   ],
   authors: [{ name: "Vick-Emmanuel Michel" }],
@@ -48,23 +48,23 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | Conseil IA pour PME françaises`,
+    title: `${SITE_NAME} | Conseil IA pour TPE/PME françaises`,
     description:
-      "Automatisez votre PME avec l’IA grâce à un audit pragmatique, des agents IA et des workflows connectés.",
+      "Automatisez votre TPE/PME avec l’IA grâce à un audit pragmatique, des agents IA et des workflows connectés.",
     images: [
       {
         url: "/og-image.svg",
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} - Conseil IA pour PME françaises`
+        alt: `${SITE_NAME} - Conseil IA pour TPE/PME françaises`
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | Conseil IA pour PME françaises`,
+    title: `${SITE_NAME} | Conseil IA pour TPE/PME françaises`,
     description:
-      "Audit IA, agents IA sur mesure et automatisation des processus internes pour les PME françaises.",
+      "Audit IA, agents IA sur mesure et automatisation des processus internes pour les TPE/PME françaises.",
     images: ["/og-image.svg"]
   }
 };
