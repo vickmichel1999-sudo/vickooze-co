@@ -30,6 +30,7 @@ html {
 
 body {
   @apply bg-white font-sans text-charcoal antialiased;
+  overflow-x: hidden;
   text-rendering: optimizeLegibility;
 }
 
@@ -39,7 +40,7 @@ body {
 }
 
 .section-shell {
-  @apply mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-10;
+  @apply mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 xl:px-0;
 }
 
 .eyebrow {
@@ -70,4 +71,15 @@ body {
 
 .text-balance {
   text-wrap: balance;
+}
+
+@media (max-width: 767px) {
+  .eyebrow {
+    @apply w-full justify-center text-center tracking-[0.14em];
+  }
+
+  .eyebrow::before,
+  .eyebrow-center::after {
+    @apply w-[18px];
+  }
 }

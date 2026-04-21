@@ -34,7 +34,7 @@ export function FinalCTA() {
             ))}
           </ul>
 
-          <Button asChild size="xl" variant="light" className="mt-8">
+          <Button asChild size="xl" variant="light" className="mt-8 w-full sm:w-auto">
             <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
               Réserver mon audit offert
               <ArrowRight className="ml-2 h-5 w-5" />

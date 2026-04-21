@@ -136,17 +136,17 @@ const faqs = [
 export default function TrainingPage() {
   return (
     <>
-      <section className="bg-white pt-32 pb-16 md:pb-24">
+      <section className="bg-white pt-28 pb-16 md:pt-32 md:pb-24">
         <div className="section-shell text-center">
           <Reveal className="mx-auto max-w-5xl">
             <p className="eyebrow">Formation des équipes</p>
-            <h1 className="mt-4 font-serif text-5xl leading-[1.05] text-charcoal md:text-[64px]">
+            <h1 className="mx-auto mt-4 max-w-4xl font-serif text-[44px] leading-[1.02] tracking-[-0.02em] text-charcoal sm:text-5xl md:text-[64px]">
               Formation IA pour vos équipes
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted">
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted md:text-lg md:leading-8">
               Maîtrisez ChatGPT, Claude, le prompt engineering et les automatisations IA pour gagner du temps dès les premières semaines.
             </p>
-            <Button asChild variant="secondary" size="lg" className="mt-8">
+            <Button asChild variant="secondary" size="lg" className="mt-8 w-full sm:w-auto">
               <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
                 Prendre rendez-vous
               </a>
@@ -154,7 +154,7 @@ export default function TrainingPage() {
           </Reveal>
 
           <Reveal delay={0.12} className="relative mx-auto mt-16 max-w-6xl">
-            <div className="relative min-h-[520px] overflow-hidden rounded-lg bg-charcoal shadow-soft">
+            <div className="relative min-h-[340px] overflow-hidden rounded-lg bg-charcoal shadow-soft md:min-h-[520px]">
               <Image
                 src={PLACEHOLDER_IMAGES.founder}
                 alt={`${FOUNDER_NAME} prépare une formation IA pour une PME`}
@@ -166,7 +166,34 @@ export default function TrainingPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-charcoal/45 via-transparent to-white/10" />
             </div>
 
-            <div className="absolute left-5 top-28 w-[260px] rounded-lg bg-white p-5 text-left shadow-soft md:left-20">
+            <div className="mt-4 grid gap-3 text-left md:hidden">
+              <div className="rounded-lg bg-white p-5 shadow-soft">
+                <p className="text-sm font-black text-charcoal">Prompts prêts à l’emploi</p>
+                <div className="mt-4 grid gap-3 text-sm text-muted">
+                  {["Direction", "Commercial", "Support", "Opérations"].map((item) => (
+                    <div key={item} className="flex items-center justify-between gap-4">
+                      <span>{item}</span>
+                      <span className="rounded-lg bg-[#D9F7D8] px-3 py-1 text-xs font-black text-[#217A35]">
+                        OK
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-lg bg-white p-5 shadow-soft">
+                <p className="text-sm font-black text-charcoal">Cas pratiques</p>
+                <div className="mt-4 grid gap-3 text-sm">
+                  {["Emails clients", "Compte-rendu", "Qualification leads", "Agent interne"].map((item) => (
+                    <div key={item} className="flex items-center gap-3">
+                      <CheckCircle2 className="h-4 w-4 text-pine" />
+                      <span className="text-muted">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute left-5 top-28 hidden w-[260px] rounded-lg bg-white p-5 text-left shadow-soft md:block md:left-20">
               <p className="text-sm font-black text-charcoal">Prompts prêts à l’emploi</p>
               <div className="mt-4 space-y-3 text-sm text-muted">
                 {["Direction", "Commercial", "Support", "Opérations"].map((item) => (
@@ -193,7 +220,7 @@ export default function TrainingPage() {
               </div>
             </div>
 
-            <div className="absolute right-5 top-20 w-[280px] rounded-lg bg-white p-5 text-left shadow-soft md:right-20">
+            <div className="absolute right-5 top-20 hidden w-[280px] rounded-lg bg-white p-5 text-left shadow-soft md:block md:right-20">
               <p className="text-sm font-black text-charcoal">Cas pratiques</p>
               <div className="mt-4 space-y-3 text-sm">
                 {["Emails clients", "Compte-rendu", "Qualification leads", "Agent interne"].map((item) => (
@@ -210,17 +237,17 @@ export default function TrainingPage() {
 
       <section className="bg-white py-16 md:py-24">
         <div className="section-shell">
-          <Reveal>
+          <Reveal className="text-center lg:text-left">
             <p className="eyebrow">Formation IA pour PME</p>
-            <h2 className="mt-4 max-w-5xl font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
+            <h2 className="mx-auto mt-4 max-w-5xl font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl lg:mx-0">
               Vous voulez être plus efficace avec l’IA mais vous êtes bloqué au point de départ ?
             </h2>
           </Reveal>
           <div className="mt-12 grid gap-8 md:grid-cols-4">
             {painPoints.map((item, index) => (
               <Reveal key={item.title} delay={index * 0.05}>
-                <div>
-                  <item.icon className="h-8 w-8 text-pine" />
+                <div className="text-center md:text-left">
+                  <item.icon className="mx-auto h-8 w-8 text-pine md:mx-0" />
                   <h3 className="mt-6 text-xl font-black text-charcoal">{item.title}</h3>
                   <p className="mt-3 text-base leading-7 text-muted">{item.text}</p>
                 </div>
@@ -244,17 +271,17 @@ export default function TrainingPage() {
 
           <div className="mt-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
             <Reveal>
-              <Card className="relative min-h-[420px] overflow-hidden p-7">
+              <Card className="relative min-h-[360px] overflow-hidden p-6 text-center md:min-h-[420px] md:p-7 md:text-left">
                 <p className="eyebrow">01</p>
                 <h3 className="mt-8 text-2xl font-black text-charcoal">Structurer les bons usages</h3>
-                <p className="mt-4 max-w-sm leading-7 text-muted">
+                <p className="mx-auto mt-4 max-w-sm leading-7 text-muted md:mx-0">
                   Les équipes repartent avec une méthode commune et des cas concrets.
                 </p>
-                <div className="absolute bottom-8 left-8 right-8 grid gap-3">
+                <div className="absolute bottom-6 left-6 right-6 grid gap-3 md:bottom-8 md:left-8 md:right-8">
                   {["Emails", "Devis", "Reporting", "Support client"].map((label, index) => (
                     <div
                       key={label}
-                      className="rounded-lg bg-white px-5 py-3 text-xl font-black text-charcoal shadow-soft"
+                      className="rounded-lg bg-white px-4 py-3 text-lg font-black text-charcoal shadow-soft md:px-5 md:text-xl"
                       style={{ transform: `rotate(${index % 2 === 0 ? "-2deg" : "2deg"})` }}
                     >
                       {label}
@@ -266,10 +293,10 @@ export default function TrainingPage() {
             <div className="grid gap-6">
               {solutionCards.slice(1).map((card, index) => (
                 <Reveal key={card.title} delay={index * 0.06}>
-                  <Card className="grid min-h-[196px] gap-6 overflow-hidden p-7 md:grid-cols-[1fr_220px]">
+                  <Card className="grid min-h-[196px] gap-6 overflow-hidden p-6 text-center md:grid-cols-[1fr_220px] md:p-7 md:text-left">
                     <div>
                       <p className="eyebrow">{card.number}</p>
-                      <h3 className="mt-14 text-2xl font-black text-charcoal">{card.title}</h3>
+                      <h3 className="mt-8 text-2xl font-black text-charcoal md:mt-14">{card.title}</h3>
                       <p className="mt-4 leading-7 text-muted">{card.text}</p>
                     </div>
                     <div className="hidden place-items-center bg-cream md:grid">
@@ -315,7 +342,7 @@ export default function TrainingPage() {
             <div className="grid gap-5">
               {modules.map((module, index) => (
                 <Reveal key={module.title} delay={index * 0.05}>
-                  <Card className="flex items-center justify-between gap-5 p-6">
+                  <Card className="flex flex-col items-start gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                     <div>
                       <p className="eyebrow">{module.label}</p>
                       <h3 className="mt-3 text-xl font-black text-charcoal md:text-2xl">{module.title}</h3>
@@ -330,10 +357,10 @@ export default function TrainingPage() {
             </div>
 
             <Reveal delay={0.12}>
-              <Card className="h-full p-8">
+              <Card className="h-full p-6 sm:p-8">
                 <p className="eyebrow">Parcours sur mesure</p>
                 <div className="mt-5 flex items-end gap-3">
-                  <p className="text-5xl font-black text-charcoal">Sur devis</p>
+                  <p className="text-4xl font-black text-charcoal sm:text-5xl">Sur devis</p>
                   <p className="pb-2 text-sm font-bold text-muted">/ équipe</p>
                 </div>
                 <div className="mt-8 space-y-4">
@@ -371,18 +398,18 @@ export default function TrainingPage() {
             </p>
           </Reveal>
           <Reveal delay={0.08} className="mx-auto mt-12 max-w-5xl rounded-lg border border-white/12 p-8 md:p-12">
-            <div className="grid gap-10 lg:grid-cols-2">
+            <div className="grid gap-10 text-center lg:grid-cols-2 lg:text-left">
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.18em] text-peach">Paiement unique</p>
                 <p className="mt-6 text-5xl font-black">Prix sur demande</p>
                 <p className="mt-3 text-white/70">Selon le nombre de modules et de collaborateurs.</p>
-                <Button asChild size="lg" className="mt-10">
+                <Button asChild size="lg" className="mt-10 w-full sm:w-auto">
                   <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
                     Prendre rendez-vous
                   </a>
                 </Button>
               </div>
-              <div className="space-y-5 border-white/10 lg:border-l lg:pl-10">
+              <div className="space-y-5 border-white/10 text-left lg:border-l lg:pl-10">
                 {pricingBullets.slice(1).map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <CheckCircle2 className="h-5 w-5 text-peach" />
@@ -396,8 +423,8 @@ export default function TrainingPage() {
       </section>
 
       <section className="bg-white py-16 md:py-24">
-        <div className="section-shell grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-          <Reveal>
+        <div className="section-shell grid items-center gap-10 text-center lg:grid-cols-[0.9fr_1.1fr] lg:text-left">
+          <Reveal className="mx-auto max-w-2xl lg:mx-0">
             <p className="eyebrow">Pourquoi nous</p>
             <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
               Qui va vous apprendre ?
@@ -409,8 +436,8 @@ export default function TrainingPage() {
               L’objectif : vous rendre opérationnel, autonome et capable d’utiliser l’IA sans dépendre d’un empilement d’outils mal configurés.
             </p>
           </Reveal>
-          <Reveal delay={0.1}>
-            <div className="relative min-h-[430px] overflow-hidden rounded-lg bg-charcoal">
+          <Reveal delay={0.1} className="mx-auto w-full max-w-[560px] lg:max-w-none">
+            <div className="relative min-h-[360px] overflow-hidden rounded-lg bg-charcoal md:min-h-[430px]">
               <Image
                 src={PLACEHOLDER_IMAGES.founder}
                 alt={`Portrait de ${FOUNDER_NAME}`}
@@ -430,11 +457,11 @@ export default function TrainingPage() {
               Ne repartez pas les mains vides
             </h2>
           </Reveal>
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
+          <div className="mt-12 grid gap-8 text-center md:grid-cols-3 md:text-left">
             {deliverables.map((item, index) => (
               <Reveal key={item.title} delay={index * 0.05}>
                 <div>
-                  <item.icon className="h-7 w-7 text-pine" />
+                  <item.icon className="mx-auto h-7 w-7 text-pine md:mx-0" />
                   <h3 className="mt-5 text-lg font-black text-charcoal">{item.title}</h3>
                   <p className="mt-3 leading-7 text-muted">{item.text}</p>
                 </div>
@@ -446,7 +473,7 @@ export default function TrainingPage() {
 
       <section className="bg-white py-16 md:py-24">
         <div className="section-shell">
-          <Reveal>
+          <Reveal className="text-center md:text-left">
             <p className="eyebrow">FAQ</p>
             <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
               Questions fréquentes

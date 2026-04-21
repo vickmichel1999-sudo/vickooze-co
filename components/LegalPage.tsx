@@ -25,18 +25,20 @@ const legalLinks = [
 export function LegalPage({ eyebrow, title, intro, updatedAt, sections }: LegalPageProps) {
   return (
     <main className="bg-white">
-      <section className="pt-32 pb-16 md:pb-20">
+      <section className="pt-28 pb-16 md:pt-32 md:pb-20">
         <div className="section-shell">
-          <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
-            <div className="max-w-4xl">
-            <p className="eyebrow">{eyebrow}</p>
-            <h1 className="mt-4 font-serif text-5xl leading-[1.05] text-charcoal md:text-[64px]">
-              {title}
-            </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-muted">{intro}</p>
-            <p className="mt-6 text-sm font-bold text-charcoal">
-              Dernière mise à jour : {updatedAt}
-            </p>
+          <div className="grid gap-10 text-center lg:grid-cols-[0.92fr_1.08fr] lg:items-end lg:text-left">
+            <div className="mx-auto max-w-4xl lg:mx-0">
+              <p className="eyebrow">{eyebrow}</p>
+              <h1 className="mt-4 font-serif text-[44px] leading-[1.02] tracking-[-0.02em] text-charcoal sm:text-5xl md:text-[64px]">
+                {title}
+              </h1>
+              <p className="mx-auto mt-6 max-w-3xl text-base leading-7 text-muted md:text-lg md:leading-8 lg:mx-0">
+                {intro}
+              </p>
+              <p className="mt-6 text-sm font-bold text-charcoal">
+                Dernière mise à jour : {updatedAt}
+              </p>
             </div>
 
             <div className="rounded-lg bg-cream-3 p-6 shadow-soft">

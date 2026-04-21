@@ -422,8 +422,8 @@ function AuditReportPreview() {
           ))}
         </div>
 
-        <div className="rounded-lg bg-white/[0.06] p-4">
-          <div className="grid grid-cols-[1fr_90px_90px] gap-3 text-xs font-black uppercase tracking-[0.12em] text-peach">
+        <div className="overflow-hidden rounded-lg bg-white/[0.06] p-4">
+          <div className="grid grid-cols-[1fr_58px_70px] gap-2 text-[10px] font-black uppercase tracking-[0.1em] text-peach sm:grid-cols-[1fr_90px_90px] sm:gap-3 sm:text-xs">
             <span>Automatisation</span>
             <span>ROI</span>
             <span>Difficulté</span>
@@ -435,7 +435,7 @@ function AuditReportPreview() {
           ].map((row) => (
             <div
               key={row[0]}
-              className="mt-3 grid grid-cols-[1fr_90px_90px] gap-3 border-t border-white/10 pt-3 text-sm text-white/82"
+              className="mt-3 grid grid-cols-[1fr_58px_70px] gap-2 border-t border-white/10 pt-3 text-xs text-white/82 sm:grid-cols-[1fr_90px_90px] sm:gap-3 sm:text-sm"
             >
               <span>{row[0]}</span>
               <span>{row[1]}</span>
@@ -456,36 +456,36 @@ function AuditReportPreview() {
 export default function HomePage() {
   return (
     <>
-      <section className="overflow-hidden bg-white pt-24 pb-20 md:pt-28 md:pb-24">
+      <section className="overflow-hidden bg-white pt-24 pb-16 md:pt-28 md:pb-24">
         <div className="section-shell grid items-start gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-          <Reveal>
+          <Reveal className="mx-auto max-w-3xl text-center lg:mx-0 lg:text-left">
             <p className="eyebrow">Audit IA offert pour PME françaises</p>
-            <h1 className="mt-6 max-w-[620px] font-serif text-[56px] leading-[0.93] tracking-[-0.035em] text-charcoal sm:text-[70px] md:text-[86px] lg:text-[94px]">
+            <h1 className="mx-auto mt-6 max-w-[620px] font-serif text-[46px] leading-[0.96] tracking-[-0.032em] text-charcoal sm:text-[64px] md:text-[82px] lg:mx-0 lg:text-[94px]">
               Votre PME perd des heures sur des tâches que <span className="text-pine">l’IA</span> peut déjà gérer
             </h1>
-            <p className="mt-8 max-w-[520px] text-[17px] leading-8 text-muted">
+            <p className="mx-auto mt-7 max-w-[520px] text-[16px] leading-7 text-muted sm:text-[17px] sm:leading-8 lg:mx-0">
               Nous identifions les tâches qui ralentissent vos équipes, puis nous déployons les agents IA et automatisations qui libèrent du temps sans complexifier votre organisation.
             </p>
 
-            <div className="mt-7 grid max-w-[520px] gap-3 sm:grid-cols-3">
+            <div className="mx-auto mt-7 grid max-w-[520px] gap-3 sm:grid-cols-3 lg:mx-0">
               {heroPainPoints.map((pain) => (
                 <div key={pain} className="rounded-md border border-charcoal/10 bg-cream-3 px-4 py-3">
-                  <p className="flex items-start gap-2 text-[12px] font-black leading-4 text-charcoal">
-                    <span className="mt-1 block h-px w-4 shrink-0 bg-pine" />
+                  <p className="flex items-center justify-center gap-2 text-[12px] font-black leading-4 text-charcoal lg:items-start lg:justify-start">
+                    <span className="hidden h-px w-4 shrink-0 bg-pine lg:mt-1 lg:block" />
                     {pain}
                   </p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-8 max-w-[520px] rounded-md border border-pine/30 bg-white p-6 shadow-soft">
+            <div className="mx-auto mt-8 max-w-[520px] rounded-md border border-pine/30 bg-white p-5 shadow-soft sm:p-6 lg:mx-0">
               <p className="font-mono text-[11px] font-black uppercase tracking-[0.18em] text-muted-2">
                 Résultat attendu
               </p>
               <p className="mt-3 text-[18px] font-black leading-7 text-charcoal">
                 En 30 minutes, vous repartez avec une vision claire des gains rapides à automatiser en priorité.
               </p>
-              <ul className="mt-5 grid gap-3">
+              <ul className="mt-5 grid gap-3 text-left">
                 {heroOutcomes.map((outcome) => (
                   <li key={outcome} className="flex items-center gap-3 text-sm font-bold text-muted">
                     <Check className="h-5 w-5 shrink-0 rounded-full bg-pine p-1 text-white" />
@@ -495,14 +495,14 @@ export default function HomePage() {
               </ul>
             </div>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Button asChild size="xl">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
+              <Button asChild size="xl" className="w-full sm:w-auto">
                 <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
                   Réserver mon audit gratuit
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </Button>
-              <Button asChild variant="outline" size="xl">
+              <Button asChild variant="outline" size="xl" className="w-full sm:w-auto">
                 <Link href="#offres">Voir ce qu’on automatise</Link>
               </Button>
             </div>
@@ -511,8 +511,49 @@ export default function HomePage() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.12} className="relative min-h-[540px] lg:mt-20">
-            <div className="absolute bottom-8 right-0 top-20 w-full overflow-hidden rounded-lg bg-charcoal shadow-soft lg:w-[78%]">
+          <Reveal delay={0.12} className="mx-auto w-full max-w-[520px] lg:mt-20 lg:max-w-none">
+            <div className="lg:hidden">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-charcoal shadow-soft">
+                <Image
+                  src={PLACEHOLDER_IMAGES.founder}
+                  alt={`${FOUNDER_NAME} travaille sur une stratégie IA`}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 92vw, 700px"
+                  className="object-cover object-[48%_45%] opacity-82 grayscale"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/62 via-charcoal/12 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 rounded-md bg-pine p-4 text-white shadow-soft">
+                  <p className="text-sm font-black">Gain potentiel</p>
+                  <p className="mt-2 font-serif text-4xl leading-none">+10h</p>
+                  <p className="mt-1 text-sm font-bold text-white/80">par semaine sur les opérations répétitives</p>
+                </div>
+              </div>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-md bg-peach/95 px-5 py-4 shadow-soft">
+                  <div className="flex items-center justify-between gap-5">
+                    <span className="text-sm font-black text-charcoal">Tâches détectées</span>
+                    <span className="font-black text-pine">12</span>
+                  </div>
+                  <p className="mt-2 text-xs font-bold text-charcoal/62">dont 5 automatisables rapidement</p>
+                </div>
+                <div className="rounded-md bg-charcoal p-5 text-white shadow-soft">
+                  <p className="text-sm font-black">Avant / après IA</p>
+                  <div className="mt-4 flex h-16 items-end gap-2">
+                    {[34, 58, 52, 82, 70].map((height, index) => (
+                      <div
+                        key={height}
+                        className={`w-full rounded-sm ${index === 3 ? "bg-pine" : "bg-white/28"}`}
+                        style={{ height: `${height}%` }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative hidden min-h-[540px] lg:block">
+              <div className="absolute bottom-8 right-0 top-20 w-full overflow-hidden rounded-lg bg-charcoal shadow-soft lg:w-[78%]">
               <Image
                 src={PLACEHOLDER_IMAGES.founder}
                 alt={`${FOUNDER_NAME} travaille sur une stratégie IA`}
@@ -521,19 +562,19 @@ export default function HomePage() {
                 sizes="(max-width: 1024px) 92vw, 700px"
                 className="object-cover object-[48%_45%] opacity-82 grayscale"
               />
-            </div>
+              </div>
 
-            <div className="absolute bottom-8 right-0 top-20 w-full rounded-lg bg-gradient-to-t from-charcoal/50 via-charcoal/10 to-transparent lg:w-[78%]" />
+              <div className="absolute bottom-8 right-0 top-20 w-full rounded-lg bg-gradient-to-t from-charcoal/50 via-charcoal/10 to-transparent lg:w-[78%]" />
 
-            <div className="absolute left-2 top-32 w-[280px] rounded-md bg-peach/95 px-5 py-4 shadow-soft backdrop-blur">
+              <div className="absolute left-2 top-32 w-[280px] rounded-md bg-peach/95 px-5 py-4 shadow-soft backdrop-blur">
               <div className="flex items-center justify-between gap-5">
                 <span className="text-sm font-black text-charcoal">Tâches détectées</span>
                 <span className="font-black text-pine">12</span>
               </div>
               <p className="mt-2 text-xs font-bold text-charcoal/62">dont 5 automatisables rapidement</p>
-            </div>
+              </div>
 
-            <div className="absolute left-8 top-56 w-[230px] rounded-md bg-charcoal p-5 text-white shadow-soft">
+              <div className="absolute left-8 top-56 w-[230px] rounded-md bg-charcoal p-5 text-white shadow-soft">
               <p className="text-sm font-black">Avant / après IA</p>
               <div className="mt-5 flex h-24 items-end gap-2">
                 {[34, 58, 52, 82, 70].map((height, index) => (
@@ -549,12 +590,13 @@ export default function HomePage() {
                 <span>Coût</span>
                 <span>Qualité</span>
               </div>
-            </div>
+              </div>
 
-            <div className="absolute bottom-20 right-3 w-[230px] rounded-md bg-pine p-5 text-white shadow-soft">
+              <div className="absolute bottom-20 right-3 w-[230px] rounded-md bg-pine p-5 text-white shadow-soft">
               <p className="text-sm font-black">Gain potentiel</p>
               <p className="mt-4 font-serif text-5xl leading-none">+10h</p>
               <p className="mt-2 text-sm font-bold text-white/80">par semaine sur les opérations répétitives</p>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -565,7 +607,7 @@ export default function HomePage() {
           {heroStats.map((stat, index) => (
             <Reveal key={stat.label} delay={index * 0.04}>
               <div className="flex items-center justify-center gap-8 text-center md:justify-start">
-                <div>
+                <div className="mx-auto md:mx-0">
                   <p className="font-serif text-5xl leading-none text-peach md:text-6xl">{stat.value}</p>
                   <p className="mt-3 max-w-[190px] text-sm leading-5 text-white/70">{stat.label}</p>
                 </div>
@@ -582,7 +624,7 @@ export default function HomePage() {
         <div className="section-shell">
           <Reveal className="mx-auto max-w-4xl text-center">
             <p className="eyebrow eyebrow-center">Preuve business</p>
-            <h2 className="mx-auto mt-4 max-w-4xl font-serif text-[44px] leading-[0.98] tracking-[-0.028em] text-charcoal md:text-[64px]">
+            <h2 className="mx-auto mt-4 max-w-4xl font-serif text-[38px] leading-[1] tracking-[-0.026em] text-charcoal sm:text-[44px] md:text-[64px]">
               Ce que l’IA peut changer dans une PME dès les premières semaines
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-[16px] leading-7 text-muted">
@@ -610,10 +652,10 @@ export default function HomePage() {
                   {timeSavingsExample.map((item, index) => (
                     <div
                       key={item.task}
-                      className="grid grid-cols-[1fr_120px_56px] items-center gap-4 rounded-md border border-charcoal/10 bg-cream px-5 py-4"
+                      className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-md border border-charcoal/10 bg-cream px-4 py-4 sm:grid-cols-[1fr_120px_56px] sm:gap-4 sm:px-5"
                     >
                       <span className="text-sm font-black text-charcoal">{item.task}</span>
-                      <span className="relative h-1 overflow-hidden rounded-full bg-charcoal/10">
+                      <span className="relative order-3 col-span-2 h-1 overflow-hidden rounded-full bg-charcoal/10 sm:order-none sm:col-span-1">
                         <span
                           className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-peach to-pine"
                           style={{ width: `${[46, 54, 38, 46][index]}%` }}
@@ -713,19 +755,19 @@ export default function HomePage() {
             {offers.map((offer, index) => (
               <Reveal key={offer.title} delay={index * 0.05}>
                 <Card className="overflow-hidden border-0 bg-white shadow-soft">
-                  <div className="grid gap-8 p-7 md:p-10 lg:grid-cols-[0.86fr_1fr] lg:items-center">
-                    <div>
+                  <div className="grid gap-8 p-5 sm:p-7 md:p-10 lg:grid-cols-[0.86fr_1fr] lg:items-center">
+                    <div className="text-center lg:text-left">
                       <span className="rounded-sm bg-peach/45 px-3 py-2 text-xs font-black uppercase tracking-[0.14em] text-pine">
                         {offer.tag}
                       </span>
-                      <h3 className="mt-6 max-w-xl font-serif text-4xl leading-[1.05] text-charcoal md:text-5xl">
+                      <h3 className="mx-auto mt-6 max-w-xl font-serif text-3xl leading-[1.05] text-charcoal sm:text-4xl md:text-5xl lg:mx-0">
                         {offer.title}
                       </h3>
-                      <p className="mt-5 max-w-xl leading-7 text-muted">{offer.description}</p>
-                      <Button asChild variant="secondary" className="mt-7">
+                      <p className="mx-auto mt-5 max-w-xl leading-7 text-muted lg:mx-0">{offer.description}</p>
+                      <Button asChild variant="secondary" className="mt-7 w-full sm:w-auto">
                         <Link href={offer.href}>{offer.cta}</Link>
                       </Button>
-                      <ul className="mt-8 grid gap-4">
+                      <ul className="mt-8 grid gap-4 text-left">
                         {offer.checkpoints.map((checkpoint) => (
                           <li key={checkpoint} className="flex gap-3 text-sm font-bold text-charcoal">
                             <Check className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-pine p-1 text-white" />
@@ -790,11 +832,11 @@ export default function HomePage() {
             })}
           </div>
 
-          <div className="mt-12 grid gap-8 md:grid-cols-5 lg:mt-0">
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:mt-0 lg:grid-cols-5">
             {processSteps.map((step, index) => (
               <Reveal key={step.title} delay={index * 0.04}>
-                <div>
-                  <div className="grid h-10 w-10 place-items-center rounded-full bg-pine font-black text-white">
+                <div className="mx-auto max-w-sm text-center lg:text-left">
+                  <div className="mx-auto grid h-10 w-10 place-items-center rounded-full bg-pine font-black text-white lg:mx-0">
                     {step.step}
                   </div>
                   <h3 className="mt-5 text-xl font-black text-charcoal">{step.title}</h3>
@@ -853,29 +895,29 @@ export default function HomePage() {
       <section className="bg-white py-16">
         <div className="section-shell">
           <Reveal>
-            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-              <div>
+            <div className="grid gap-10 text-center lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:text-left">
+              <div className="mx-auto max-w-2xl lg:mx-0">
                 <p className="eyebrow">Pourquoi nous</p>
                 <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
                   Qui va vous accompagner ?
                 </h2>
-                <p className="mt-6 max-w-xl text-lg leading-8 text-muted">
+                <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-muted lg:mx-0">
                   VICKOOZE & Co aide les PME à transformer les idées IA en systèmes utiles: agents, automatisations, méthodes et reporting.
                 </p>
-                <p className="mt-5 max-w-xl text-lg leading-8 text-charcoal">
+                <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-charcoal lg:mx-0">
                   Intervention à distance depuis Paris, avec un accompagnement clair, humain et orienté résultats.
                 </p>
-                <Button asChild className="mt-8" variant="outline">
+                <Button asChild className="mt-8 w-full sm:w-auto" variant="outline">
                   <Link href="/a-propos">
                     Découvrir l’histoire
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </div>
-              <div className="min-h-[420px] overflow-hidden rounded-lg">
+              <div className="mx-auto min-h-[360px] w-full max-w-[560px] overflow-hidden rounded-lg lg:max-w-none">
                 <FounderVisual
                   caption="IA utile, process clairs, équipes autonomes."
-                  className="h-full min-h-[420px]"
+                  className="h-full min-h-[360px] md:min-h-[420px]"
                   imageClassName="object-[48%_42%]"
                 />
               </div>

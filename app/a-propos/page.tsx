@@ -48,7 +48,7 @@ export default function AboutPage() {
 
       <section className="bg-white py-16 md:py-24">
         <div className="section-shell grid items-center gap-10 lg:grid-cols-[1fr_0.82fr]">
-          <Reveal>
+          <Reveal className="mx-auto max-w-3xl lg:mx-0">
             <p className="eyebrow">Découvrez notre histoire</p>
             <h2 className="mt-3 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
               Le mot du fondateur
@@ -95,7 +95,7 @@ export default function AboutPage() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.12}>
+          <Reveal delay={0.12} className="mx-auto w-full max-w-[520px] lg:max-w-none">
             <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-charcoal/10 bg-cream shadow-soft">
               <Image
                 src={PLACEHOLDER_IMAGES.founder}

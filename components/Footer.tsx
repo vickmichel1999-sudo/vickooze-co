@@ -35,9 +35,9 @@ export function Footer() {
   return (
     <footer className="bg-charcoal py-16 text-white">
       <div className="section-shell">
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_1.8fr]">
-          <div>
-            <Link href="/" className="flex items-center gap-3 text-xl font-black">
+        <div className="grid gap-10 text-center lg:grid-cols-[1.2fr_1.8fr] lg:text-left">
+          <div className="mx-auto max-w-md lg:mx-0">
+            <Link href="/" className="flex items-center justify-center gap-3 text-xl font-black lg:justify-start">
               <span className="grid h-10 w-10 place-items-center rounded-lg bg-pine font-serif text-lg italic text-white">
                 V
               </span>
@@ -49,7 +49,7 @@ export function Footer() {
             </p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="mt-6 inline-flex items-center gap-2 text-sm text-white/74 transition-colors hover:text-pine"
+              className="mt-6 inline-flex items-center justify-center gap-2 text-sm text-white/74 transition-colors hover:text-pine lg:justify-start"
             >
               <Mail className="h-4 w-4" />
               {CONTACT_EMAIL}
@@ -58,14 +58,14 @@ export function Footer() {
               href={LINKEDIN_URL}
               target="_blank"
               rel="noreferrer"
-              className="mt-4 flex w-fit items-center gap-2 text-sm text-white/74 transition-colors hover:text-pine"
+              className="mx-auto mt-4 flex w-fit items-center gap-2 text-sm text-white/74 transition-colors hover:text-pine lg:mx-0"
             >
               <Linkedin className="h-4 w-4" />
               LinkedIn
             </a>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-3 sm:text-left">
             {footerColumns.map((column) => (
               <div key={column.title}>
                 <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-peach">

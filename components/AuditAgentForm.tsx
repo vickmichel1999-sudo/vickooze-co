@@ -121,7 +121,7 @@ function Field({
   onChange: (value: string) => void;
 }) {
   const className =
-    "mt-2 w-full rounded-lg border border-charcoal/10 bg-white px-4 py-3 text-sm font-medium text-charcoal outline-none transition-colors placeholder:text-muted/55 focus:border-pine";
+    "mt-2 w-full rounded-lg border border-charcoal/10 bg-white px-4 py-3 text-base font-medium text-charcoal outline-none transition-colors placeholder:text-muted/55 focus:border-pine sm:text-sm";
 
   return (
     <label className="block">
@@ -382,10 +382,10 @@ export function AuditAgentForm() {
   }
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+    <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-10">
       <Card className="h-fit p-6 md:p-8">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
+        <div className="flex flex-col gap-4 text-center sm:flex-row sm:items-start sm:justify-between sm:text-left">
+          <div className="mx-auto sm:mx-0">
             <p className="eyebrow">Questionnaire</p>
             <h2 className="mt-3 font-serif text-3xl leading-tight text-charcoal">
               Informations à auditer
@@ -394,7 +394,7 @@ export function AuditAgentForm() {
           <button
             type="button"
             onClick={() => setForm(demoForm)}
-            className="rounded-lg border border-charcoal/10 px-4 py-3 text-sm font-black text-charcoal transition-colors hover:border-pine hover:text-pine"
+            className="w-full rounded-lg border border-charcoal/10 px-4 py-3 text-sm font-black text-charcoal transition-colors hover:border-pine hover:text-pine sm:w-auto"
           >
             Remplir un exemple
           </button>
@@ -416,7 +416,7 @@ export function AuditAgentForm() {
             </div>
           ) : null}
 
-          <Button type="submit" size="xl" disabled={isLoading}>
+          <Button type="submit" size="xl" disabled={isLoading} className="w-full">
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -493,15 +493,15 @@ export function AuditAgentForm() {
             <ReportCard report={report} />
           </div>
         ) : (
-          <Card className="grid min-h-[620px] place-items-center bg-cream p-8 text-center">
+          <Card className="grid min-h-[420px] place-items-center bg-cream p-6 text-center md:min-h-[620px] md:p-8">
             <div className="max-w-xl">
               <div className="mx-auto grid h-14 w-14 place-items-center rounded-lg bg-pine text-white">
                 <Sparkles className="h-7 w-7" />
               </div>
-              <h2 className="mt-6 font-serif text-4xl leading-tight text-charcoal">
+              <h2 className="mt-6 font-serif text-3xl leading-tight text-charcoal md:text-4xl">
                 Le rapport apparaîtra ici
               </h2>
-              <p className="mt-5 text-lg leading-8 text-muted">
+              <p className="mt-5 text-base leading-7 text-muted md:text-lg md:leading-8">
                 L’agent analysera les manques, priorisera les automatisations, proposera un process de déploiement et préparera les prochaines questions à poser au dirigeant.
               </p>
             </div>

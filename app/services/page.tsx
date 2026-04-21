@@ -193,18 +193,18 @@ const steps = [
 export default function ServicesPage() {
   return (
     <>
-      <section className="overflow-hidden bg-white pt-32 pb-16 md:pb-24">
-        <div className="section-shell grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
-          <Reveal>
+      <section className="overflow-hidden bg-white pt-28 pb-16 md:pt-32 md:pb-24">
+        <div className="section-shell grid items-center gap-10 text-center lg:grid-cols-[0.95fr_1.05fr] lg:text-left">
+          <Reveal className="mx-auto max-w-3xl lg:mx-0">
             <p className="eyebrow">Services IA à la demande</p>
-            <h1 className="mt-5 max-w-3xl font-serif text-5xl leading-[1.05] text-charcoal md:text-[64px]">
+            <h1 className="mx-auto mt-5 max-w-3xl font-serif text-[44px] leading-[1.02] tracking-[-0.02em] text-charcoal sm:text-5xl md:text-[64px] lg:mx-0">
               Vos process sont prêts pour l’IA. Il manque le bon système.
             </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-muted">
+            <p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-muted md:text-lg md:leading-8 lg:mx-0">
               Nous créons des agents IA, automatisations et workflows connectés à vos outils pour réduire les tâches répétitives, améliorer le suivi client et accélérer vos opérations.
             </p>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            <div className="mx-auto mt-8 grid max-w-2xl gap-3 sm:grid-cols-3 lg:mx-0">
               {["Agent IA", "Workflow", "Formation"].map((item) => (
                 <div key={item} className="rounded-lg border border-charcoal/10 bg-cream px-4 py-3">
                   <p className="text-sm font-black text-charcoal">{item}</p>
@@ -213,14 +213,14 @@ export default function ServicesPage() {
               ))}
             </div>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Button asChild size="xl">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
+              <Button asChild size="xl" className="w-full sm:w-auto">
                 <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
                   Réserver un diagnostic
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </Button>
-              <Button asChild variant="outline" size="xl">
+              <Button asChild variant="outline" size="xl" className="w-full sm:w-auto">
                 <Link href="#services-concrets">Voir les services</Link>
               </Button>
             </div>
@@ -229,9 +229,9 @@ export default function ServicesPage() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.12}>
-            <div className="relative min-h-[500px] rounded-lg bg-charcoal p-6 text-white shadow-soft">
-              <div className="absolute right-6 top-6 rounded-lg bg-pine px-4 py-3 text-sm font-black">
+          <Reveal delay={0.12} className="mx-auto w-full max-w-[560px] lg:max-w-none">
+            <div className="relative min-h-[420px] rounded-lg bg-charcoal p-5 text-left text-white shadow-soft sm:p-6 md:min-h-[500px]">
+              <div className="absolute right-5 top-5 rounded-lg bg-pine px-4 py-3 text-sm font-black sm:right-6 sm:top-6">
                 +10h/semaine
               </div>
               <div className="pt-16">
@@ -307,12 +307,12 @@ export default function ServicesPage() {
             {servicePillars.map((pillar, index) => (
               <Reveal key={pillar.title} delay={index * 0.05}>
                 <Card className="overflow-hidden border-0 bg-cream shadow-soft">
-                  <div className="grid gap-8 p-7 md:p-10 lg:grid-cols-[0.8fr_1fr]">
-                    <div>
-                      <div className="grid h-12 w-12 place-items-center rounded-lg bg-pine text-white">
+                  <div className="grid gap-8 p-5 sm:p-7 md:p-10 lg:grid-cols-[0.8fr_1fr]">
+                    <div className="text-center lg:text-left">
+                      <div className="mx-auto grid h-12 w-12 place-items-center rounded-lg bg-pine text-white lg:mx-0">
                         <pillar.icon className="h-6 w-6" />
                       </div>
-                      <h3 className="mt-6 font-serif text-4xl leading-[1.05] text-charcoal">
+                      <h3 className="mt-6 font-serif text-3xl leading-[1.05] text-charcoal sm:text-4xl">
                         {pillar.title}
                       </h3>
                       <p className="mt-5 text-lg leading-8 text-muted">{pillar.promise}</p>
@@ -366,8 +366,8 @@ export default function ServicesPage() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {services.map((service, index) => (
               <Reveal key={service.title} delay={index * 0.035}>
-                <Card className="group h-full p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
-                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-white text-pine transition-colors group-hover:bg-pine group-hover:text-white">
+                <Card className="group h-full p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lift sm:text-left">
+                  <div className="mx-auto grid h-12 w-12 place-items-center rounded-lg bg-white text-pine transition-colors group-hover:bg-pine group-hover:text-white sm:mx-0">
                     <service.icon className="h-6 w-6" />
                   </div>
                   <h3 className="mt-6 text-xl font-black leading-tight text-charcoal">{service.title}</h3>
@@ -394,7 +394,7 @@ export default function ServicesPage() {
           <div className="mt-12 grid gap-6 md:grid-cols-4">
             {steps.map((step, index) => (
               <Reveal key={step.title} delay={index * 0.05}>
-                <div className="h-full rounded-lg border border-charcoal/10 p-6">
+                <div className="h-full rounded-lg border border-charcoal/10 p-6 text-center sm:text-left">
                   <div className="flex items-center justify-between">
                     <div className="grid h-11 w-11 place-items-center rounded-lg bg-pine text-white">
                       <step.icon className="h-5 w-5" />
@@ -421,7 +421,7 @@ export default function ServicesPage() {
                   <p className="text-lg leading-8 text-white/74">
                     Lors du diagnostic, nous regardons vos tâches répétitives, vos outils actuels et les gains possibles. Ensuite, vous repartez avec une recommandation claire : agent IA, workflow, chatbot, formation ou audit complet.
                   </p>
-                  <Button asChild size="xl" variant="light" className="mt-6">
+                  <Button asChild size="xl" variant="light" className="mt-6 w-full sm:w-auto">
                     <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
                       Réserver mon diagnostic
                       <ArrowRight className="ml-2 h-5 w-5" />

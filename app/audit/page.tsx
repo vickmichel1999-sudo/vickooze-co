@@ -161,18 +161,18 @@ const useCases = [
 export default function AuditPage() {
   return (
     <>
-      <section className="overflow-hidden bg-white pt-32 pb-16 md:pb-24">
-        <div className="section-shell grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
-          <Reveal>
+      <section className="overflow-hidden bg-white pt-28 pb-16 md:pt-32 md:pb-24">
+        <div className="section-shell grid items-center gap-10 text-center lg:grid-cols-[0.95fr_1.05fr] lg:text-left">
+          <Reveal className="mx-auto max-w-3xl lg:mx-0">
             <p className="eyebrow">Audit IA pour PME</p>
-            <h1 className="mt-5 max-w-3xl font-serif text-5xl leading-[1.05] text-charcoal md:text-[64px]">
+            <h1 className="mx-auto mt-5 max-w-3xl font-serif text-[44px] leading-[1.02] tracking-[-0.02em] text-charcoal sm:text-5xl md:text-[64px] lg:mx-0">
               Avant d’automatiser, identifiez les tâches qui rapportent vraiment.
             </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-muted">
+            <p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-muted md:text-lg md:leading-8 lg:mx-0">
               En 30 minutes, nous analysons vos processus, repérons les gains rapides et posons les bases d’une roadmap IA claire, priorisée et mesurable.
             </p>
 
-            <div className="mt-8 rounded-lg border-l-4 border-pine bg-cream p-5">
+            <div className="mx-auto mt-8 max-w-2xl rounded-lg border border-pine/25 bg-cream p-5 shadow-soft lg:mx-0">
               <p className="text-sm font-black uppercase tracking-[0.14em] text-pine">
                 Promesse
               </p>
@@ -181,14 +181,14 @@ export default function AuditPage() {
               </p>
             </div>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Button asChild size="xl">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
+              <Button asChild size="xl" className="w-full sm:w-auto">
                 <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
                   Réserver mon audit gratuit
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </Button>
-              <Button asChild variant="outline" size="xl">
+              <Button asChild variant="outline" size="xl" className="w-full sm:w-auto">
                 <Link href="/agent-audit">Tester l’agent IA</Link>
               </Button>
             </div>
@@ -197,9 +197,9 @@ export default function AuditPage() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.12}>
-            <div className="relative min-h-[500px] rounded-lg bg-charcoal p-6 text-white shadow-soft">
-              <div className="absolute right-6 top-6 rounded-lg bg-pine px-4 py-3 text-sm font-black">
+          <Reveal delay={0.12} className="mx-auto w-full max-w-[560px] lg:max-w-none">
+            <div className="relative min-h-[420px] rounded-lg bg-charcoal p-5 text-left text-white shadow-soft sm:p-6 md:min-h-[500px]">
+              <div className="absolute right-5 top-5 rounded-lg bg-pine px-4 py-3 text-sm font-black sm:right-6 sm:top-6">
                 Audit offert 30min
               </div>
               <div className="pt-16">
@@ -255,8 +255,8 @@ export default function AuditPage() {
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {painPoints.map((point, index) => (
               <Reveal key={point.title} delay={index * 0.05}>
-                <Card className="h-full p-6">
-                  <point.icon className="h-8 w-8 text-pine" />
+                <Card className="h-full p-6 text-center sm:text-left">
+                  <point.icon className="mx-auto h-8 w-8 text-pine sm:mx-0" />
                   <h3 className="mt-6 text-xl font-black text-charcoal">{point.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-muted">{point.text}</p>
                 </Card>
@@ -268,9 +268,9 @@ export default function AuditPage() {
 
       <section className="bg-white py-16 md:py-24">
         <div className="section-shell grid gap-10 lg:grid-cols-[0.82fr_1fr] lg:items-start">
-          <Reveal>
+          <Reveal className="text-center lg:text-left">
             <p className="eyebrow">Ce qui est inclus</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl">
+            <h2 className="mx-auto mt-4 max-w-2xl font-serif text-4xl leading-[1.1] text-charcoal md:text-5xl lg:mx-0">
               Une analyse actionnable de vos processus
             </h2>
             <p className="mt-6 text-lg leading-8 text-muted">
@@ -337,8 +337,8 @@ export default function AuditPage() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {deliverables.map((deliverable, index) => (
               <Reveal key={deliverable.title} delay={index * 0.05}>
-                <Card className="h-full p-6">
-                  <div className="grid h-12 w-12 place-items-center rounded-lg bg-charcoal text-peach">
+                <Card className="h-full p-6 text-center sm:text-left">
+                  <div className="mx-auto grid h-12 w-12 place-items-center rounded-lg bg-charcoal text-peach sm:mx-0">
                     <deliverable.icon className="h-6 w-6" />
                   </div>
                   <h3 className="mt-6 text-xl font-black leading-tight text-charcoal">
@@ -364,7 +364,7 @@ export default function AuditPage() {
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {useCases.map((item, index) => (
               <Reveal key={item} delay={index * 0.035}>
-                <div className="flex h-full items-start gap-4 rounded-lg bg-cream p-5">
+                <div className="flex h-full items-start gap-4 rounded-lg bg-cream p-5 text-left">
                   <Bot className="mt-0.5 h-6 w-6 shrink-0 text-pine" />
                   <p className="font-bold leading-7 text-charcoal">{item}</p>
                 </div>
@@ -386,7 +386,7 @@ export default function AuditPage() {
           <div className="mt-12 grid gap-6 md:grid-cols-4">
             {auditSteps.map((step, index) => (
               <Reveal key={step.title} delay={index * 0.05}>
-                <Card className="h-full p-6">
+                <Card className="h-full p-6 text-center sm:text-left">
                   <div className="flex items-center justify-between">
                     <div className="grid h-11 w-11 place-items-center rounded-lg bg-pine text-white">
                       <step.icon className="h-5 w-5" />
@@ -443,7 +443,7 @@ export default function AuditPage() {
             <p className="mt-5 text-lg leading-8 text-white/84">
               Le premier échange de 30 minutes est offert. Il sert à cadrer votre situation, identifier les premiers gains et voir si une mission d’audit complète est pertinente.
             </p>
-            <Button asChild size="xl" variant="light" className="mt-8">
+                  <Button asChild size="xl" variant="light" className="mt-8 w-full sm:w-auto">
               <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
                 Réserver mon audit gratuit
                 <ArrowRight className="ml-2 h-5 w-5" />

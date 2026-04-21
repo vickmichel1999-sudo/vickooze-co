@@ -37,15 +37,15 @@ export function Header() {
           : "border-charcoal/8 bg-white/92 backdrop-blur-xl"
       )}
     >
-      <div className="section-shell relative flex h-14 items-center justify-between gap-4">
+      <div className="section-shell relative flex h-16 items-center justify-between gap-3 md:h-14 md:gap-4">
         <Link
           href="/"
-          className="flex items-center gap-3 whitespace-nowrap text-[15px] font-black tracking-[-0.01em] text-charcoal"
+          className="flex min-w-0 items-center gap-2 text-[14px] font-black tracking-[-0.01em] text-charcoal sm:gap-3 sm:text-[15px]"
         >
           <span className="grid h-7 w-7 place-items-center rounded-md bg-charcoal font-serif text-sm italic text-white">
             V
           </span>
-          <span>{SITE_NAME}</span>
+          <span className="truncate">{SITE_NAME}</span>
         </Link>
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-charcoal/10 bg-white/85 p-1.5 text-xs font-black text-charcoal/72 shadow-sm backdrop-blur md:flex">
@@ -87,14 +87,14 @@ export function Header() {
       </div>
 
       {isOpen ? (
-        <div className="border-t border-charcoal/10 bg-white/95 px-5 py-5 shadow-soft backdrop-blur-xl md:hidden">
-          <nav className="mx-auto flex max-w-7xl flex-col gap-2">
+        <div className="border-t border-charcoal/10 bg-white/95 py-5 shadow-soft backdrop-blur-xl md:hidden">
+          <nav className="mx-auto flex w-full max-w-sm flex-col gap-2 px-4">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-lg px-3 py-3 text-base font-bold text-charcoal transition-colors hover:bg-cream hover:text-pine",
+                  "rounded-lg px-4 py-3 text-center text-base font-bold text-charcoal transition-colors hover:bg-cream hover:text-pine",
                   pathname === item.href ? "bg-pine text-white hover:bg-pine hover:text-white" : ""
                 )}
                 onClick={() => setIsOpen(false)}

@@ -19,7 +19,7 @@ export function FounderVisual({
 }: FounderVisualProps) {
   return (
     <Reveal className={cn("relative", className)}>
-      <div className="relative min-h-[420px] overflow-hidden rounded-lg border border-charcoal/10 bg-cream shadow-soft">
+      <div className="relative min-h-[360px] overflow-hidden rounded-lg border border-charcoal/10 bg-cream shadow-soft md:min-h-[420px]">
         <Image
           src={PLACEHOLDER_IMAGES.founder}
           alt="Vick-Emmanuel Michel travaille sur une mission de conseil IA"
