@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -23,7 +24,7 @@ import { FinalCTA } from "@/components/FinalCTA";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CALENDLY_URL } from "@/lib/constants";
+import { CALENDLY_URL, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Audit IA complet",
@@ -158,6 +159,84 @@ const useCases = [
   "Connecter CRM, Slack, Notion, Airtable ou Google Workspace"
 ];
 
+const auditImages = {
+  pain: "/audit-pain-email-overload.png",
+  process: "/audit-process-map.png",
+  loom: "/audit-loom-review.png",
+  report: "/audit-report-mockup.png"
+};
+
+const deliverableVisuals = [
+  {
+    src: auditImages.report,
+    alt: "Aperçu du rapport PDF d'audit IA",
+    label: "PDF audit"
+  },
+  {
+    src: auditImages.loom,
+    alt: "Aperçu d'une vidéo Loom de restitution d'audit IA",
+    label: "Vidéo Loom"
+  },
+  {
+    src: auditImages.process,
+    alt: "Carnet de cartographie des processus et priorités d'automatisation",
+    label: "Plan 90 jours"
+  },
+  {
+    src: null,
+    alt: "",
+    label: "Stack outils"
+  }
+];
+
+function ToolStackVisual() {
+  return (
+    <div className="relative grid aspect-[4/3] place-items-center overflow-hidden bg-[#EAF2F4] p-5">
+      <div className="absolute inset-x-8 top-1/2 h-px -translate-y-1/2 bg-pine/25" />
+      <div className="relative grid w-full max-w-[260px] gap-3">
+        {[
+          ["CRM", "Lead qualifié"],
+          ["Make", "Workflow actif"],
+          ["OpenAI", "Résumé + scoring"],
+          ["Email", "Relance envoyée"]
+        ].map(([tool, detail], index) => (
+          <div
+            key={tool}
+            className="flex items-center justify-between rounded-lg bg-white px-4 py-3 shadow-soft"
+            style={{ transform: `translateX(${index % 2 === 0 ? "-8px" : "12px"})` }}
+          >
+            <span className="text-sm font-black text-charcoal">{tool}</span>
+            <span className="text-xs font-bold text-muted">{detail}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DeliverableVisual({ index }: { index: number }) {
+  const visual = deliverableVisuals[index];
+
+  if (!visual?.src) {
+    return <ToolStackVisual />;
+  }
+
+  return (
+    <div className="relative aspect-[4/3] overflow-hidden bg-cream-3">
+      <Image
+        src={visual.src}
+        alt={visual.alt}
+        fill
+        sizes="(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 260px"
+        className={index === 0 ? "object-contain p-4" : "object-cover"}
+      />
+      <span className="absolute left-4 top-4 rounded-md bg-white/90 px-3 py-2 text-[11px] font-black uppercase tracking-[0.12em] text-pine shadow-sm">
+        {visual.label}
+      </span>
+    </div>
+  );
+}
+
 export default function AuditPage() {
   return (
     <>
@@ -252,7 +331,30 @@ export default function AuditPage() {
             </p>
           </Reveal>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <Reveal delay={0.08}>
+            <div className="mt-12 overflow-hidden rounded-lg bg-charcoal shadow-lift">
+              <div className="relative aspect-[16/10] min-h-[280px] md:aspect-[16/7]">
+                <Image
+                  src={auditImages.pain}
+                  alt="Dirigeant de PME débordé devant des emails, documents et post-it"
+                  fill
+                  sizes="(max-width: 1024px) 92vw, 1160px"
+                  className="object-cover object-[48%_46%] grayscale-[12%]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/72 via-charcoal/10 to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5 max-w-2xl rounded-lg bg-white/92 p-5 text-charcoal shadow-soft backdrop-blur md:bottom-8 md:left-8">
+                  <p className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-pine">
+                    Le vrai point de départ
+                  </p>
+                  <p className="mt-2 text-lg font-black leading-7 md:text-xl">
+                    Avant d’ajouter un outil IA, on regarde où le dirigeant et ses équipes perdent déjà du temps.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
             {painPoints.map((point, index) => (
               <Reveal key={point.title} delay={index * 0.05}>
                 <Card className="h-full p-6 text-center sm:text-left">
@@ -279,6 +381,23 @@ export default function AuditPage() {
           </Reveal>
 
           <div className="grid gap-4">
+            <Reveal>
+              <div className="overflow-hidden rounded-lg bg-cream-3 p-5 shadow-soft">
+                <div className="relative mx-auto aspect-[4/3] max-w-[560px] -rotate-1 overflow-hidden rounded-lg bg-white shadow-lift">
+                  <Image
+                    src={auditImages.report}
+                    alt="Aperçu du rapport PDF remis après l'audit IA"
+                    fill
+                    sizes="(max-width: 1024px) 92vw, 560px"
+                    className="object-contain p-3"
+                  />
+                </div>
+                <p className="mt-5 text-center text-sm font-bold leading-6 text-muted">
+                  Aperçu type du PDF remis après l’audit : score, axes d’amélioration,
+                  recommandations et prochaines actions.
+                </p>
+              </div>
+            </Reveal>
             {included.map((item, index) => (
               <Reveal key={item} delay={index * 0.03}>
                 <div className="flex items-start gap-4 rounded-lg border border-charcoal/10 bg-cream p-5">
@@ -337,14 +456,17 @@ export default function AuditPage() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {deliverables.map((deliverable, index) => (
               <Reveal key={deliverable.title} delay={index * 0.05}>
-                <Card className="h-full p-6 text-center sm:text-left">
-                  <div className="mx-auto grid h-12 w-12 place-items-center rounded-lg bg-charcoal text-peach sm:mx-0">
-                    <deliverable.icon className="h-6 w-6" />
+                <Card className="h-full overflow-hidden p-0 text-center sm:text-left">
+                  <DeliverableVisual index={index} />
+                  <div className="p-6">
+                    <div className="mx-auto grid h-11 w-11 place-items-center rounded-lg bg-charcoal text-peach sm:mx-0">
+                      <deliverable.icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="mt-5 text-xl font-black leading-tight text-charcoal">
+                      {deliverable.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-6 text-muted">{deliverable.text}</p>
                   </div>
-                  <h3 className="mt-6 text-xl font-black leading-tight text-charcoal">
-                    {deliverable.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-muted">{deliverable.text}</p>
                 </Card>
               </Reveal>
             ))}
@@ -383,7 +505,33 @@ export default function AuditPage() {
             </h2>
           </Reveal>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-4">
+          <Reveal delay={0.08}>
+            <div className="mt-12 grid gap-6 overflow-hidden rounded-lg bg-white p-5 shadow-soft lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:p-8">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-cream">
+                <Image
+                  src={auditImages.process}
+                  alt="Cartographie du processus, post-it et priorités avant déploiement IA"
+                  fill
+                  sizes="(max-width: 1024px) 92vw, 540px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="text-center lg:text-left">
+                <p className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-pine">
+                  Cartographie avant automatisation
+                </p>
+                <h3 className="mt-4 font-serif text-3xl leading-tight text-charcoal md:text-4xl">
+                  On visualise vos flux avant de brancher un agent IA.
+                </h3>
+                <p className="mt-4 leading-7 text-muted">
+                  L’audit transforme les échanges du rendez-vous en plan lisible :
+                  processus, points de friction, priorités et premières actions.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
+          <div className="mt-8 grid gap-6 md:grid-cols-4">
             {auditSteps.map((step, index) => (
               <Reveal key={step.title} delay={index * 0.05}>
                 <Card className="h-full p-6 text-center sm:text-left">
@@ -414,6 +562,25 @@ export default function AuditPage() {
                 <p className="mt-5 text-lg leading-8 text-white/74">
                   Vous pouvez ensuite choisir : lancer un agent IA, automatiser un workflow, former vos équipes ou garder la roadmap en interne.
                 </p>
+                <div className="mt-8 flex flex-col items-center gap-4 rounded-lg border border-white/10 bg-white/[0.06] p-4 text-center sm:flex-row sm:text-left">
+                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-white/10">
+                    <Image
+                      src={PLACEHOLDER_IMAGES.founder}
+                      alt={`Portrait de ${FOUNDER_NAME}`}
+                      fill
+                      sizes="80px"
+                      className="object-cover object-[48%_42%] grayscale"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold leading-6 text-white/86">
+                      “Mon rôle : vous montrer où l’IA peut réellement faire gagner du temps avant de parler d’outils.”
+                    </p>
+                    <p className="mt-2 text-xs font-black uppercase tracking-[0.14em] text-peach">
+                      {FOUNDER_NAME}
+                    </p>
+                  </div>
+                </div>
               </div>
             </Reveal>
             <div className="grid gap-5 md:grid-cols-3">
@@ -433,7 +600,7 @@ export default function AuditPage() {
 
       <section className="bg-cream py-16 md:py-24">
         <div className="section-shell">
-          <Reveal className="mx-auto max-w-3xl rounded-lg bg-cta-gradient p-8 text-center text-white shadow-lift md:p-12">
+          <Reveal className="mx-auto max-w-4xl rounded-lg bg-cta-gradient p-6 text-center text-white shadow-lift md:p-12">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-white/80">
               Prix
             </p>
@@ -443,7 +610,22 @@ export default function AuditPage() {
             <p className="mt-5 text-lg leading-8 text-white/84">
               Le premier échange de 30 minutes est offert. Il sert à cadrer votre situation, identifier les premiers gains et voir si une mission d’audit complète est pertinente.
             </p>
-                  <Button asChild size="xl" variant="light" className="mt-8 w-full sm:w-auto">
+            <div className="mx-auto mt-8 grid max-w-2xl gap-4 rounded-lg bg-white/16 p-4 text-left backdrop-blur sm:grid-cols-[84px_1fr] sm:items-center">
+              <div className="relative mx-auto h-20 w-20 overflow-hidden rounded-lg bg-white/20 sm:mx-0">
+                <Image
+                  src={PLACEHOLDER_IMAGES.founder}
+                  alt={`Portrait de ${FOUNDER_NAME}, fondateur de VICKOOZE & Co`}
+                  fill
+                  sizes="80px"
+                  className="object-cover object-[48%_42%] grayscale"
+                />
+              </div>
+              <p className="text-sm font-bold leading-6 text-white/90">
+                Vous échangez directement avec moi pour identifier les gains rapides,
+                les risques et les automatisations prioritaires.
+              </p>
+            </div>
+            <Button asChild size="xl" variant="light" className="mt-8 w-full sm:w-auto">
               <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
                 Réserver mon audit gratuit
                 <ArrowRight className="ml-2 h-5 w-5" />
