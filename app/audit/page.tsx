@@ -277,41 +277,64 @@ export default function AuditPage() {
           </Reveal>
 
           <Reveal delay={0.12} className="mx-auto w-full max-w-[560px] lg:max-w-none">
-            <div className="relative min-h-[420px] rounded-lg bg-charcoal p-5 text-left text-white shadow-soft sm:p-6 md:min-h-[500px]">
-              <div className="absolute right-5 top-5 rounded-lg bg-pine px-4 py-3 text-sm font-black sm:right-6 sm:top-6">
-                Audit offert 30min
-              </div>
-              <div className="pt-16">
-                <p className="text-sm font-black uppercase tracking-[0.16em] text-peach">
-                  Diagnostic opérationnel
-                </p>
-                <h2 className="mt-4 font-serif text-4xl leading-[1.05] text-white">
-                  De la tâche manuelle au système automatisé
-                </h2>
+            <div className="relative min-h-[520px] overflow-hidden rounded-lg bg-charcoal text-left text-white shadow-soft">
+              <Image
+                src={PLACEHOLDER_IMAGES.founder}
+                alt={`${FOUNDER_NAME} pendant un échange de diagnostic IA`}
+                fill
+                priority
+                sizes="(max-width: 1024px) 92vw, 560px"
+                className="object-cover object-[48%_42%] grayscale-[10%]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/42 to-charcoal/8" />
 
-                <div className="mt-8 grid gap-4">
-                  {[
-                    { label: "Temps perdu estimé", value: "8-12h/sem" },
-                    { label: "Tâches à analyser", value: "15+" },
-                    { label: "Priorités retenues", value: "3-5" }
-                  ].map((item) => (
-                    <div key={item.label} className="flex items-center justify-between rounded-lg bg-white p-5 text-charcoal">
-                      <span className="text-sm font-black">{item.label}</span>
-                      <span className="font-serif text-3xl text-pine">{item.value}</span>
-                    </div>
+              <div className="absolute left-4 top-4 rounded-lg bg-peach px-4 py-3 text-charcoal shadow-soft sm:left-6 sm:top-6">
+                <p className="text-xs font-black uppercase tracking-[0.14em]">Tâches détectées</p>
+                <p className="mt-1 text-2xl font-black">12</p>
+                <p className="text-xs font-bold text-charcoal/72">dont 5 automatisables rapidement</p>
+              </div>
+
+              <div className="absolute right-4 top-[180px] w-[156px] rounded-lg bg-charcoal/88 p-4 shadow-lift backdrop-blur sm:right-6">
+                <p className="text-xs font-black text-white">Avant / après IA</p>
+                <div className="mt-4 flex h-16 items-end gap-2">
+                  {[34, 52, 44, 68, 74].map((height, index) => (
+                    <span
+                      key={height}
+                      className={index > 2 ? "w-6 rounded-sm bg-pine" : "w-6 rounded-sm bg-white/28"}
+                      style={{ height }}
+                    />
                   ))}
                 </div>
+                <div className="mt-3 flex justify-between text-[10px] font-bold text-white/56">
+                  <span>Temps</span>
+                  <span>Coût</span>
+                  <span>Qualité</span>
+                </div>
+              </div>
 
-                <div className="mt-8 rounded-lg border border-white/10 bg-white/[0.04] p-5">
-                  <p className="text-sm font-black text-white">Exemples de sorties</p>
-                  <div className="mt-4 grid gap-3">
-                    {["Agent IA support", "Workflow CRM", "Reporting automatique"].map((item) => (
-                      <div key={item} className="flex items-center gap-3 text-sm text-white/74">
-                        <Check className="h-5 w-5 shrink-0 text-peach" />
-                        {item}
-                      </div>
-                    ))}
-                  </div>
+              <div className="absolute bottom-5 left-4 right-4 rounded-lg bg-white p-5 text-charcoal shadow-lift sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-[360px]">
+                <p className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-pine">
+                  Appel audit offert
+                </p>
+                <h2 className="mt-3 font-serif text-3xl leading-tight text-charcoal sm:text-4xl">
+                  On part de vos vrais process, pas d’une démo d’outil.
+                </h2>
+                <p className="mt-3 text-sm font-bold leading-6 text-muted">
+                  {FOUNDER_NAME} analyse vos tâches, vos outils et vos premiers gains possibles avant toute mission.
+                </p>
+                <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+                  {[
+                    ["15+", "tâches"],
+                    ["3-5", "priorités"],
+                    ["90j", "roadmap"]
+                  ].map(([value, label]) => (
+                    <div key={label} className="rounded-md bg-cream px-2 py-3">
+                      <p className="font-serif text-2xl leading-none text-pine">{value}</p>
+                      <p className="mt-1 text-[10px] font-black uppercase tracking-[0.08em] text-muted">
+                        {label}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
