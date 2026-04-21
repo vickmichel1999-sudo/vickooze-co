@@ -356,7 +356,7 @@ export default function AuditPage() {
 
           <Reveal delay={0.08}>
             <div className="mt-12 overflow-hidden rounded-lg bg-charcoal shadow-lift">
-              <div className="relative aspect-[16/10] min-h-[280px] md:aspect-[16/7]">
+              <div className="relative min-h-[430px] sm:min-h-[360px] md:aspect-[16/7] md:min-h-[280px]">
                 <Image
                   src={auditImages.pain}
                   alt="Dirigeant de TPE/PME débordé devant des emails, documents et post-it"
@@ -365,11 +365,11 @@ export default function AuditPage() {
                   className="object-cover object-[48%_46%] grayscale-[12%]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/86 via-charcoal/24 to-charcoal/8" />
-                <div className="absolute bottom-5 left-5 right-5 max-w-2xl rounded-lg border border-white/18 bg-charcoal/58 p-5 text-white shadow-soft backdrop-blur-md md:bottom-8 md:left-8">
+                <div className="absolute bottom-4 left-4 right-4 max-w-none rounded-lg border border-white/18 bg-charcoal/64 p-4 text-white shadow-soft backdrop-blur-md sm:bottom-5 sm:left-5 sm:right-5 sm:p-5 md:bottom-8 md:left-8 md:max-w-2xl">
                   <p className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-peach">
                     Le vrai point de départ
                   </p>
-                  <p className="mt-2 text-lg font-black leading-7 md:text-xl">
+                  <p className="mt-2 text-base font-black leading-6 sm:text-lg sm:leading-7 md:text-xl">
                     Avant d’ajouter un outil IA, on regarde où le dirigeant et ses équipes perdent déjà du temps.
                   </p>
                 </div>
