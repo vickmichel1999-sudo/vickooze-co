@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Playfair_Display } from "next/font/google";
 
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { SiteAnalytics } from "@/components/SiteAnalytics";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="fr">
       <body className={cn(inter.variable, playfair.variable, jetbrainsMono.variable)}>
+        <SiteAnalytics />
         <Header />
         <main>{children}</main>
         <Footer />

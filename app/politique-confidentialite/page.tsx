@@ -23,13 +23,13 @@ const sections = [
   {
     title: "Données susceptibles d’être traitées",
     paragraphs: [
-      "Le site ne comporte pas de formulaire natif à ce stade. Certaines données peuvent toutefois être transmises lorsque vous écrivez par email, réservez un appel ou interagissez avec les liens externes."
+      "Certaines données peuvent être transmises lorsque vous écrivez par email, réservez un appel, utilisez l’agent d’audit ou interagissez avec les principales pages du site."
     ],
     bullets: [
       "Données d’identification : nom, prénom, entreprise, fonction.",
       "Données de contact : adresse email, numéro de téléphone si fourni.",
       "Données liées au rendez-vous : créneau choisi, message, besoin exprimé.",
-      "Données techniques de navigation si des outils de mesure d’audience ou de sécurité sont ajoutés ultérieurement."
+      "Données techniques de navigation : pages consultées, clics sur les boutons, profondeur de scroll, referrer, appareil et session anonymisée."
     ]
   },
   {
@@ -39,7 +39,7 @@ const sections = [
       "Organiser les appels découverte et audits IA.",
       "Préparer une proposition commerciale adaptée aux besoins exprimés.",
       "Assurer le suivi de la relation prospect ou client.",
-      "Améliorer la clarté du site et la qualité des contenus proposés."
+      "Comprendre les parcours de navigation pour améliorer la clarté du site et la qualité des contenus proposés."
     ]
   },
   {

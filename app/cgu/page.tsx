@@ -30,7 +30,7 @@ const sections = [
   {
     title: "Prise de rendez-vous",
     paragraphs: [
-      `Les boutons de prise de rendez-vous peuvent rediriger vers Calendly : ${CALENDLY_URL}.`,
+      `Les boutons de prise de rendez-vous affichent un module Calendly intégré au site. Un lien de secours peut ouvrir Calendly dans un nouvel onglet : ${CALENDLY_URL}.`,
       "L’utilisation de ce service externe est soumise aux conditions et politiques propres à Calendly. Les informations transmises lors de la réservation servent à organiser l’échange demandé."
     ]
   },

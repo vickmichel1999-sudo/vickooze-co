@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { CALENDLY_URL, LOGO_IMAGE, SITE_NAME } from "@/lib/constants";
+import { BOOKING_PATH, LOGO_IMAGE, SITE_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -75,9 +75,9 @@ export function Header() {
 
         <div className="hidden md:block">
           <Button asChild size="default">
-            <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+            <Link href={BOOKING_PATH}>
               Prendre rendez-vous
-            </a>
+            </Link>
           </Button>
         </div>
 
@@ -109,9 +109,9 @@ export function Header() {
               </Link>
             ))}
             <Button asChild className="mt-3 w-full">
-              <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+              <Link href={BOOKING_PATH} onClick={() => setIsOpen(false)}>
                 Prendre rendez-vous
-              </a>
+              </Link>
             </Button>
           </nav>
         </div>

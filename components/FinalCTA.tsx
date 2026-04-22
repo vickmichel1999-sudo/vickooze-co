@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
-import { CALENDLY_URL, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
+import { BOOKING_PATH, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
 
 const reassurance = [
   "Sans engagement",
@@ -56,10 +57,10 @@ export function FinalCTA() {
               </ul>
 
               <Button asChild size="xl" variant="light" className="mt-8 w-full sm:w-auto">
-                <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+                <Link href={BOOKING_PATH}>
                   Réserver mon audit offert
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </a>
+                </Link>
               </Button>
               <p className="mt-5 text-sm text-white/70">
                 Appel en visio · Disponible sous 48h · Aucune carte bancaire demandée

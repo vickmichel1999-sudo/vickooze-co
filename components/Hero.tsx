@@ -4,7 +4,7 @@ import { ArrowRight, BarChart3, Bot, Check, TrendingUp } from "lucide-react";
 
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
-import { CALENDLY_URL, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
+import { BOOKING_PATH, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 type HeroProps = {
@@ -63,10 +63,10 @@ export function Hero({
           </div>
           <div className={cn("mt-9 flex flex-col gap-3 sm:flex-row", showVisual ? "lg:justify-start" : "justify-center")}>
             <Button asChild size="xl" className="w-full sm:w-auto">
-              <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+              <Link href={BOOKING_PATH}>
                 {cta}
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </Button>
             {secondaryCta ? (
               <Button asChild size="xl" variant="outline" className="w-full sm:w-auto">

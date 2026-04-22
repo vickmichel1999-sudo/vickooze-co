@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowRight,
   Bot,
@@ -20,7 +21,7 @@ import { FinalCTA } from "@/components/FinalCTA";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CALENDLY_URL, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
+import { BOOKING_PATH, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Formation IA complète pour équipes",
@@ -147,9 +148,9 @@ export default function TrainingPage() {
               Maîtrisez ChatGPT, Claude, le prompt engineering et les automatisations IA pour gagner du temps dès les premières semaines.
             </p>
             <Button asChild variant="secondary" size="lg" className="mt-8 w-full sm:w-auto">
-              <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+              <Link href={BOOKING_PATH}>
                 Prendre rendez-vous
-              </a>
+              </Link>
             </Button>
           </Reveal>
 
@@ -372,10 +373,10 @@ export default function TrainingPage() {
                   ))}
                 </div>
                 <Button asChild variant="secondary" size="xl" className="mt-9 w-full">
-                  <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+                  <Link href={BOOKING_PATH}>
                     Commencer
                     <ArrowRight className="ml-2 h-5 w-5" />
-                  </a>
+                  </Link>
                 </Button>
                 <p className="mt-5 text-center text-xs font-black uppercase tracking-[0.18em] text-pine">
                   Réservez un appel gratuit en amont
@@ -404,9 +405,9 @@ export default function TrainingPage() {
                 <p className="mt-6 text-5xl font-black">Prix sur demande</p>
                 <p className="mt-3 text-white/70">Selon le nombre de modules et de collaborateurs.</p>
                 <Button asChild size="lg" className="mt-10 w-full sm:w-auto">
-                  <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+                  <Link href={BOOKING_PATH}>
                     Prendre rendez-vous
-                  </a>
+                  </Link>
                 </Button>
               </div>
               <div className="space-y-5 border-white/10 text-left lg:border-l lg:pl-10">

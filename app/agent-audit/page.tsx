@@ -5,7 +5,7 @@ import { ArrowRight, Bot, Check, ShieldCheck } from "lucide-react";
 import { AuditAgentForm } from "@/components/AuditAgentForm";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
-import { CALENDLY_URL } from "@/lib/constants";
+import { BOOKING_PATH } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Agent audit IA interne",
@@ -55,9 +55,9 @@ export default function AgentAuditPage() {
                 </a>
               </Button>
               <Button asChild variant="outline" size="xl" className="w-full sm:w-auto">
-                <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+                <Link href={BOOKING_PATH}>
                   Réserver un appel
-                </a>
+                </Link>
               </Button>
             </div>
           </Reveal>

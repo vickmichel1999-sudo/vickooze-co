@@ -25,7 +25,7 @@ import { FinalCTA } from "@/components/FinalCTA";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CALENDLY_URL } from "@/lib/constants";
+import { BOOKING_PATH } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Services IA à la demande",
@@ -215,10 +215,10 @@ export default function ServicesPage() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
               <Button asChild size="xl" className="w-full sm:w-auto">
-                <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+                <Link href={BOOKING_PATH}>
                   Réserver un diagnostic
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </a>
+                </Link>
               </Button>
               <Button asChild variant="outline" size="xl" className="w-full sm:w-auto">
                 <Link href="#services-concrets">Voir les services</Link>
@@ -422,10 +422,10 @@ export default function ServicesPage() {
                     Lors du diagnostic, nous regardons vos tâches répétitives, vos outils actuels et les gains possibles. Ensuite, vous repartez avec une recommandation claire : agent IA, workflow, chatbot, formation ou audit complet.
                   </p>
                   <Button asChild size="xl" variant="light" className="mt-6 w-full sm:w-auto">
-                    <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+                    <Link href={BOOKING_PATH}>
                       Réserver mon diagnostic
                       <ArrowRight className="ml-2 h-5 w-5" />
-                    </a>
+                    </Link>
                   </Button>
                 </div>
               </div>

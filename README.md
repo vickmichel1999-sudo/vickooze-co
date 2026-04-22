@@ -43,6 +43,29 @@ OpenAI génère le JSON du rapport en priorité. Si OpenAI échoue (crédit insu
 
 Sur Vercel, ajoute les mêmes variables dans Project Settings → Environment Variables, coche `Production`, `Preview` et `Development`, puis redéploie le site pour que les nouvelles clés soient prises en compte.
 
+## Admin, analytics et rendez-vous intégré
+
+Le site contient une page de réservation intégrée sur `http://localhost:3000/rendez-vous`.
+Les CTA du site pointent vers cette page, qui affiche Calendly dans le site au lieu de rediriger directement.
+
+Un tableau admin est disponible sur `http://localhost:3000/admin`.
+En local, le mot de passe de test est `vickooze-local`.
+En production, configurez ces variables sur Vercel :
+
+```bash
+ADMIN_PASSWORD="mot-de-passe-long"
+ADMIN_SESSION_SECRET="chaine-longue-aleatoire"
+```
+
+Le tracking comportemental enregistre les pages vues, clics, scrolls, sources et parcours récents.
+En local, les événements sont stockés dans `.data/analytics-events.jsonl`.
+En production, ajoutez un stockage Redis compatible Upstash :
+
+```bash
+UPSTASH_REDIS_REST_URL="https://..."
+UPSTASH_REDIS_REST_TOKEN="..."
+```
+
 ## Scripts utiles
 
 ```bash

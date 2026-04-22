@@ -24,7 +24,7 @@ import { FinalCTA } from "@/components/FinalCTA";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CALENDLY_URL, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
+import { BOOKING_PATH, FOUNDER_NAME, PLACEHOLDER_IMAGES } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Audit IA complet",
@@ -262,10 +262,10 @@ export default function AuditPage() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
               <Button asChild size="xl" className="w-full sm:w-auto">
-                <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+                <Link href={BOOKING_PATH}>
                   Réserver mon audit gratuit
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </a>
+                </Link>
               </Button>
               <Button asChild variant="outline" size="xl" className="w-full sm:w-auto">
                 <Link href="/agent-audit">Tester l’agent IA</Link>
@@ -649,10 +649,10 @@ export default function AuditPage() {
               </p>
             </div>
             <Button asChild size="xl" variant="light" className="mt-8 w-full sm:w-auto">
-              <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
+              <Link href={BOOKING_PATH}>
                 Réserver mon audit gratuit
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </Button>
           </Reveal>
         </div>
