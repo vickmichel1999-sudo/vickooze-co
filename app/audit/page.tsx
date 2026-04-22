@@ -658,7 +658,7 @@ export default function AuditPage() {
         </div>
       </section>
 
-      <FinalCTA />
+      <FinalCTA showAgentAuditCta />
     </>
   );
 }

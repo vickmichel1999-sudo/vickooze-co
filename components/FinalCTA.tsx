@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Bot, Check } from "lucide-react";
 
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ const reassurance = [
   "Repartez avec un plan concret"
 ];
 
-export function FinalCTA() {
+export function FinalCTA({ showAgentAuditCta = false }: { showAgentAuditCta?: boolean } = {}) {
   return (
     <section className="bg-white py-16 md:py-24">
       <div className="section-shell">
@@ -56,12 +56,26 @@ export function FinalCTA() {
                 ))}
               </ul>
 
-              <Button asChild size="xl" variant="light" className="mt-8 w-full sm:w-auto">
-                <Link href={BOOKING_PATH}>
-                  Réserver mon audit offert
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
+                <Button asChild size="xl" variant="light" className="w-full sm:w-auto">
+                  <Link href={BOOKING_PATH}>
+                    Réserver mon audit offert
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+                {showAgentAuditCta ? (
+                  <Button
+                    asChild
+                    size="xl"
+                    className="w-full border border-white/28 bg-white/10 text-white shadow-none hover:-translate-y-0.5 hover:bg-white hover:text-charcoal sm:w-auto"
+                  >
+                    <Link href="/agent-audit">
+                      <Bot className="mr-2 h-5 w-5" />
+                      Tester l’agent d’audit de votre site en 3 minutes
+                    </Link>
+                  </Button>
+                ) : null}
+              </div>
               <p className="mt-5 text-sm text-white/70">
                 Appel en visio · Disponible sous 48h · Aucune carte bancaire demandée
               </p>
