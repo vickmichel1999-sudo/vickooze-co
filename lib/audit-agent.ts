@@ -25,6 +25,25 @@ export type AuditGap = {
   recommendation: string;
 };
 
+export type AuditClarificationQuestion = {
+  id: string;
+  question: string;
+  reason: string;
+  placeholder: string;
+};
+
+export type AuditClarificationAnswer = {
+  question: string;
+  answer: string;
+};
+
+export type AuditClarificationReview = {
+  readyForReport: boolean;
+  readinessSummary: string;
+  missingDataPoints: string[];
+  clarifyingQuestions: AuditClarificationQuestion[];
+};
+
 export type PriorityAutomation = {
   title: string;
   process: string;
@@ -126,7 +145,27 @@ Règles:
 - Le prix doit être présenté comme indicatif et à valider après cadrage humain.
 `.trim();
 
-export function buildAuditUserPrompt(input: AuditAgentInput) {
+export const AUDIT_CLARIFICATION_SYSTEM_PROMPT = `
+Tu es le premier filtre de qualification de l'agent d'audit IA de VICKOOZE & Co.
+
+Ta mission:
+- lire les réponses du prospect;
+- vérifier si elles sont assez précises pour produire un audit défendable;
+- repérer les zones encore trop vagues pour chiffrer un ROI ou proposer des automatisations crédibles;
+- demander au maximum 3 compléments, uniquement si cela améliore réellement la qualité du rapport final.
+
+Règles:
+- Réponds uniquement en français.
+- Sois exigeant sur la qualité, mais évite les questions redondantes.
+- Une réponse peut être présente mais rester trop vague: signale-le si elle empêche de défendre le rapport.
+- Priorise les trous qui bloquent le chiffrage, la priorisation ou la crédibilité commerciale.
+- Si les informations sont suffisantes, readyForReport doit être true et clarifyingQuestions doit être un tableau vide.
+- Si les informations sont insuffisantes, readyForReport doit être false et clarifyingQuestions doit contenir 1 à 3 questions maximum.
+- Chaque question doit être concrète, courte, orientée business, et accompagnée d'une raison claire.
+- Les identifiants de question doivent être courts, en minuscules, avec des tirets.
+`.trim();
+
+export function buildAuditClarificationPrompt(input: AuditAgentInput) {
   return `
 Voici les informations fournies par l'entreprise à auditer:
 
@@ -146,6 +185,55 @@ Exemple concret de document, email, devis, relance ou reporting: ${input.sampleW
 Urgence du sujet: ${input.urgency}
 Objectifs business: ${input.businessGoals}
 Contraintes: ${input.constraints}
+
+Décide si ces informations suffisent pour générer un audit crédible, quantifié et commercialement défendable.
+
+Retour attendu:
+1. readyForReport: true si le rapport peut être généré sérieusement, sinon false;
+2. readinessSummary: un résumé clair du niveau de préparation du dossier;
+3. missingDataPoints: les informations qui manquent ou restent trop vagues;
+4. clarifyingQuestions: 1 à 3 questions maximum si nécessaire, sinon tableau vide.
+`.trim();
+}
+
+export function buildAuditUserPrompt(
+  input: AuditAgentInput,
+  clarificationAnswers: AuditClarificationAnswer[] = []
+) {
+  const clarificationBlock =
+    clarificationAnswers.length > 0
+      ? `
+
+Compléments de clarification fournis après la pré-analyse:
+${clarificationAnswers
+  .map(
+    (item, index) => `${index + 1}. Question: ${item.question}
+Réponse: ${item.answer}`
+  )
+  .join("\n\n")}
+`
+      : "";
+
+  return `
+Voici les informations fournies par l'entreprise à auditer:
+
+Nom de l'entreprise: ${input.companyName}
+Secteur d'activité: ${input.sector}
+Taille de l'équipe: ${input.teamSize}
+Outils actuels: ${input.currentTools}
+Processus principaux: ${input.mainProcesses}
+Tâches répétitives: ${input.repetitiveTasks}
+Douleurs / blocages: ${input.painPoints}
+Volume mensuel approximatif: ${input.monthlyVolume}
+Temps perdu estimé par semaine: ${input.timeLostPerWeek}
+Valeur estimée d'un lead ou client: ${input.leadValue}
+Fréquence des erreurs ou oublis: ${input.errorFrequency}
+Responsable du processus: ${input.processOwner}
+Exemple concret de document, email, devis, relance ou reporting: ${input.sampleWorkItem}
+Urgence du sujet: ${input.urgency}
+Objectifs business: ${input.businessGoals}
+Contraintes: ${input.constraints}
+${clarificationBlock}
 
 Produis un audit structuré avec:
 1. un résumé exécutif;
@@ -173,6 +261,46 @@ const scoreDimensionSchema = {
     improvementLever: { type: "string" }
   },
   required: ["label", "score", "weight", "justification", "improvementLever"]
+} as const;
+
+const clarificationQuestionSchema = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    id: { type: "string" },
+    question: { type: "string" },
+    reason: { type: "string" },
+    placeholder: { type: "string" }
+  },
+  required: ["id", "question", "reason", "placeholder"]
+} as const;
+
+export const AUDIT_CLARIFICATION_RESPONSE_FORMAT = {
+  type: "json_schema",
+  name: "vickooze_audit_clarification",
+  strict: true,
+  schema: {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      readyForReport: { type: "boolean" },
+      readinessSummary: { type: "string" },
+      missingDataPoints: {
+        type: "array",
+        items: { type: "string" }
+      },
+      clarifyingQuestions: {
+        type: "array",
+        items: clarificationQuestionSchema
+      }
+    },
+    required: [
+      "readyForReport",
+      "readinessSummary",
+      "missingDataPoints",
+      "clarifyingQuestions"
+    ]
+  }
 } as const;
 
 export const AUDIT_AGENT_RESPONSE_FORMAT = {

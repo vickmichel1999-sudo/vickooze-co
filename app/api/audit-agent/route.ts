@@ -2,11 +2,19 @@ import { NextResponse } from "next/server";
 import { waitUntil } from "@vercel/functions";
 
 import {
+  AUDIT_CLARIFICATION_RESPONSE_FORMAT,
+  AUDIT_CLARIFICATION_SYSTEM_PROMPT,
   AUDIT_AGENT_RESPONSE_FORMAT,
   AUDIT_AGENT_SYSTEM_PROMPT,
+  buildAuditClarificationPrompt,
   buildAuditUserPrompt
 } from "@/lib/audit-agent";
-import type { AuditAgentInput, AuditReport } from "@/lib/audit-agent";
+import type {
+  AuditAgentInput,
+  AuditClarificationAnswer,
+  AuditClarificationReview,
+  AuditReport
+} from "@/lib/audit-agent";
 import { createAuditPdf, createAuditWorkbook } from "@/lib/audit-report-assets";
 import { sendAuditReportEmails } from "@/lib/audit-report-email";
 
@@ -16,6 +24,7 @@ export const maxDuration = 60;
 const ANTHROPIC_TIMEOUT_MS = 50_000;
 const ANTHROPIC_API_VERSION = "2023-06-01";
 const OPENAI_TIMEOUT_MS = 50_000;
+type AuditProvider = "anthropic" | "openai";
 
 const requiredFields: Array<keyof AuditAgentInput> = [
   "companyName",
@@ -61,13 +70,48 @@ function sanitizeInput(payload: unknown): AuditAgentInput {
   return input;
 }
 
-function extractAnthropicReport(response: any): AuditReport | null {
+function sanitizeClarificationAnswers(payload: unknown): AuditClarificationAnswer[] {
+  if (!payload || typeof payload !== "object") {
+    return [];
+  }
+
+  const source = payload as { clarificationAnswers?: unknown };
+
+  if (!Array.isArray(source.clarificationAnswers)) {
+    return [];
+  }
+
+  return source.clarificationAnswers
+    .map((item) => {
+      if (!item || typeof item !== "object") {
+        return null;
+      }
+
+      const answerSource = item as Record<string, unknown>;
+      const question =
+        typeof answerSource.question === "string" ? answerSource.question.trim().slice(0, 280) : "";
+      const answer =
+        typeof answerSource.answer === "string" ? answerSource.answer.trim().slice(0, 2200) : "";
+
+      if (question.length < 2 || answer.length < 2) {
+        return null;
+      }
+
+      return {
+        question,
+        answer
+      };
+    })
+    .filter((item): item is AuditClarificationAnswer => Boolean(item));
+}
+
+function extractAnthropicToolInput<T>(response: any, toolName: string): T | null {
   const toolUse = response.content?.find(
-    (part: any) => part?.type === "tool_use" && part?.name === "create_audit_report"
+    (part: any) => part?.type === "tool_use" && part?.name === toolName
   );
 
   if (toolUse?.input && typeof toolUse.input === "object") {
-    return toolUse.input as AuditReport;
+    return toolUse.input as T;
   }
 
   const text = response.content
@@ -79,7 +123,7 @@ function extractAnthropicReport(response: any): AuditReport | null {
     return null;
   }
 
-  return JSON.parse(text) as AuditReport;
+  return JSON.parse(text) as T;
 }
 
 async function readJsonResponse(response: Response) {
@@ -96,7 +140,175 @@ async function readJsonResponse(response: Response) {
   }
 }
 
-async function generateReportWithAnthropic(input: AuditAgentInput) {
+async function generateClarificationWithAnthropic(input: AuditAgentInput) {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("ANTHROPIC_API_KEY est manquante.");
+  }
+
+  const model = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-20250514";
+  const anthropicResponse = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": apiKey,
+      "anthropic-version": ANTHROPIC_API_VERSION,
+      "Content-Type": "application/json"
+    },
+    signal: AbortSignal.timeout(ANTHROPIC_TIMEOUT_MS),
+    body: JSON.stringify({
+      model,
+      system: AUDIT_CLARIFICATION_SYSTEM_PROMPT,
+      messages: [
+        {
+          role: "user",
+          content: buildAuditClarificationPrompt(input)
+        }
+      ],
+      tools: [
+        {
+          name: "create_audit_clarification",
+          description:
+            "Retourne la décision de pré-analyse indiquant si le rapport peut être généré tout de suite ou s'il faut demander 1 à 3 précisions.",
+          input_schema: AUDIT_CLARIFICATION_RESPONSE_FORMAT.schema
+        }
+      ],
+      tool_choice: {
+        type: "tool",
+        name: "create_audit_clarification"
+      },
+      temperature: 0.2,
+      max_tokens: 1500
+    })
+  });
+
+  const data = await readJsonResponse(anthropicResponse);
+
+  if (!anthropicResponse.ok) {
+    const message =
+      data?.error?.message ||
+      "Impossible de générer l’audit avec Anthropic pour le moment. Vérifie la clé API et le modèle configuré.";
+    throw new Error(message);
+  }
+
+  const clarification = extractAnthropicToolInput<AuditClarificationReview>(
+    data,
+    "create_audit_clarification"
+  );
+
+  if (!clarification) {
+    throw new Error("Claude n’a pas renvoyé de pré-analyse exploitable.");
+  }
+
+  return clarification;
+}
+
+async function generateClarificationWithOpenAI(input: AuditAgentInput) {
+  const apiKey = process.env.OPENAI_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("OPENAI_API_KEY est manquante.");
+  }
+
+  const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
+  const openAiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json"
+    },
+    signal: AbortSignal.timeout(OPENAI_TIMEOUT_MS),
+    body: JSON.stringify({
+      model,
+      messages: [
+        {
+          role: "system",
+          content: AUDIT_CLARIFICATION_SYSTEM_PROMPT
+        },
+        {
+          role: "user",
+          content: buildAuditClarificationPrompt(input)
+        }
+      ],
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: AUDIT_CLARIFICATION_RESPONSE_FORMAT.name,
+          strict: AUDIT_CLARIFICATION_RESPONSE_FORMAT.strict,
+          schema: AUDIT_CLARIFICATION_RESPONSE_FORMAT.schema
+        }
+      },
+      temperature: 0.2,
+      max_tokens: 1500
+    })
+  });
+
+  const data = await readJsonResponse(openAiResponse);
+
+  if (!openAiResponse.ok) {
+    const message =
+      data?.error?.message ||
+      "Impossible de générer l’audit avec OpenAI pour le moment. Vérifie la clé API et le modèle configuré.";
+    throw new Error(message);
+  }
+
+  const content = data?.choices?.[0]?.message?.content;
+
+  if (typeof content !== "string" || content.length === 0) {
+    throw new Error("OpenAI n’a pas renvoyé de pré-analyse exploitable.");
+  }
+
+  return JSON.parse(content) as AuditClarificationReview;
+}
+
+async function generateClarification(input: AuditAgentInput) {
+  const providerErrors: string[] = [];
+
+  if (process.env.OPENAI_API_KEY) {
+    try {
+      return {
+        clarification: await generateClarificationWithOpenAI(input),
+        provider: "openai"
+      } satisfies {
+        clarification: AuditClarificationReview;
+        provider: AuditProvider;
+      };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Erreur OpenAI inconnue.";
+      providerErrors.push(`OpenAI: ${message}`);
+      console.error("OpenAI audit clarification failed, falling back to Anthropic", message);
+    }
+  } else {
+    providerErrors.push("OpenAI: OPENAI_API_KEY est manquante.");
+  }
+
+  if (process.env.ANTHROPIC_API_KEY) {
+    try {
+      return {
+        clarification: await generateClarificationWithAnthropic(input),
+        provider: "anthropic"
+      } satisfies {
+        clarification: AuditClarificationReview;
+        provider: AuditProvider;
+      };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Erreur Anthropic inconnue.";
+      providerErrors.push(`Anthropic: ${message}`);
+      console.error("Anthropic audit clarification failed", message);
+    }
+  } else {
+    providerErrors.push("Anthropic: ANTHROPIC_API_KEY est manquante.");
+  }
+
+  throw new Error(
+    `Aucun fournisseur IA disponible pour pré-analyser l’audit. ${providerErrors.join(" ")}`
+  );
+}
+
+async function generateReportWithAnthropic(
+  input: AuditAgentInput,
+  clarificationAnswers: AuditClarificationAnswer[] = []
+) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
 
   if (!apiKey) {
@@ -118,7 +330,7 @@ async function generateReportWithAnthropic(input: AuditAgentInput) {
       messages: [
         {
           role: "user",
-          content: buildAuditUserPrompt(input)
+          content: buildAuditUserPrompt(input, clarificationAnswers)
         }
       ],
       tools: [
@@ -147,7 +359,7 @@ async function generateReportWithAnthropic(input: AuditAgentInput) {
     throw new Error(message);
   }
 
-  const report = extractAnthropicReport(data);
+  const report = extractAnthropicToolInput<AuditReport>(data, "create_audit_report");
 
   if (!report) {
     throw new Error("Claude n’a pas renvoyé de rapport exploitable.");
@@ -156,7 +368,10 @@ async function generateReportWithAnthropic(input: AuditAgentInput) {
   return report;
 }
 
-async function generateReportWithOpenAI(input: AuditAgentInput) {
+async function generateReportWithOpenAI(
+  input: AuditAgentInput,
+  clarificationAnswers: AuditClarificationAnswer[] = []
+) {
   const apiKey = process.env.OPENAI_API_KEY;
 
   if (!apiKey) {
@@ -180,7 +395,7 @@ async function generateReportWithOpenAI(input: AuditAgentInput) {
         },
         {
           role: "user",
-          content: buildAuditUserPrompt(input)
+          content: buildAuditUserPrompt(input, clarificationAnswers)
         }
       ],
       response_format: {
@@ -214,15 +429,18 @@ async function generateReportWithOpenAI(input: AuditAgentInput) {
   return JSON.parse(content) as AuditReport;
 }
 
-async function generateReport(input: AuditAgentInput) {
+async function generateReport(
+  input: AuditAgentInput,
+  clarificationAnswers: AuditClarificationAnswer[] = []
+) {
   const providerErrors: string[] = [];
 
   if (process.env.OPENAI_API_KEY) {
     try {
       return {
-        report: await generateReportWithOpenAI(input),
+        report: await generateReportWithOpenAI(input, clarificationAnswers),
         provider: "openai"
-      };
+      } satisfies { report: AuditReport; provider: AuditProvider };
     } catch (error) {
       const message = error instanceof Error ? error.message : "Erreur OpenAI inconnue.";
       providerErrors.push(`OpenAI: ${message}`);
@@ -235,9 +453,9 @@ async function generateReport(input: AuditAgentInput) {
   if (process.env.ANTHROPIC_API_KEY) {
     try {
       return {
-        report: await generateReportWithAnthropic(input),
+        report: await generateReportWithAnthropic(input, clarificationAnswers),
         provider: "anthropic"
-      };
+      } satisfies { report: AuditReport; provider: AuditProvider };
     } catch (error) {
       const message = error instanceof Error ? error.message : "Erreur Anthropic inconnue.";
       providerErrors.push(`Anthropic: ${message}`);
@@ -273,9 +491,13 @@ async function sendReportInBackground(input: AuditAgentInput, report: AuditRepor
 
 export async function POST(request: Request) {
   let input: AuditAgentInput;
+  let payload: unknown;
+  let clarificationAnswers: AuditClarificationAnswer[] = [];
 
   try {
-    input = sanitizeInput(await request.json());
+    payload = await request.json();
+    input = sanitizeInput(payload);
+    clarificationAnswers = sanitizeClarificationAnswers(payload);
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Données invalides." },
@@ -284,7 +506,19 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { report, provider } = await generateReport(input);
+    if (clarificationAnswers.length === 0) {
+      const { clarification, provider } = await generateClarification(input);
+
+      if (!clarification.readyForReport) {
+        return NextResponse.json({
+          status: "needs_clarification",
+          clarification,
+          provider
+        });
+      }
+    }
+
+    const { report, provider } = await generateReport(input, clarificationAnswers);
     const canSendEmail = Boolean(process.env.RESEND_API_KEY);
 
     if (canSendEmail) {
@@ -292,6 +526,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({
+      status: "completed",
       report,
       provider,
       emailSent: false,

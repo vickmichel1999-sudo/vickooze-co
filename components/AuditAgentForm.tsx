@@ -3,7 +3,11 @@
 import { FormEvent, useState } from "react";
 import { ArrowRight, Check, Loader2, Mail, Sparkles } from "lucide-react";
 
-import type { AuditAgentInput, AuditReport } from "@/lib/audit-agent";
+import type {
+  AuditAgentInput,
+  AuditClarificationReview,
+  AuditReport
+} from "@/lib/audit-agent";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -443,6 +447,81 @@ function ReportCard({ report }: { report: AuditReport }) {
   );
 }
 
+function ClarificationCard({
+  clarification,
+  answers,
+  isLoading,
+  onAnswerChange,
+  onSubmit
+}: {
+  clarification: AuditClarificationReview;
+  answers: Record<string, string>;
+  isLoading: boolean;
+  onAnswerChange: (id: string, value: string) => void;
+  onSubmit: () => void;
+}) {
+  return (
+    <div className="grid gap-5">
+      <Card className="border-pine/30 bg-pine/10 p-6">
+        <p className="text-sm font-black uppercase tracking-[0.14em] text-pine">
+          Étape 1 terminée
+        </p>
+        <h2 className="mt-3 font-serif text-3xl leading-tight text-charcoal">
+          Compléments nécessaires avant le rapport final
+        </h2>
+        <p className="mt-4 text-lg leading-8 text-muted">{clarification.readinessSummary}</p>
+        {clarification.missingDataPoints.length > 0 ? (
+          <div className="mt-5 flex flex-wrap gap-2">
+            {clarification.missingDataPoints.map((item) => (
+              <span
+                key={item}
+                className="rounded-lg border border-charcoal/10 bg-white px-3 py-2 text-xs font-black text-charcoal"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        ) : null}
+      </Card>
+
+      <Card className="p-6 md:p-8">
+        <h3 className="font-serif text-3xl leading-tight text-charcoal">
+          Répondez à ces questions
+        </h3>
+        <div className="mt-6 grid gap-5">
+          {clarification.clarifyingQuestions.map((item) => (
+            <label key={item.id} className="block">
+              <span className="text-base font-black text-charcoal">{item.question}</span>
+              <p className="mt-2 text-sm leading-6 text-muted">{item.reason}</p>
+              <textarea
+                value={answers[item.id] || ""}
+                onChange={(event) => onAnswerChange(item.id, event.target.value)}
+                placeholder={item.placeholder}
+                rows={4}
+                className="mt-3 w-full rounded-lg border border-charcoal/10 bg-white px-4 py-3 text-base font-medium text-charcoal outline-none transition-colors placeholder:text-muted/55 focus:border-pine sm:text-sm"
+              />
+            </label>
+          ))}
+        </div>
+
+        <Button type="button" size="xl" disabled={isLoading} onClick={onSubmit} className="mt-6 w-full">
+          {isLoading ? (
+            <>
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              Génération du rapport final...
+            </>
+          ) : (
+            <>
+              Générer le rapport final
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </>
+          )}
+        </Button>
+      </Card>
+    </div>
+  );
+}
+
 async function readApiJson(response: Response) {
   const text = await response.text();
 
@@ -461,6 +540,8 @@ async function readApiJson(response: Response) {
 export function AuditAgentForm() {
   const [form, setForm] = useState<AuditAgentInput>(emptyForm);
   const [report, setReport] = useState<AuditReport | null>(null);
+  const [clarification, setClarification] = useState<AuditClarificationReview | null>(null);
+  const [clarificationAnswers, setClarificationAnswers] = useState<Record<string, string>>({});
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [emailStatus, setEmailStatus] = useState<{
@@ -474,10 +555,31 @@ export function AuditAgentForm() {
     setForm((current) => ({ ...current, [name]: value }));
   }
 
+  function updateClarificationAnswer(id: string, value: string) {
+    setClarificationAnswers((current) => ({
+      ...current,
+      [id]: value
+    }));
+  }
+
+  function applyCompletedResponse(data: any) {
+    setClarification(null);
+    setClarificationAnswers({});
+    setReport(data.report);
+    setProvider(data.provider === "openai" ? "openai" : "anthropic");
+    setEmailStatus({
+      status: data.emailSent ? "sent" : data.emailQueued ? "queued" : "failed",
+      recipient: form.email,
+      message: data.emailError
+    });
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
     setReport(null);
+    setClarification(null);
+    setClarificationAnswers({});
     setEmailStatus(null);
     setProvider(null);
     setIsLoading(true);
@@ -494,13 +596,65 @@ export function AuditAgentForm() {
         throw new Error(data.error || "Impossible de générer l’audit.");
       }
 
-      setReport(data.report);
       setProvider(data.provider === "openai" ? "openai" : "anthropic");
-      setEmailStatus({
-        status: data.emailSent ? "sent" : data.emailQueued ? "queued" : "failed",
-        recipient: form.email,
-        message: data.emailError
+
+      if (data.status === "needs_clarification") {
+        setClarification(data.clarification);
+        return;
+      }
+
+      applyCompletedResponse(data);
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : "Erreur inattendue.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function handleClarificationSubmit() {
+    if (!clarification) {
+      return;
+    }
+
+    const preparedAnswers = clarification.clarifyingQuestions.map((item) => ({
+      question: item.question,
+      answer: (clarificationAnswers[item.id] || "").trim()
+    }));
+
+    if (preparedAnswers.some((item) => item.answer.length < 2)) {
+      setError("Merci de répondre aux questions affichées avant de générer le rapport final.");
+      return;
+    }
+
+    setError("");
+    setReport(null);
+    setEmailStatus(null);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/audit-agent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          clarificationAnswers: preparedAnswers
+        })
       });
+      const data = await readApiJson(response);
+
+      if (!response.ok) {
+        throw new Error(data.error || "Impossible de générer l’audit.");
+      }
+
+      setProvider(data.provider === "openai" ? "openai" : "anthropic");
+
+      if (data.status === "needs_clarification") {
+        setClarification(data.clarification);
+        setClarificationAnswers({});
+        return;
+      }
+
+      applyCompletedResponse(data);
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Erreur inattendue.");
     } finally {
@@ -619,6 +773,31 @@ export function AuditAgentForm() {
             ) : null}
             <ReportCard report={report} />
           </div>
+        ) : clarification ? (
+          <div className="grid gap-5">
+            {provider ? (
+              <Card className="flex items-start gap-4 border-charcoal/10 bg-white p-5">
+                <Sparkles className="mt-0.5 h-6 w-6 shrink-0 text-pine" />
+                <div>
+                  <p className="text-sm font-black uppercase tracking-[0.14em] text-pine">
+                    Pré-analyse effectuée avec {provider === "openai" ? "OpenAI" : "Claude"}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-muted">
+                    L’agent a d’abord vérifié si les informations étaient assez solides pour produire
+                    un audit crédible. Réponds aux quelques questions ci-dessous pour lancer ensuite
+                    le rapport final.
+                  </p>
+                </div>
+              </Card>
+            ) : null}
+            <ClarificationCard
+              clarification={clarification}
+              answers={clarificationAnswers}
+              isLoading={isLoading}
+              onAnswerChange={updateClarificationAnswer}
+              onSubmit={handleClarificationSubmit}
+            />
+          </div>
         ) : (
           <Card className="grid min-h-[420px] place-items-center bg-cream p-6 text-center md:min-h-[620px] md:p-8">
             <div className="max-w-xl">
@@ -629,7 +808,9 @@ export function AuditAgentForm() {
                 Le rapport apparaîtra ici
               </h2>
               <p className="mt-5 text-base leading-7 text-muted md:text-lg md:leading-8">
-                L’agent analysera les manques, priorisera les automatisations, proposera un process de déploiement et préparera les prochaines questions à poser au dirigeant.
+                L’agent fait d’abord une passe de cadrage pour détecter les zones trop vagues, puis
+                génère le rapport final avec les automatisations prioritaires, le scoring et la
+                proposition commerciale.
               </p>
             </div>
           </Card>
