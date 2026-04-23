@@ -8,6 +8,12 @@ export type AuditAgentInput = {
   repetitiveTasks: string;
   painPoints: string;
   monthlyVolume: string;
+  timeLostPerWeek: string;
+  leadValue: string;
+  errorFrequency: string;
+  processOwner: string;
+  sampleWorkItem: string;
+  urgency: string;
   businessGoals: string;
   constraints: string;
 };
@@ -24,11 +30,34 @@ export type PriorityAutomation = {
   process: string;
   currentProblem: string;
   aiSolution: string;
+  evidence: string;
+  assumption: string;
+  confidence: "Faible" | "Moyenne" | "Élevée";
+  risk: string;
+  kpiToTrack: string;
   recommendedTools: string[];
   estimatedTimeSaved: string;
   difficulty: "Faible" | "Moyenne" | "Élevée";
   roiPotential: "Faible" | "Moyen" | "Fort";
   firstStep: string;
+};
+
+export type ScoreDimension = {
+  label: string;
+  score: number;
+  weight: number;
+  justification: string;
+  improvementLever: string;
+};
+
+export type ScoreBreakdown = {
+  processClarity: ScoreDimension;
+  dataReadiness: ScoreDimension;
+  toolStack: ScoreDimension;
+  repetitiveVolume: ScoreDimension;
+  businessUrgency: ScoreDimension;
+  implementationEase: ScoreDimension;
+  globalScoreRationale: string;
 };
 
 export type RoadmapItem = {
@@ -48,6 +77,7 @@ export type AuditReport = {
   executiveSummary: string;
   maturityScore: number;
   maturityLabel: string;
+  scoreBreakdown: ScoreBreakdown;
   detectedGaps: AuditGap[];
   priorityAutomations: PriorityAutomation[];
   recommendedProcess: string[];
@@ -75,6 +105,17 @@ Règles:
 - Mentionne Make, n8n, Zapier, CRM, emails, Slack, Notion, Airtable ou Google Workspace seulement si pertinent.
 - Privilégie les TPE/PME sans équipe technique interne.
 - Si une information manque, formule une hypothèse raisonnable et ajoute une question dans questionsToClarify.
+- Calcule le score de maturité IA avec 6 sous-scores pondérés:
+  - clarté des processus: 20%;
+  - préparation des données: 15%;
+  - stack outils: 15%;
+  - volume répétitif: 20%;
+  - urgence business: 15%;
+  - facilité de mise en place: 15%.
+- Le maturityScore doit correspondre à la moyenne pondérée de ces 6 sous-scores, arrondie à l'entier le plus proche.
+- Justifie chaque sous-score avec une preuve tirée des informations fournies.
+- Pour chaque automatisation prioritaire, donne obligatoirement: preuve utilisée, hypothèse, niveau de confiance, risque, KPI à suivre.
+- Si le ROI ne peut pas être chiffré correctement, explique pourquoi et demande l'information manquante.
 - Le résultat doit aider Vick-Emmanuel Michel à préparer un audit ou une proposition commerciale.
 - Termine par une proposition commerciale indicative et justifiée.
 - Pour le prix, reste cohérent pour une TPE/PME française:
@@ -97,22 +138,42 @@ Processus principaux: ${input.mainProcesses}
 Tâches répétitives: ${input.repetitiveTasks}
 Douleurs / blocages: ${input.painPoints}
 Volume mensuel approximatif: ${input.monthlyVolume}
+Temps perdu estimé par semaine: ${input.timeLostPerWeek}
+Valeur estimée d'un lead ou client: ${input.leadValue}
+Fréquence des erreurs ou oublis: ${input.errorFrequency}
+Responsable du processus: ${input.processOwner}
+Exemple concret de document, email, devis, relance ou reporting: ${input.sampleWorkItem}
+Urgence du sujet: ${input.urgency}
 Objectifs business: ${input.businessGoals}
 Contraintes: ${input.constraints}
 
 Produis un audit structuré avec:
 1. un résumé exécutif;
 2. un score de maturité IA sur 100;
-3. les manques principaux;
-4. les automatisations prioritaires;
-5. le processus recommandé;
-6. une roadmap 30 / 60 / 90 jours;
-7. les questions à clarifier;
-8. les risques et garde-fous;
-9. une proposition commerciale indicative avec prix et justification;
-10. la meilleure prochaine étape commerciale.
+3. le détail des 6 sous-scores pondérés avec justification;
+4. les manques principaux;
+5. les automatisations prioritaires avec preuve, hypothèse, confiance, risque et KPI;
+6. le processus recommandé;
+7. une roadmap 30 / 60 / 90 jours;
+8. les questions à clarifier;
+9. les risques et garde-fous;
+10. une proposition commerciale indicative avec prix et justification;
+11. la meilleure prochaine étape commerciale.
 `.trim();
 }
+
+const scoreDimensionSchema = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    label: { type: "string" },
+    score: { type: "number" },
+    weight: { type: "number" },
+    justification: { type: "string" },
+    improvementLever: { type: "string" }
+  },
+  required: ["label", "score", "weight", "justification", "improvementLever"]
+} as const;
 
 export const AUDIT_AGENT_RESPONSE_FORMAT = {
   type: "json_schema",
@@ -125,6 +186,28 @@ export const AUDIT_AGENT_RESPONSE_FORMAT = {
       executiveSummary: { type: "string" },
       maturityScore: { type: "number" },
       maturityLabel: { type: "string" },
+      scoreBreakdown: {
+        type: "object",
+        additionalProperties: false,
+        properties: {
+          processClarity: scoreDimensionSchema,
+          dataReadiness: scoreDimensionSchema,
+          toolStack: scoreDimensionSchema,
+          repetitiveVolume: scoreDimensionSchema,
+          businessUrgency: scoreDimensionSchema,
+          implementationEase: scoreDimensionSchema,
+          globalScoreRationale: { type: "string" }
+        },
+        required: [
+          "processClarity",
+          "dataReadiness",
+          "toolStack",
+          "repetitiveVolume",
+          "businessUrgency",
+          "implementationEase",
+          "globalScoreRationale"
+        ]
+      },
       detectedGaps: {
         type: "array",
         items: {
@@ -149,6 +232,14 @@ export const AUDIT_AGENT_RESPONSE_FORMAT = {
             process: { type: "string" },
             currentProblem: { type: "string" },
             aiSolution: { type: "string" },
+            evidence: { type: "string" },
+            assumption: { type: "string" },
+            confidence: {
+              type: "string",
+              enum: ["Faible", "Moyenne", "Élevée"]
+            },
+            risk: { type: "string" },
+            kpiToTrack: { type: "string" },
             recommendedTools: {
               type: "array",
               items: { type: "string" }
@@ -169,6 +260,11 @@ export const AUDIT_AGENT_RESPONSE_FORMAT = {
             "process",
             "currentProblem",
             "aiSolution",
+            "evidence",
+            "assumption",
+            "confidence",
+            "risk",
+            "kpiToTrack",
             "recommendedTools",
             "estimatedTimeSaved",
             "difficulty",
@@ -234,6 +330,7 @@ export const AUDIT_AGENT_RESPONSE_FORMAT = {
       "executiveSummary",
       "maturityScore",
       "maturityLabel",
+      "scoreBreakdown",
       "detectedGaps",
       "priorityAutomations",
       "recommendedProcess",

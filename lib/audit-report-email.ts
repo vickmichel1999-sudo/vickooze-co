@@ -31,7 +31,10 @@ export function buildClientAuditEmail(input: AuditAgentInput, report: AuditRepor
             <strong style="color:#1A1A1A;">${escapeHtml(automation.title)}</strong><br />
             <span style="color:#555;">${escapeHtml(automation.estimatedTimeSaved)} · ROI ${escapeHtml(
               automation.roiPotential
-            )} · Difficulté ${escapeHtml(automation.difficulty)}</span>
+            )} · Difficulté ${escapeHtml(automation.difficulty)} · Confiance ${escapeHtml(
+              automation.confidence
+            )}</span><br />
+            <span style="color:#777;">KPI: ${escapeHtml(automation.kpiToTrack)}</span>
           </td>
         </tr>`
     )
@@ -73,6 +76,9 @@ export function buildClientAuditEmail(input: AuditAgentInput, report: AuditRepor
             ${automations}
           </table>
 
+          <h2 style="margin:24px 0 10px;font-size:22px;">Lecture du score</h2>
+          <p style="margin:0;color:#555;line-height:1.7;">${escapeHtml(report.scoreBreakdown.globalScoreRationale)}</p>
+
           <h2 style="margin:24px 0 10px;font-size:22px;">Prochaine étape recommandée</h2>
           <p style="margin:0;color:#555;line-height:1.7;">${escapeHtml(report.nextStep)}</p>
 
@@ -100,9 +106,17 @@ export function buildNotificationEmail(input: AuditAgentInput, report: AuditRepo
       <p><strong>Email client:</strong> ${escapeHtml(input.email)}</p>
       <p><strong>Secteur:</strong> ${escapeHtml(input.sector)}</p>
       <p><strong>Score:</strong> ${report.maturityScore}/100 - ${escapeHtml(report.maturityLabel)}</p>
+      <p><strong>Lecture score:</strong> ${escapeHtml(report.scoreBreakdown.globalScoreRationale)}</p>
       <p><strong>Prix indicatif:</strong> ${escapeHtml(report.commercialOffer.recommendedPrice)}</p>
       <h2>Top automatisations</h2>
-      ${list(report.priorityAutomations.slice(0, 5).map((automation) => `${automation.title} - ${automation.estimatedTimeSaved}`))}
+      ${list(
+        report.priorityAutomations
+          .slice(0, 5)
+          .map(
+            (automation) =>
+              `${automation.title} - ${automation.estimatedTimeSaved} - confiance ${automation.confidence} - KPI: ${automation.kpiToTrack}`
+          )
+      )}
       <h2>Questions à clarifier</h2>
       ${list(report.questionsToClarify)}
     </div>

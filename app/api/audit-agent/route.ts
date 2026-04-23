@@ -27,6 +27,12 @@ const requiredFields: Array<keyof AuditAgentInput> = [
   "repetitiveTasks",
   "painPoints",
   "monthlyVolume",
+  "timeLostPerWeek",
+  "leadValue",
+  "errorFrequency",
+  "processOwner",
+  "sampleWorkItem",
+  "urgency",
   "businessGoals",
   "constraints"
 ];

@@ -1,7 +1,7 @@
 import ExcelJS from "exceljs";
 import PDFDocument from "pdfkit";
 
-import type { AuditAgentInput, AuditReport } from "@/lib/audit-agent";
+import type { AuditAgentInput, AuditReport, ScoreDimension } from "@/lib/audit-agent";
 
 const COLORS = {
   charcoal: "1A1A1A",
@@ -72,6 +72,17 @@ function addKeyValueRows(sheet: ExcelJS.Worksheet, startRow: number, rows: Array
   });
 }
 
+function getScoreBreakdownRows(report: AuditReport): Array<[string, ScoreDimension]> {
+  return [
+    ["Clarte des processus", report.scoreBreakdown.processClarity],
+    ["Preparation des donnees", report.scoreBreakdown.dataReadiness],
+    ["Stack outils", report.scoreBreakdown.toolStack],
+    ["Volume repetitif", report.scoreBreakdown.repetitiveVolume],
+    ["Urgence business", report.scoreBreakdown.businessUrgency],
+    ["Facilite de mise en place", report.scoreBreakdown.implementationEase]
+  ];
+}
+
 export async function createAuditWorkbook(input: AuditAgentInput, report: AuditReport) {
   const workbook = new ExcelJS.Workbook();
   workbook.creator = "VICKOOZE & Co";
@@ -92,17 +103,46 @@ export async function createAuditWorkbook(input: AuditAgentInput, report: AuditR
     ["Email client", input.email],
     ["Secteur", input.sector],
     ["Taille equipe", input.teamSize],
+    ["Temps perdu / semaine", input.timeLostPerWeek],
+    ["Valeur lead/client", input.leadValue],
+    ["Frequence erreurs", input.errorFrequency],
+    ["Responsable process", input.processOwner],
+    ["Urgence", input.urgency],
     ["Score maturite IA", `${report.maturityScore}/100 - ${report.maturityLabel}`],
     ["Prix indicatif", report.commercialOffer.recommendedPrice]
   ]);
-  summary.mergeCells("A11:F11");
-  summary.getCell("A11").value = "Resume executif";
-  summary.getCell("A11").font = { bold: true, color: { argb: COLORS.white } };
-  summary.getCell("A11").fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLORS.coral } };
-  summary.mergeCells("A12:F15");
-  summary.getCell("A12").value = report.executiveSummary;
-  summary.getCell("A12").alignment = { wrapText: true, vertical: "top" };
-  summary.getRow(12).height = 90;
+  summary.mergeCells("A16:F16");
+  summary.getCell("A16").value = "Resume executif";
+  summary.getCell("A16").font = { bold: true, color: { argb: COLORS.white } };
+  summary.getCell("A16").fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLORS.coral } };
+  summary.mergeCells("A17:F20");
+  summary.getCell("A17").value = report.executiveSummary;
+  summary.getCell("A17").alignment = { wrapText: true, vertical: "top" };
+  summary.getRow(17).height = 90;
+
+  const scoring = workbook.addWorksheet("Scoring");
+  scoring.columns = [
+    { width: 28 },
+    { width: 16 },
+    { width: 14 },
+    { width: 58 },
+    { width: 48 }
+  ];
+  addTitle(scoring, "Grille de scoring ponderee", report.scoreBreakdown.globalScoreRationale);
+  scoring.addRow([]);
+  scoring.addRow(["Dimension", "Score", "Poids", "Justification", "Levier d'amelioration"]);
+  styleHeader(scoring.getRow(4));
+  getScoreBreakdownRows(report).forEach(([dimension, score]) => {
+    const row = scoring.addRow([
+      dimension,
+      score.score,
+      `${score.weight}%`,
+      score.justification,
+      score.improvementLever
+    ]);
+    row.alignment = { wrapText: true, vertical: "top" };
+    row.height = 82;
+  });
 
   const gaps = workbook.addWorksheet("Manques detectes");
   gaps.columns = [{ width: 30 }, { width: 34 }, { width: 42 }, { width: 44 }];
@@ -122,6 +162,11 @@ export async function createAuditWorkbook(input: AuditAgentInput, report: AuditR
     { width: 30 },
     { width: 36 },
     { width: 44 },
+    { width: 42 },
+    { width: 42 },
+    { width: 16 },
+    { width: 34 },
+    { width: 30 },
     { width: 28 },
     { width: 18 },
     { width: 16 },
@@ -135,6 +180,11 @@ export async function createAuditWorkbook(input: AuditAgentInput, report: AuditR
     "Process",
     "Probleme actuel",
     "Solution IA",
+    "Preuve",
+    "Hypothese",
+    "Confiance",
+    "Risque",
+    "KPI",
     "Outils recommandes",
     "Gain estime",
     "Difficulte",
@@ -148,6 +198,11 @@ export async function createAuditWorkbook(input: AuditAgentInput, report: AuditR
       automation.process,
       automation.currentProblem,
       automation.aiSolution,
+      automation.evidence,
+      automation.assumption,
+      automation.confidence,
+      automation.risk,
+      automation.kpiToTrack,
       automation.recommendedTools.join(", "),
       automation.estimatedTimeSaved,
       automation.difficulty,
@@ -252,6 +307,15 @@ export async function createAuditPdf(input: AuditAgentInput, report: AuditReport
     `Score: ${report.maturityScore}/100 (${report.maturityLabel}) | Prix indicatif: ${report.commercialOffer.recommendedPrice}`
   );
   addPdfSection(doc, "Synthese executive", report.executiveSummary);
+  addPdfSection(doc, "Grille de scoring ponderee", report.scoreBreakdown.globalScoreRationale);
+  getScoreBreakdownRows(report).forEach(([dimension, score]) => {
+    doc.moveDown(0.4);
+    doc.fillColor(`#${COLORS.charcoal}`).fontSize(11.5).text(`${dimension}: ${score.score}/100 (${score.weight}%)`);
+    doc
+      .fillColor(`#${COLORS.muted}`)
+      .fontSize(10)
+      .text(`${score.justification} Levier: ${score.improvementLever}`, { lineGap: 2 });
+  });
 
   addPdfSection(doc, "Manques detectes");
   report.detectedGaps.forEach((gap) => {
@@ -271,6 +335,10 @@ export async function createAuditPdf(input: AuditAgentInput, report: AuditReport
       .fontSize(10)
       .text(`Probleme: ${automation.currentProblem}`, { lineGap: 2 })
       .text(`Solution: ${automation.aiSolution}`, { lineGap: 2 })
+      .text(`Preuve: ${automation.evidence}`, { lineGap: 2 })
+      .text(`Hypothese: ${automation.assumption}`, { lineGap: 2 })
+      .text(`Confiance: ${automation.confidence} | Risque: ${automation.risk}`, { lineGap: 2 })
+      .text(`KPI a suivre: ${automation.kpiToTrack}`, { lineGap: 2 })
       .text(
         `Gain estime: ${automation.estimatedTimeSaved} | Difficulté: ${automation.difficulty} | ROI: ${automation.roiPotential}`,
         { lineGap: 2 }

@@ -17,6 +17,12 @@ const emptyForm: AuditAgentInput = {
   repetitiveTasks: "",
   painPoints: "",
   monthlyVolume: "",
+  timeLostPerWeek: "",
+  leadValue: "",
+  errorFrequency: "",
+  processOwner: "",
+  sampleWorkItem: "",
+  urgency: "",
   businessGoals: "",
   constraints: ""
 };
@@ -34,6 +40,15 @@ const demoForm: AuditAgentInput = {
   painPoints:
     "Les commerciaux oublient parfois les relances, le CRM n’est pas toujours à jour et la direction perd du temps à consolider les chiffres.",
   monthlyVolume: "Environ 90 leads entrants, 35 rendez-vous commerciaux et 20 propositions envoyées par mois.",
+  timeLostPerWeek:
+    "Environ 12 à 15 heures par semaine cumulées entre relances, saisie CRM et reporting.",
+  leadValue: "Un client signé représente environ 3 500 € de marge brute annuelle.",
+  errorFrequency:
+    "2 à 3 relances oubliées par semaine et un reporting commercial incomplet presque chaque vendredi.",
+  processOwner: "La responsable commerciale supervise le pipeline, mais chaque commercial gère ses propres relances.",
+  sampleWorkItem:
+    "Exemple type: email de demande entrante, compte rendu de rendez-vous, puis proposition commerciale générée dans Google Docs.",
+  urgency: "Court terme: l’équipe veut améliorer le suivi commercial dans les 30 à 60 prochains jours.",
   businessGoals:
     "Réduire le temps administratif, améliorer le taux de relance, mieux qualifier les leads et gagner en visibilité sur le pipeline.",
   constraints:
@@ -98,6 +113,40 @@ const fields: Array<{
     textarea: true
   },
   {
+    name: "timeLostPerWeek",
+    label: "Temps perdu estimé par semaine",
+    placeholder: "Ex: 8h/semaine sur les relances, 5h sur le reporting, 3h sur la saisie CRM...",
+    textarea: true
+  },
+  {
+    name: "leadValue",
+    label: "Valeur estimée d’un lead, client ou dossier",
+    placeholder: "Ex: un client vaut 2 500 € de marge/an, un devis signé vaut 1 200 €, panier moyen 180 €..."
+  },
+  {
+    name: "errorFrequency",
+    label: "Fréquence des erreurs, oublis ou retards",
+    placeholder: "Ex: 3 relances oubliées/semaine, 10% de devis en retard, reporting incomplet chaque mois...",
+    textarea: true
+  },
+  {
+    name: "processOwner",
+    label: "Responsable du processus",
+    placeholder: "Ex: responsable commerciale, dirigeant, office manager, équipe support..."
+  },
+  {
+    name: "sampleWorkItem",
+    label: "Exemple concret de document, email ou reporting",
+    placeholder: "Colle ou décris un exemple typique: email entrant, devis, relance, compte rendu, tableau...",
+    textarea: true
+  },
+  {
+    name: "urgency",
+    label: "Urgence du sujet",
+    placeholder: "Ex: immédiat, dans 30 jours, avant le prochain trimestre, simple exploration...",
+    textarea: true
+  },
+  {
     name: "businessGoals",
     label: "Objectifs business",
     placeholder: "Ex: gagner 10h/semaine, améliorer le suivi commercial, réduire les délais...",
@@ -148,6 +197,15 @@ function Field({
 }
 
 function ReportCard({ report }: { report: AuditReport }) {
+  const scoreItems = [
+    ["Processus", report.scoreBreakdown.processClarity],
+    ["Données", report.scoreBreakdown.dataReadiness],
+    ["Outils", report.scoreBreakdown.toolStack],
+    ["Volume répétitif", report.scoreBreakdown.repetitiveVolume],
+    ["Urgence", report.scoreBreakdown.businessUrgency],
+    ["Facilité", report.scoreBreakdown.implementationEase]
+  ] as const;
+
   return (
     <div className="grid gap-6">
       <Card className="overflow-hidden border-0 bg-charcoal p-6 text-white md:p-8">
@@ -166,6 +224,39 @@ function ReportCard({ report }: { report: AuditReport }) {
           <p className="text-lg leading-8 text-white/78">{report.executiveSummary}</p>
         </div>
       </Card>
+
+      <section>
+        <h2 className="font-serif text-3xl leading-tight text-charcoal">
+          Grille de scoring pondérée
+        </h2>
+        <p className="mt-3 text-sm leading-6 text-muted">
+          {report.scoreBreakdown.globalScoreRationale}
+        </p>
+        <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {scoreItems.map(([title, item]) => (
+            <Card key={title} className="p-5">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-sm font-black uppercase tracking-[0.12em] text-pine">
+                    {title}
+                  </p>
+                  <h3 className="mt-2 text-lg font-black text-charcoal">{item.label}</h3>
+                </div>
+                <div className="rounded-lg bg-cream px-3 py-2 text-right">
+                  <p className="font-serif text-3xl leading-none text-pine">{item.score}</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.12em] text-muted">
+                    poids {item.weight}%
+                  </p>
+                </div>
+              </div>
+              <p className="mt-4 text-sm leading-6 text-muted">{item.justification}</p>
+              <p className="mt-4 text-sm font-bold leading-6 text-charcoal">
+                Levier : {item.improvementLever}
+              </p>
+            </Card>
+          ))}
+        </div>
+      </section>
 
       <section>
         <h2 className="font-serif text-3xl leading-tight text-charcoal">Manques détectés</h2>
@@ -211,6 +302,42 @@ function ReportCard({ report }: { report: AuditReport }) {
                   <p className="mt-3 text-sm leading-6 text-muted">{automation.aiSolution}</p>
                   <p className="mt-4 text-sm font-black text-charcoal">Premier pas</p>
                   <p className="mt-2 text-sm leading-6 text-muted">{automation.firstStep}</p>
+                  <div className="mt-5 grid gap-3 rounded-lg bg-white p-4">
+                    <div>
+                      <p className="text-xs font-black uppercase tracking-[0.12em] text-pine">
+                        Preuve utilisée
+                      </p>
+                      <p className="mt-1 text-sm leading-6 text-muted">{automation.evidence}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-black uppercase tracking-[0.12em] text-pine">
+                        Hypothèse
+                      </p>
+                      <p className="mt-1 text-sm leading-6 text-muted">{automation.assumption}</p>
+                    </div>
+                    <div className="grid gap-3 sm:grid-cols-3">
+                      <div>
+                        <p className="text-xs font-black uppercase tracking-[0.12em] text-pine">
+                          Confiance
+                        </p>
+                        <p className="mt-1 text-sm font-black text-charcoal">
+                          {automation.confidence}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-black uppercase tracking-[0.12em] text-pine">
+                          Risque
+                        </p>
+                        <p className="mt-1 text-sm leading-6 text-muted">{automation.risk}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-black uppercase tracking-[0.12em] text-pine">
+                          KPI
+                        </p>
+                        <p className="mt-1 text-sm leading-6 text-muted">{automation.kpiToTrack}</p>
+                      </div>
+                    </div>
+                  </div>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {automation.recommendedTools.map((tool) => (
                       <span key={tool} className="rounded-lg bg-white px-3 py-2 text-xs font-black text-charcoal">
